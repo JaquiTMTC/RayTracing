@@ -19,8 +19,8 @@ public class Camera {
      * @param _horizontalFOV the field of view in radians of the camera
      */
     public Camera(Vector3d _pos, Vector3d _normal, int _width, int _height, double _horizontalFOV){
-        pos = _pos.copy();
-        normal = _normal.copy().normalize();
+        pos = new Vector3d(_pos);
+        normal = new Vector3d(_normal).normalize();
         width = _width;
         height = _height;
         xDir = normal.cross(new Vector3d(0, 0, 1)).normalize();
@@ -108,19 +108,19 @@ public class Camera {
     // Getters and Setters
 
     public Vector3d getNormal() {
-        return normal.copy();
+        return new Vector3d(normal);
     }
 
     public Vector3d getxDir() {
-        return xDir.copy();
+        return new Vector3d(xDir);
     }
 
     public Vector3d getyDir() {
-        return yDir.copy();
+        return new Vector3d(yDir);
     }
 
     public Vector3d getPos() {
-        return pos.copy();
+        return new Vector3d(pos);
     }
 
     public int getWidth() {

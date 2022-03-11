@@ -15,6 +15,12 @@ public class Vector3d {
         z = _z;
     }
 
+    public Vector3d(Vector3d v){
+        x = v.x;
+        y = v.y;
+        z = v.z;
+    }
+
     public Vector3d normalize(){
         double norm = norm();
         return new Vector3d(x/norm, y/norm, z/norm);
@@ -50,10 +56,6 @@ public class Vector3d {
 
     public Vector3d mult(double t){
         return new Vector3d(t*x, t*y, t*z);
-    }
-
-    public Vector3d copy(){
-        return new Vector3d(x, y, z);
     }
 
     public double angle(Vector3d v){

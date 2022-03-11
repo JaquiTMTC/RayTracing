@@ -15,12 +15,12 @@ public class Sphere extends Drawable {
      * @param _radius the radius of the sphere
      * @param _color the color of the sphere
      */
-    public Sphere(Vector3d _center, double _radius, Color _color, boolean isReflective){
-        center = _center.copy();
+    public Sphere(Vector3d _center, double _radius, Color _color, boolean _isReflective){
+        center = new Vector3d(_center);
         radius = _radius;
         rSq = Math.pow(radius, 2);
         color = _color;
-        this.isReflective = isReflective;
+        isReflective = _isReflective;
     }
 
 //    public boolean intersects(Ray ray) {

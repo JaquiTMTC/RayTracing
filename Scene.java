@@ -15,6 +15,6 @@ public class Scene {
     }
 
     public Vector3d getLight() {
-        return light.copy();
+        return new Vector3d(light);
     }
 }

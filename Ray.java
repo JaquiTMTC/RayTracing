@@ -5,18 +5,18 @@ public class Ray {
 
 
     public Ray(Vector3d _pos, Vector3d _dir){
-        pos = _pos.copy();
-        dir = _dir.copy().normalize();
+        pos = new Vector3d(_pos);
+        dir = new Vector3d(_dir).normalize();
     }
 
     /*** Getters and Setters ***/
 
     public Vector3d getPos() {
-        return pos.copy();
+        return new Vector3d(pos);
     }
 
     public Vector3d getDir() {
-        return dir.copy();
+        return new Vector3d(dir);
     }
 
 
