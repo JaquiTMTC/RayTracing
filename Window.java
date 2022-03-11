@@ -17,14 +17,24 @@ public class Window  extends  JPanel{
 
         // Initializing scene
 
-        int width = 1280;
+        int width = 720;
         int height = 720;
 
         BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
         Camera camera = new Camera(new Vector3d(0, 0, 0), new Vector3d(1, 0, 0), width, height, Math.PI/2);
 
-        Drawable[] geometry = {new Sphere(new Vector3d(3, 0, 0), 1, Color.BLUE, true), new Sphere(new Vector3d(-2, 0, 0), 1, Color.YELLOW, false)};
+        Drawable[] geometry = {
+                new Sphere(new Vector3d(4, 0, 0), 1.5, Color.BLUE, false),
+                new Sphere(new Vector3d(-0.5, 0.2, 0.2), 0.1, Color.YELLOW, true),
+                new Sphere(new Vector3d(0.5, -0.2, 0.2), 0.1, Color.green, true),
+                new Plane(new Vector3d(0, 1, 0), new Vector3d(0, -3, 0 ), Color.white, true),
+                new Plane(new Vector3d(0, -1, 0), new Vector3d(0, 3, 0 ), Color.green, true),
+                new Plane(new Vector3d(-1, 0, 0), new Vector3d(5, 0, 0), Color.orange, false),
+                new Plane(new Vector3d(0, 0, -1), new Vector3d(0, 0, 3), Color.cyan, false),
+                new Plane(new Vector3d(0, 0, 1), new Vector3d(0, 0, -3), Color.magenta, false),
+                new Plane(new Vector3d(1, 0, 0), new Vector3d(-5, 0, 0), Color.pink, false)
+        };
 
         Scene scene = new Scene(geometry, new Vector3d(1, 0, 2));
 
@@ -50,7 +60,7 @@ public class Window  extends  JPanel{
         frame.getContentPane().add(new Window());
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1280, 720);
+        frame.setSize(720, 720);
         frame.setVisible(true);
     }
 }

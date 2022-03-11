@@ -66,7 +66,7 @@ public class Camera {
     public Color renderPixel(int x, int y, Scene scene){
         Ray ray = createRay(x, y);
         //System.out.println(x+" "+y);
-        return renderRay(ray, scene, 1);
+        return renderRay(ray, scene, 5);
     }
 
     public Color renderRay(Ray ray, Scene scene, int maxBounces){
