@@ -43,6 +43,8 @@ public class Camera {
      */
     public Ray createRay(int x, int y){
 
+
+
         double xMax = Math.tan(horizontalFOV/2);
         double yMax = Math.tan(verticalFOV/2);
 
@@ -64,9 +66,14 @@ public class Camera {
      * @return the color of the given pixel
      */
     public Color renderPixel(int x, int y, Scene scene){
+        if(x<=10 && y>=710){
+            return Color.red;
+        }
         Ray ray = createRay(x, y);
         //System.out.println(x+" "+y);
-        return renderRay(ray, scene, 5);
+        Color returnColor = renderRay(ray, scene, 5);
+        returnColor = ((returnColor==null) ? Color.RED : returnColor);
+        return (returnColor);
     }
 
     public Color renderRay(Ray ray, Scene scene, int maxBounces){
@@ -86,14 +93,30 @@ public class Camera {
         }
 
         if (closestObject==null){
-            return Color.RED;
+            return null;
         }
+        // Debug
+
         Vector3d intersection = ray.at(tMin);
         Vector3d normalGeometry = closestObject.normal(intersection);
-        if(closestObject.isReflective && maxBounces!=0){
+
+//        if (closestObject.equals(new Plane(new Vector3d(0, 0, -1), new Vector3d(0, 0, 3), Color.cyan, true))){
+//            System.out.println(ray);
+//            System.out.println(ray.bounce(intersection, normalGeometry));
+//            System.out.println();
+//        }
+
+        if(maxBounces!=0 && closestObject.isReflective){ // If the object is reflective, we bounce it off geometry and render the new ray
             return renderRay(ray.bounce(intersection, normalGeometry), scene, maxBounces-1);
         } else {
+
             Vector3d toLight = scene.light.sub(intersection);
+            Ray toLightRay = new Ray(intersection, toLight);
+            if(maxBounces!=0 && renderRay(toLightRay, scene, 0)==null){  // If we are in the shadow of an object, we render black
+                return Color.black;
+            }
+
+            // We get the color of a point based on the color of the object and the angle of the surface to the light
             double angle = normalGeometry.angle(toLight);
             double rColor = Math.max(closestObject.color.getRed() * Math.cos(angle), 0);
             double gColor = Math.max(closestObject.color.getGreen() * Math.cos(angle), 0);

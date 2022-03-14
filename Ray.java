@@ -44,4 +44,12 @@ public class Ray {
 //        Vector3d newDir = dir.add(normalDiff);
 //        return new Ray(pos, newDir);
     }
+
+    @Override
+    public String toString() {
+        return "Ray{" +
+                "pos=" + pos +
+                ", dir=" + dir +
+                '}';
+    }
 }

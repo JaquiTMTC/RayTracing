@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.util.Objects;
 
 public class Plane extends Drawable{
     private Vector3d normal;
@@ -29,5 +30,12 @@ public class Plane extends Drawable{
 
     Drawable copy() {
         return new Plane(normal, center, color, isReflective);
+    }
+
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Plane plane = (Plane) o;
+        return Objects.equals(normal, plane.normal) && Objects.equals(center, plane.center);
     }
 }
