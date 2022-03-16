@@ -15,10 +15,9 @@ public class Plane extends Drawable{
     /**
      * Finds the parameter of the intersection between a ray and the plane
      * @param ray the ray
-     * @return the distance if it intersects, -1 if it doesn't intersect
      */
     double closestIntersectionPoint(Ray ray) {
-        if(ray.getDir().dot(normal)==0){ // If ray is parallel to plane
+        if (ray.getDir().dot(normal) == 0) { // If ray is parallel to plane
             return -1; // We do not consider important the case where the camera is in the plane (where the ray should intersect the plane)
         }
         return center.sub(ray.getPos()).dot(normal)/ray.getDir().dot(normal);
