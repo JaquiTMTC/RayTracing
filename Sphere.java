@@ -45,7 +45,6 @@ public class Sphere extends Drawable {
      * point by using ray.at on the return value.
      * /!\ In order to work for this method, the method precomputeCamera must have been previously called.
      * @param ray the ray to check intersection with
-     * @return the parameter of the intersection
      */
     public double closestIntersectionPoint(Ray ray) {
         /*
