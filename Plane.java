@@ -38,4 +38,13 @@ public class Plane extends Drawable{
         Plane plane = (Plane) o;
         return Objects.equals(normal, plane.normal) && Objects.equals(center, plane.center);
     }
+
+    public String toString() {
+        return "Plane{" +
+                "isReflective=" + isReflective +
+                ", color=" + color +
+                ", normal=" + normal +
+                ", center=" + center +
+                '}';
+    }
 }
