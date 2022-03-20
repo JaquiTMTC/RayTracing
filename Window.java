@@ -44,6 +44,7 @@ public class Window extends JPanel implements ActionListener {
                 new Plane(new Vector3d(0, 0, -1), new Vector3d(0, 0, 3), Color.cyan, false),
                 new Plane(new Vector3d(0, 0, 1), new Vector3d(0, 0, -3), Color.magenta, false),
                 new Plane(new Vector3d(1, 0, 0), new Vector3d(-5, 0, 0), Color.pink, false)
+
         };
 
         Scene scene = new Scene(geometry, new Vector3d(1, 0, 2));

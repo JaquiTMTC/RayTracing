@@ -15,7 +15,7 @@ public class Cube extends Drawable {
     double c;
     private Vector3d n;
 
-    public Cube(Vector3d _normal1, Vector3d _normal2, Vector3d _normal3, Vector3d _normal4, Vector3d _normal5, Vector3d _normal6, Vector3d _center, Color  _color, boolean _isReflective) {
+    public Cube(Vector3d _normal1, Vector3d _normal2, Vector3d _normal3, Vector3d _normal4, Vector3d _normal5, Vector3d _normal6, Vector3d _center, Color _color, boolean _isReflective) {
 
     normal1 = new Vector3d(_normal1);
     normal2 = new Vector3d(_normal2);
@@ -28,7 +28,7 @@ public class Cube extends Drawable {
     isReflective = _isReflective;
 
     }
-    public Cube (LinkedList _listNormal, double _c, Vector3d _n) {
+    public Cube(LinkedList _listNormal, double _c, Vector3d _n) {
 
         listNormal = new LinkedList<Vector3d>();
         c = 00;
@@ -56,21 +56,23 @@ public class Cube extends Drawable {
     }
 
     Vector3d normal(Vector3d point) {
-//        for (Vector3d normal : listNormal) {
-//            return new n = (Vector3d(normal));
-//        }
-//        return n;
-        return null;
+        for (Vector3d normal : listNormal) {
+            return new Vector3d(normal);
+        }
+        return n;
     }
 
     Drawable copy() {
         return new Cube (normal1, normal2, normal3, normal4, normal5, normal6, center, color, isReflective);
     }
 
- /*   public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Cube cube = (cube) o;
-        return Objects.equals(normal, plane.normal) && Objects.equals(center, plane.center);
-    }*/
+   // public boolean equals(Object o) {
+     //   if (this == o) return true;
+     //   if (o == null || getClass() != o.getClass()) return false;
+        //Cube cube = (cube) o;
+
+      //  return Objects.equals(n, cube.n) && Objects.equals(center, cube.center);
+    //}
+
+    // Utilité de Vector3d normal ?
 }
