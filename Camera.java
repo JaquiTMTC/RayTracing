@@ -28,6 +28,7 @@ public class Camera {
 
         horizontalFOV = _horizontalFOV;
         verticalFOV = horizontalFOV*height/width;
+        //System.out.println(verticalFOV);
 
 //        System.out.println(normal);
 //        System.out.println(xDir);
@@ -46,7 +47,7 @@ public class Camera {
 
 
         double xMax = Math.tan(horizontalFOV/2);
-        double yMax = Math.tan(verticalFOV/2);
+        double yMax = xMax*height/width;
 
         double xComp = (double)x/width*(2*xMax)-xMax;
         double yComp = (double)y/height*(2*yMax)-yMax;
@@ -102,6 +103,10 @@ public class Camera {
         double tMin = (double) intersect[0];
         Drawable closestObject = (Drawable) intersect[1];
 
+        if (closestObject==null){
+            return null;
+        }
+
         Vector3d intersection = ray.at(tMin);
         Vector3d normalGeometry = closestObject.normal(intersection);
 
@@ -112,6 +117,11 @@ public class Camera {
 //        }
 
         if(maxBounces>0 && closestObject.isReflective){ // If the object is reflective, we bounce it off geometry and render the new ray
+//            Color refelctedColor = renderRay(ray.bounce(intersection, normalGeometry), scene, maxBounces-1);
+//            double rColor = (refelctedColor.getRed()+closestObject.color.getRed())/2.;
+//            double gColor = (refelctedColor.getGreen()+closestObject.color.getGreen())/2.;
+//            double bColor = (refelctedColor.getBlue()+closestObject.color.getBlue())/2.;
+//            return new Color((int) rColor, (int) gColor, (int) bColor);
             return renderRay(ray.bounce(intersection, normalGeometry), scene, maxBounces-1);
         } else {
 
