@@ -12,11 +12,11 @@ public class Fenetre extends JFrame implements ActionListener{ // besoin de bout
     int width;
     int height;
     // declaration des boutons en attribut qui seront utilises dans le ActionPerformed
-    JButton etapeSuiv = new JButton(" Passer étape suivante");
-
-    JButton effRendu = new JButton ("Effacer le rendu");
     JComboBox listeVolume=new JComboBox();
     JComboBox listeMatieres=new JComboBox();
+    JButton etapeSuiv = new JButton("Passer étape suivante");
+    JButton effRendu = new JButton ("Effacer le rendu");
+    JPanel panelEtape2 = new JPanel();
 
     // constructeur
     public Fenetre(String nom, int w, int h) {
@@ -35,19 +35,19 @@ public class Fenetre extends JFrame implements ActionListener{ // besoin de bout
         panelMenu.setLayout(new GridBagLayout());
         panelMenu.setBackground(Color.orange);
 
-        JLabel labelMenu = new JLabel ("menu");
+        JLabel labelMenu = new JLabel ("Menu");
         GridBagConstraints co = new GridBagConstraints();
         co.fill = GridBagConstraints.CENTER;
         co.ipady = 20;
         panelMenu.add(labelMenu, co);
 
         JPanel panelBoutons = new JPanel();
+        panelBoutons.setVisible(true);
         panelBoutons.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         panelBoutons.setBackground(Color.yellow);
 
-
-        listeVolume.addItem("--choix volume--");
+        listeVolume.addItem("--Choix volume--");
         listeVolume.addItem("Sphère");
         listeVolume.addItem("Cube");
         listeVolume.addItem("Cylindre");
@@ -62,7 +62,7 @@ public class Fenetre extends JFrame implements ActionListener{ // besoin de bout
 
         // par défaut: Constraints en CENTER
 
-        listeMatieres.addItem("--choix matieres--");
+        listeMatieres.addItem("--Choix matière--");
         listeMatieres.addItem("Bois");
         c.anchor= GridBagConstraints.FIRST_LINE_START; // position a interieur de la case de la liste deroulante
         c.fill = GridBagConstraints.HORIZONTAL; // important de mettre ces lignes après creation ComboBox en question
@@ -74,7 +74,6 @@ public class Fenetre extends JFrame implements ActionListener{ // besoin de bout
         c.insets=new Insets(10,10,10,10);
         panelBoutons.add(listeMatieres, c);
 
-
         etapeSuiv.setBackground(Color.green);
         etapeSuiv.addActionListener(this);
         c.fill=GridBagConstraints.HORIZONTAL;
@@ -82,7 +81,6 @@ public class Fenetre extends JFrame implements ActionListener{ // besoin de bout
         c.gridy= 3;
         c.insets=new Insets(10,10,10,10);
         panelBoutons.add(etapeSuiv, c);
-
 
         effRendu.setBackground(Color.red);
         effRendu.addActionListener(this);
@@ -92,11 +90,14 @@ public class Fenetre extends JFrame implements ActionListener{ // besoin de bout
         c.insets=new Insets(10,10,10,10);
         panelBoutons.add(effRendu, c);
 
+        panelEtape2.setVisible(false);
+        panelEtape2.setBackground(Color.red);
+        panelEtape2.setLayout(null);
+        panelEtape2.setBounds(200,100,30,40);
 
         panelGlobal.add(panelMenu, BorderLayout.NORTH);
         panelGlobal.add(panelBoutons, BorderLayout.WEST);
-
-
+        panelGlobal.add(panelEtape2);
 
         add(panelGlobal);
         this.setVisible(true);
@@ -111,7 +112,8 @@ public class Fenetre extends JFrame implements ActionListener{ // besoin de bout
             System.out.println(" Effacer");
         }
         if(listeVolume.getSelectedItem()== "Sphère" ){
-            System.out.println(" Sphere selectionnée");
+            System.out.println("Sphère sélectionnée");
+            panelEtape2.setVisible(true);
         }
 
     }
