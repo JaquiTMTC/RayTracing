@@ -6,6 +6,7 @@ public class Plane extends Drawable{
     private Vector3d center;
 
     public Plane(Vector3d _normal, Vector3d _center, Color _color, boolean _isReflective){
+
         normal = new Vector3d(_normal);
         center = new Vector3d(_center);
         color = _color;
