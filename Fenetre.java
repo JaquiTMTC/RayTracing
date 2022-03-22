@@ -6,7 +6,6 @@ import java.awt.event.*;
 import java.awt.*;
 import java.awt.FlowLayout;
 
-
 public class Fenetre extends JFrame implements ActionListener{ // besoin de boutons pour le menu, le choix de la scène
 // taille fenêtre et attributs
     int width;
@@ -27,13 +26,20 @@ public class Fenetre extends JFrame implements ActionListener{ // besoin de bout
         this.setLocation(100, 100);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // panel
-        JPanel panelGlobal = new JPanel(new BorderLayout());
+        JPanel panelGlobal = new JPanel();
+        panelGlobal.setLayout(new GridBagLayout());
+        GridBagConstraints cons = new GridBagConstraints();
         panelGlobal.setBounds(0,0, this.width, this.height); // panneau qui englobe tt la fenetre
         panelGlobal.setBackground(Color.blue);
 
-        JPanel panelMenu = new JPanel(new BorderLayout());
+        JPanel panelMenu = new JPanel();
+        cons.fill=GridBagConstraints.PAGE_START;
+        //cons.anchor= GridBagConstraints.PAGE_START;
+        cons.gridx=0;
+        cons.gridy=0;
         panelMenu.setLayout(new GridBagLayout());
         panelMenu.setBackground(Color.orange);
+        panelGlobal.add(panelMenu,cons);
 
         JLabel labelMenu = new JLabel ("Menu");
         GridBagConstraints co = new GridBagConstraints();
@@ -42,10 +48,15 @@ public class Fenetre extends JFrame implements ActionListener{ // besoin de bout
         panelMenu.add(labelMenu, co);
 
         JPanel panelBoutons = new JPanel();
+        cons.fill=GridBagConstraints.HORIZONTAL;
+        cons.gridx=1;
+        cons.gridy=1;
+        cons.gridwidth=2;
         panelBoutons.setVisible(true);
         panelBoutons.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         panelBoutons.setBackground(Color.yellow);
+        panelGlobal.add(panelBoutons,cons);
 
         listeVolume.addItem("--Choix volume--");
         listeVolume.addItem("Sphère");
@@ -90,14 +101,13 @@ public class Fenetre extends JFrame implements ActionListener{ // besoin de bout
         c.insets=new Insets(10,10,10,10);
         panelBoutons.add(effRendu, c);
 
-        panelEtape2.setVisible(false);
+        panelEtape2.setVisible(true);
+        cons.fill=GridBagConstraints.SOUTH;
+        cons.gridx=1;
+        cons.gridy=2;
         panelEtape2.setBackground(Color.red);
-        panelEtape2.setLayout(null);
-        panelEtape2.setBounds(200,100,30,40);
-
-        panelGlobal.add(panelMenu, BorderLayout.NORTH);
-        panelGlobal.add(panelBoutons, BorderLayout.WEST);
-        panelGlobal.add(panelEtape2);
+        panelEtape2.add(new JLabel("Coucou, c'est étape 2"));
+        panelGlobal.add(panelEtape2,cons);
 
         add(panelGlobal);
         this.setVisible(true);
@@ -113,7 +123,7 @@ public class Fenetre extends JFrame implements ActionListener{ // besoin de bout
         }
         if(listeVolume.getSelectedItem()== "Sphère" ){
             System.out.println("Sphère sélectionnée");
-            panelEtape2.setVisible(true);
+            //panelEtape2.setVisible(true);
         }
 
     }
