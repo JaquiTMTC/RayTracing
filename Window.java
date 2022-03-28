@@ -29,9 +29,9 @@ public class Window extends JPanel implements ActionListener {
         int width = 720;
         int height = 720;
 
-        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        //BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
-        Camera camera = new Camera(new Vector3d(0, 0, 0), new Vector3d(Math.cos(theta), Math.sin(theta), 0), width, height, Math.PI/2);
+        Camera camera = new Camera(new Vector3d(0, 0, 0), new Vector3d(1, 0, 0), width, height, Math.PI/2);
 
         Drawable[] geometry = {
                 new Sphere(new Vector3d(4, 0, 0), 1.5, Color.BLUE, false),
@@ -49,7 +49,7 @@ public class Window extends JPanel implements ActionListener {
 
         };
 
-        Scene scene = new Scene(geometry, new Vector3d(1, 0, 2));
+        Scene scene = new Scene(geometry, new Vector3d(1, 2*Math.cos(2*theta), 2));
 
         // Precompute values
 //        for(Drawable obj:geometry){
@@ -58,14 +58,16 @@ public class Window extends JPanel implements ActionListener {
 
 
         // For each pixel, calculate its color and insert it in the image
-        for(int y=0; y<height; y++){
+        /*for(int y=0; y<height; y++){
             for(int x=0; x<width; x++){
                 Color color = camera.renderPixel(x, y, scene);
                 bufferedImage.setRGB(x, y, color.getRGB());
             }
         }
+        */
 
-        return bufferedImage;
+
+        return camera.renderImage(scene, 10);
     }
 
     public void actionPerformed(ActionEvent e) {
