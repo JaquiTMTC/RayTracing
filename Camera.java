@@ -28,6 +28,7 @@ public class Camera {
 
         horizontalFOV = _horizontalFOV;
         verticalFOV = horizontalFOV*height/width;
+        //System.out.println(verticalFOV);
 
 //        System.out.println(normal);
 //        System.out.println(xDir);
@@ -46,7 +47,7 @@ public class Camera {
 
 
         double xMax = Math.tan(horizontalFOV/2);
-        double yMax = Math.tan(verticalFOV/2);
+        double yMax = xMax*height/width;
 
         double xComp = (double)x/width*(2*xMax)-xMax;
         double yComp = (double)y/height*(2*yMax)-yMax;
@@ -66,9 +67,9 @@ public class Camera {
      * @return the color of the given pixel
      */
     public Color renderPixel(int x, int y, Scene scene){
-        if(x<=10 && y>=710){
-            return Color.red;
-        }
+//        if(x<=10 && y>=710){
+//            return Color.red;
+//        }
         Ray ray = createRay(x, y);
         //System.out.println(x+" "+y);
         Color returnColor = renderRay(ray, scene, 5);
@@ -77,25 +78,34 @@ public class Camera {
     }
 
     public Color renderRay(Ray ray, Scene scene, int maxBounces){
-        double tMin = Double.MAX_VALUE;
-        double t;
-        Drawable closestObject = null;
+//        double tMin = Double.MAX_VALUE;
+//        double t;
+//        Drawable closestObject = null;
+//
+//        // For each drawable object of the scene, we calculate its intersection with the ray
+//        for(Drawable obj:scene.geometry){
+//            t = obj.closestIntersectionPoint(ray);
+//            //System.out.println(t);
+//            //System.out.println(obj);
+//            if(t>0 && t<tMin){ // If we intersect and the intersection is the closest one yet, we save it
+//                tMin = t;
+//                closestObject = obj;
+//            }
+//        }
+//
+//        if (closestObject==null){
+//            return null;
+//        }
+        // Debug
 
-        // For each drawable object of the scene, we calculate its intersection with the ray
-        for(Drawable obj:scene.geometry){
-            t = obj.closestIntersectionPoint(ray);
-            //System.out.println(t);
-            //System.out.println(obj);
-            if(t>0 && t<tMin){ // If we intersect and the intersection is the closest one yet, we save it
-                tMin = t;
-                closestObject = obj;
-            }
-        }
+        Object[] intersect = getIntersection(scene, ray);
+
+        double tMin = (double) intersect[0];
+        Drawable closestObject = (Drawable) intersect[1];
 
         if (closestObject==null){
             return null;
         }
-        // Debug
 
         Vector3d intersection = ray.at(tMin);
         Vector3d normalGeometry = closestObject.normal(intersection);
@@ -106,18 +116,26 @@ public class Camera {
 //            System.out.println();
 //        }
 
-        if(maxBounces!=0 && closestObject.isReflective){ // If the object is reflective, we bounce it off geometry and render the new ray
+        if(maxBounces>0 && closestObject.isReflective){ // If the object is reflective, we bounce it off geometry and render the new ray
+//            Color refelctedColor = renderRay(ray.bounce(intersection, normalGeometry), scene, maxBounces-1);
+//            double rColor = (refelctedColor.getRed()+closestObject.color.getRed())/2.;
+//            double gColor = (refelctedColor.getGreen()+closestObject.color.getGreen())/2.;
+//            double bColor = (refelctedColor.getBlue()+closestObject.color.getBlue())/2.;
+//            return new Color((int) rColor, (int) gColor, (int) bColor);
             return renderRay(ray.bounce(intersection, normalGeometry), scene, maxBounces-1);
         } else {
 
             Vector3d toLight = scene.light.sub(intersection);
+            double lightDistance = toLight.norm();
             Ray toLightRay = new Ray(intersection, toLight);
-            if(maxBounces!=0 && renderRay(toLightRay, scene, 0)==null){  // If we are in the shadow of an object, we render black
-                return Color.black;
+            Object[] toLightIntersection = getIntersection(scene, toLightRay);
+            double angle = normalGeometry.angle(toLight);
+            if((double) toLightIntersection[0] <= lightDistance){  // If we are in the shadow of an object, we render black
+                angle = 2*Math.PI/6;
+                //return Color.red;
             }
 
             // We get the color of a point based on the color of the object and the angle of the surface to the light
-            double angle = normalGeometry.angle(toLight);
             double rColor = Math.max(closestObject.color.getRed() * Math.cos(angle), 0);
             double gColor = Math.max(closestObject.color.getGreen() * Math.cos(angle), 0);
             double bColor = Math.max(closestObject.color.getBlue() * Math.cos(angle), 0);
@@ -126,6 +144,24 @@ public class Camera {
         }
 
 
+    }
+
+    public Object[] getIntersection(Scene scene, Ray ray){
+        double tMin = Double.MAX_VALUE;
+        double t;
+        Drawable closestObject = null;
+
+        // For each drawable object of the scene, we calculate its intersection with the ray
+        for(Drawable obj:scene.geometry){
+            t = obj.closestIntersectionPoint(ray);
+            //System.out.println(t);
+            //System.out.println(obj);
+            if(t>0.0001 && t<tMin){ // If we intersect and the intersection is the closest one yet, we save it
+                tMin = t;
+                closestObject = obj;
+            }
+        }
+        return new Object[]{tMin, closestObject};
     }
 
     // Getters and Setters
