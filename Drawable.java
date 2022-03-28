@@ -1,8 +1,7 @@
 import java.awt.Color;
 
 public abstract class Drawable {
-    boolean isReflective;
-    Color color;
+    Material material;
     //abstract boolean intersects(Ray ray);
     abstract double closestIntersectionPoint(Ray ray);
     abstract Vector3d normal(Vector3d point);

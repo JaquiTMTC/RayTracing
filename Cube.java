@@ -12,14 +12,13 @@ public class Cube extends Drawable {
     private LinkedList <Vector3d> interBons; // Liste où l'on stocke les intersections du rayon avec les plans du cube
     private LinkedList <Plane> listPlans;  // Liste des 6 plans constitants le cube
 
-    public Cube(int _largeur, int _hauteur, int _profondeur, Vector3d _center, boolean _isReflective, Color _color) {
+    public Cube(int _largeur, int _hauteur, int _profondeur, Vector3d _center, Material material) {
 
         largeur = _largeur;
         hauteur = _hauteur;
         profondeur = _profondeur;
         center = _center;
-        isReflective = _isReflective;
-        color = _color;
+        this.material = material;
     }
     public Cube(LinkedList _interBons, LinkedList _listPlans) {
 
@@ -30,22 +29,22 @@ public class Cube extends Drawable {
         Vector3d centrePlans; // Variable pour stocker le centre des plans, pour alléger les expressions
 
         centrePlans = (center.add(new Vector3d (profondeur/2, 0, 0)));  // On centre les plans selon les 3 directions x, y et z
-        listPlans.add(new Plane(new Vector3d(1, 0, 0), centrePlans, color, isReflective ));
+        listPlans.add(new Plane(new Vector3d(1, 0, 0), centrePlans, material));
 
         centrePlans = (center.add(new Vector3d (-profondeur/2, 0, 0)));
-        listPlans.add(new Plane(new Vector3d(-1, 0, 0), centrePlans, color, isReflective ));
+        listPlans.add(new Plane(new Vector3d(-1, 0, 0), centrePlans, material));
 
         centrePlans = (center.add(new Vector3d (0, largeur/2, 0)));
-        listPlans.add(new Plane (new Vector3d(0, 1, 0), centrePlans, color, isReflective));
+        listPlans.add(new Plane (new Vector3d(0, 1, 0), centrePlans, material));
 
         centrePlans = (center.add(new Vector3d (0, -largeur/2, 0)));
-        listPlans.add(new Plane (new Vector3d(0, -1, 0), centrePlans, color, isReflective));
+        listPlans.add(new Plane (new Vector3d(0, -1, 0), centrePlans, material));
 
         centrePlans = (center.add(new Vector3d (0, 0, hauteur/2)));
-         listPlans.add(new Plane(new Vector3d (0, 0, 1), centrePlans, color, isReflective));
+         listPlans.add(new Plane(new Vector3d (0, 0, 1), centrePlans, material));
 
         centrePlans = (center.add(new Vector3d (0, 0, -hauteur/2)));
-        listPlans.add(new Plane (new Vector3d(0, 0, -1), centrePlans, color, isReflective));
+        listPlans.add(new Plane (new Vector3d(0, 0, -1), centrePlans, material));
     }
 
     double closestIntersectionPoint(Ray ray) {

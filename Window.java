@@ -26,24 +26,32 @@ public class Window extends JPanel implements ActionListener {
 
         // Initializing scene
 
-        int width = 1280;
+        int width = 720;
         int height = 720;
 
         BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
         Camera camera = new Camera(new Vector3d(Math.cos(theta), Math.sin(theta), 0), new Vector3d(1, 0, Math.sin(theta)/10), width, height, Math.PI/2);
 
-        Drawable[] geometry = {
-                new Sphere(new Vector3d(4, 0, 0), 1.5, Color.BLUE, false),
-                new Sphere(new Vector3d(-0.5, 0.2, 0.2), 0.1, Color.YELLOW, true),
-                new Sphere(new Vector3d(0.5, -0.2, 0.2), 0.1, Color.green, true),
+        // Materials
+        Metal silver = new Metal(Color.black);
+        Diffuse white = new Diffuse(Color.white);
+        Diffuse red = new Diffuse(Color.red);
+        Diffuse blue = new Diffuse(Color.blue);
+        Diffuse green = new Diffuse(Color.green);
 
-                new Plane(new Vector3d(0, 1, 0), new Vector3d(0, -3, 0 ), Color.white, false),
-                new Plane(new Vector3d(0, -1, 0), new Vector3d(0, 3, 0 ), Color.green, false),
-                new Plane(new Vector3d(-1, 0, 0), new Vector3d(5, 0, 0), Color.orange, false),
-                new Plane(new Vector3d(0, 0, -1), new Vector3d(0, 0, 3), Color.cyan, false),
-                new Plane(new Vector3d(0, 0, 1), new Vector3d(0, 0, -3), Color.magenta, false),
-                new Plane(new Vector3d(1, 0, 0), new Vector3d(-5, 0, 0), Color.pink, false)
+        Drawable[] geometry = {
+
+                new Sphere(new Vector3d(4, 0, 0), 1.5, blue),
+                new Sphere(new Vector3d(-0.5, 0.2, 0.2), 0.1, silver),
+                new Sphere(new Vector3d(0.5, -0.2, 0.2), 0.1, silver),
+
+                new Plane(new Vector3d(0, 1, 0), new Vector3d(0, -3, 0 ), red),
+                new Plane(new Vector3d(0, -1, 0), new Vector3d(0, 3, 0 ), green),
+                new Plane(new Vector3d(-1, 0, 0), new Vector3d(5, 0, 0), white),
+                new Plane(new Vector3d(0, 0, -1), new Vector3d(0, 0, 3), white),
+                new Plane(new Vector3d(0, 0, 1), new Vector3d(0, 0, -3), white),
+                new Plane(new Vector3d(1, 0, 0), new Vector3d(-5, 0, 0), white),
 
         };
 
@@ -77,7 +85,7 @@ public class Window extends JPanel implements ActionListener {
         frame.getContentPane().add(window);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1280, 720);
+        frame.setSize(720, 720);
         frame.setVisible(true);
 
         Timer timer = new Timer(10, window);
