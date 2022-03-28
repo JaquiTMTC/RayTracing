@@ -17,6 +17,7 @@ public class Fenetre extends JFrame implements ActionListener{ // besoin de bout
     JButton effRendu = new JButton ("Effacer le rendu");
     JPanel panelEtape2 = new JPanel();
     JButton testAffichage = new JButton("Test affichage");
+    JLabel testRendu = new JLabel(" ");
 
     // constructeur
     public Fenetre(String nom, int w, int h) {
@@ -127,10 +128,7 @@ public class Fenetre extends JFrame implements ActionListener{ // besoin de bout
         JLabel labelVide = new JLabel ("Future zone de rendu                                        ////");
         panelZoneAffichage.add(labelVide);
 
-        JPanel panelVide = new JPanel();
-        panelVide.setBackground(Color.darkGray);
-        panelVide.setSize(500,400);
-        panelZoneAffichage.add(panelVide);
+        panelZoneAffichage.add(testRendu);
 
         panelZoneAffichage.setBackground(Color.gray);
         panelGlobal.add(panelZoneAffichage,cons);
@@ -154,7 +152,7 @@ public class Fenetre extends JFrame implements ActionListener{ // besoin de bout
         }
         if(e.getSource()==testAffichage){
             System.out.println("Bouton test affichage cliqué");
-            JFrame frame = new JFrame();
+            /*JFrame frame = new JFrame();
             Window window = new Window(0);
             frame.getContentPane().add(window);
 
@@ -164,10 +162,15 @@ public class Fenetre extends JFrame implements ActionListener{ // besoin de bout
 
             Timer timer = new Timer(10, window);
             //timer.start();
+
+             */
+            testRendu= new JLabel(new ImageIcon("./Images/marmotte.jpeg"));
         }
+
 
     }
     public static void main (String[]args){ Fenetre f = new Fenetre(" IHM", 1000, 500);
+
     }
 }
 // A faire: reduire espace entre les listes deroulantes

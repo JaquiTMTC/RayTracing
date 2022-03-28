@@ -26,12 +26,12 @@ public class Window extends JPanel implements ActionListener {
 
         // Initializing scene
 
-        int width = 1280;
+        int width = 720;
         int height = 720;
 
-        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        //BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
-        Camera camera = new Camera(new Vector3d(Math.cos(theta), Math.sin(theta), 0), new Vector3d(1, 0, Math.sin(theta)/10), width, height, Math.PI/2);
+        Camera camera = new Camera(new Vector3d(0, 0, 0), new Vector3d(1, 0, 0), width, height, Math.PI/2);
 
         Drawable[] geometry = {
                 new Sphere(new Vector3d(4, 0, 0), 1.5, Color.BLUE, false),
@@ -56,14 +56,16 @@ public class Window extends JPanel implements ActionListener {
 
 
         // For each pixel, calculate its color and insert it in the image
-        for(int y=0; y<height; y++){
+        /*for(int y=0; y<height; y++){
             for(int x=0; x<width; x++){
                 Color color = camera.renderPixel(x, y, scene);
                 bufferedImage.setRGB(x, y, color.getRGB());
             }
         }
+        */
 
-        return bufferedImage;
+
+        return camera.renderImage(scene, 10);
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -77,11 +79,11 @@ public class Window extends JPanel implements ActionListener {
         frame.getContentPane().add(window);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1280, 720);
+        frame.setSize(720, 720);
         frame.setVisible(true);
 
         Timer timer = new Timer(10, window);
-        timer.start();
+        //timer.start();
 
     }
 }
