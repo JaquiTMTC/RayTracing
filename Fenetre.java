@@ -16,6 +16,7 @@ public class Fenetre extends JFrame implements ActionListener{ // besoin de bout
     JButton etapeSuiv = new JButton("Passer étape suivante");
     JButton effRendu = new JButton ("Effacer le rendu");
     JPanel panelEtape2 = new JPanel();
+    JButton testAffichage = new JButton("Test affichage");
 
     // constructeur
     public Fenetre(String nom, int w, int h) {
@@ -37,11 +38,12 @@ public class Fenetre extends JFrame implements ActionListener{ // besoin de bout
         //cons.anchor= GridBagConstraints.PAGE_START;
         cons.gridx=0;
         cons.gridy=0;
+        cons.weightx=25;
         panelMenu.setLayout(new GridBagLayout());
         panelMenu.setBackground(Color.orange);
         panelGlobal.add(panelMenu,cons);
 
-        JLabel labelMenu = new JLabel ("Menu");
+        JLabel labelMenu = new JLabel ("-------------Menu---------------");
         GridBagConstraints co = new GridBagConstraints();
         co.fill = GridBagConstraints.CENTER;
         co.ipady = 20;
@@ -49,9 +51,10 @@ public class Fenetre extends JFrame implements ActionListener{ // besoin de bout
 
         JPanel panelBoutons = new JPanel();
         cons.fill=GridBagConstraints.HORIZONTAL;
-        cons.gridx=1;
+        cons.gridx=0;
         cons.gridy=1;
-        cons.gridwidth=2;
+        //cons.gridwidth=2;
+        cons.weightx=25;
         panelBoutons.setVisible(true);
         panelBoutons.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -103,11 +106,35 @@ public class Fenetre extends JFrame implements ActionListener{ // besoin de bout
 
         panelEtape2.setVisible(true);
         cons.fill=GridBagConstraints.SOUTH;
-        cons.gridx=1;
+        cons.gridx=0;
         cons.gridy=2;
+        cons.weightx=25;
         panelEtape2.setBackground(Color.red);
         panelEtape2.add(new JLabel("Coucou, c'est étape 2"));
+        testAffichage.addActionListener(this);
+        panelEtape2.add(testAffichage);
         panelGlobal.add(panelEtape2,cons);
+
+        JPanel panelZoneAffichage=new JPanel();
+        //cons.fill=;
+        cons.gridx=4;
+        cons.gridy=0;
+        cons.gridwidth=4; // largeur
+        cons.gridheight=4; // hauteur
+        cons.weightx=75;
+        panelZoneAffichage.setVisible(true);
+
+        JLabel labelVide = new JLabel ("Future zone de rendu                                        ////");
+        panelZoneAffichage.add(labelVide);
+
+        JPanel panelVide = new JPanel();
+        panelVide.setBackground(Color.darkGray);
+        panelVide.setSize(500,400);
+        panelZoneAffichage.add(panelVide);
+
+        panelZoneAffichage.setBackground(Color.gray);
+        panelGlobal.add(panelZoneAffichage,cons);
+
 
         add(panelGlobal);
         this.setVisible(true);
@@ -125,10 +152,22 @@ public class Fenetre extends JFrame implements ActionListener{ // besoin de bout
             System.out.println("Sphère sélectionnée");
             //panelEtape2.setVisible(true);
         }
+        if(e.getSource()==testAffichage){
+            System.out.println("Bouton test affichage cliqué");
+            JFrame frame = new JFrame();
+            Window window = new Window(0);
+            frame.getContentPane().add(window);
+
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(720, 720);
+            frame.setVisible(true);
+
+            Timer timer = new Timer(10, window);
+            //timer.start();
+        }
 
     }
-    public static void main (String[]args){
-        Fenetre f = new Fenetre(" IHM", 1000, 500);
+    public static void main (String[]args){ Fenetre f = new Fenetre(" IHM", 1000, 500);
     }
 }
 // A faire: reduire espace entre les listes deroulantes
