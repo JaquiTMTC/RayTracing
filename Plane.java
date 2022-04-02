@@ -5,12 +5,11 @@ public class Plane extends Drawable{
     private Vector3d normal;
     private Vector3d center;
 
-    public Plane(Vector3d _normal, Vector3d _center, Color _color, boolean _isReflective){
+    public Plane(Vector3d _normal, Vector3d _center, Material material){
 
         normal = new Vector3d(_normal);
         center = new Vector3d(_center);
-        color = _color;
-        isReflective = _isReflective;
+        this.material = material;
     }
 
     /**
@@ -29,7 +28,7 @@ public class Plane extends Drawable{
     }
 
     Drawable copy() {
-        return new Plane(normal, center, color, isReflective);
+        return new Plane(normal, center, material);
     }
 
     public boolean equals(Object o) {
@@ -41,8 +40,7 @@ public class Plane extends Drawable{
 
     public String toString() {
         return "Plane{" +
-                "isReflective=" + isReflective +
-                ", color=" + color +
+                "material=" + material +
                 ", normal=" + normal +
                 ", center=" + center +
                 '}';

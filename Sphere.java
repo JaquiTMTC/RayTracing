@@ -13,14 +13,13 @@ public class Sphere extends Drawable {
      * Initializes a new Sphere object with the given parameters.
      * @param _center the center of the sphere
      * @param _radius the radius of the sphere
-     * @param _color the color of the sphere
+     * @param material the material of the sphere
      */
-    public Sphere(Vector3d _center, double _radius, Color _color, boolean _isReflective){
+    public Sphere(Vector3d _center, double _radius, Material material){
         center = new Vector3d(_center);
         radius = _radius;
         rSq = Math.pow(radius, 2);
-        color = _color;
-        isReflective = _isReflective;
+        this.material = material;
     }
 
 //    public boolean intersects(Ray ray) {
@@ -80,7 +79,7 @@ public class Sphere extends Drawable {
     }
 
     public Sphere copy() {
-        return new Sphere(center, radius, color, isReflective);
+        return new Sphere(center, radius, material);
     }
 
     public String toString() {
