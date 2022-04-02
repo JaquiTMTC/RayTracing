@@ -1,4 +1,6 @@
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 
 public class Camera {
     protected Vector3d normal;
@@ -91,7 +93,6 @@ public class Camera {
         } else {
             return closestObject.material.getColor(intersection, normalGeometry, scene, this);
         }
-
     }
 
     public Object[] getIntersection(Scene scene, Ray ray){
@@ -109,6 +110,21 @@ public class Camera {
         }
         return new Object[]{tMin, closestObject};
     }
+
+    public Image renderImage ( Scene scene, int maxBounces) {
+        BufferedImage imageRendu = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        for(int y=0; y<height; y++){
+            for(int x=0; x<width; x++){
+                Color color = this.renderPixel(x, y, scene);
+               imageRendu.setRGB(x, y, color.getRGB());
+            }
+        }
+
+
+        return imageRendu ;
+
+    }
+
 
     // Getters and Setters
 
