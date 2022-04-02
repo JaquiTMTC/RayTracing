@@ -13,7 +13,7 @@ public class Cube extends Drawable {
 
     private LinkedList <Plane> listPlans;  // Liste des 6 plans constituants le cube
 
-    public Cube(double _largeur, double _hauteur, double _profondeur, Vector3d _center, boolean _isReflective, Color _color) {
+    public Cube(double _largeur, double _hauteur, double _profondeur, Vector3d _center, Material material) {
         listPlans = new LinkedList<Plane>();
         interBons = new LinkedList<Vector3d>();
         largeur = _largeur;
@@ -86,7 +86,7 @@ public class Cube extends Drawable {
 
     Drawable copy() {
 
-        return new Cube(largeur, hauteur, profondeur, center, isReflective, color);
+        return new Cube(largeur, hauteur, profondeur, center, material);
     }
 
     /*public boolean equals(Object o) {
