@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.Color;
 import java.awt.event.*;
 import java.awt.*;
+import java.awt.Font;
 import java.awt.FlowLayout;
 
 public class Fenetre extends JFrame implements ActionListener{ // besoin de boutons pour le menu, le choix de la scène
@@ -18,6 +19,7 @@ public class Fenetre extends JFrame implements ActionListener{ // besoin de bout
     JPanel panelEtape2 = new JPanel();
     JButton testAffichage = new JButton("Test affichage");
     JLabel testRendu = new JLabel(" ");
+   // Window window ;
 
     // constructeur
     public Fenetre(String nom, int w, int h) {
@@ -126,13 +128,17 @@ public class Fenetre extends JFrame implements ActionListener{ // besoin de bout
         panelZoneAffichage.setVisible(true);
 
         JLabel labelVide = new JLabel ("Future zone de rendu                                        ////");
+        // Test de modif de police de caractère
+        Font police = new Font(" Times New Roman ",Font.BOLD,18);
+        labelVide.setFont(police);
+        //labelVide.setText(" RENDU");
         panelZoneAffichage.add(labelVide);
 
         panelZoneAffichage.add(testRendu);
 
         panelZoneAffichage.setBackground(Color.gray);
         panelGlobal.add(panelZoneAffichage,cons);
-
+        //window = new Window(0);: test pour lier IHM/Rendu en mettant window en para
 
         add(panelGlobal);
         this.setVisible(true);
@@ -164,7 +170,10 @@ public class Fenetre extends JFrame implements ActionListener{ // besoin de bout
             //timer.start();
 
              */
-            testRendu= new JLabel(new ImageIcon("./Images/marmotte.jpeg"));
+            //testRendu= new JLabel(new ImageIcon("./Images/marmotte.jpeg"));
+            JLabel testRendu = new JLabel() ;
+            panelEtape2.add(testRendu);
+            testRendu.setVisible(true);
         }
 
 
