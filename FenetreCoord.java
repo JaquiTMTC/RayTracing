@@ -15,7 +15,7 @@ public class FenetreCoord extends JFrame{
     // declaration des boutons en attribut qui seront utilises dans le ActionPerformed
     JComboBox listeVolume=new JComboBox();
     JComboBox listeMatieres=new JComboBox();
-    JButton etapeSuiv = new JButton("Passer étape suivante");
+    JButton etapeSuiv1 = new JButton("Passer étape suivante");
     JButton effRendu = new JButton ("Effacer le rendu");
     JPanel panelEtape2 = new JPanel();
     JButton testAffichage = new JButton("Test affichage");
@@ -34,43 +34,72 @@ public class FenetreCoord extends JFrame{
         JPanel panelGlobal = new JPanel();
         panelGlobal.setBounds(0,0, this.width, this.height); // panneau qui englobe tt la fenetre
         panelGlobal.setBackground(Color.blue);
+        panelGlobal.setLayout(null);
 
         JPanel panelMenu = new JPanel();
-
-        panelMenu.setBackground(Color.orange);
+        panelMenu.setBounds(0,0, 300, 50);
         panelMenu.setLayout(null);
-        panelMenu.setBounds(0, 0, 300, 50);
+        panelMenu.setBackground(Color.orange);
+
+
+        JLabel labelMenu = new JLabel ("Menu");
+        labelMenu.setBounds(125, 10, 50, 20 );
+        panelMenu.add(labelMenu);
         panelGlobal.add(panelMenu);
 
-        JLabel labelMenu = new JLabel ("-------------Menu---------------");
-        labelMenu.setBounds(125, 25, 20, 20 );
-        panelMenu.add(labelMenu);
-/*
-        JPanel panelBoutons = new JPanel();
-        panelBoutons.setVisible(true);
-        panelBoutons.setBackground(Color.yellow);
-        panelGlobal.add(panelBoutons);
+        //PANEL GLOBAL DES ETAPES
+        JPanel panelEtapes = new JPanel();
+        panelEtapes.setVisible(true);
+        panelEtapes.setBackground(Color.yellow);
+        panelEtapes.setLayout(null);
+        panelEtapes.setBounds(0,50,300, 450);
+        panelGlobal.add(panelEtapes);
 
+        // Panel etape 1
+        JPanel panelEtape1 = new JPanel();
+        panelEtape1.setVisible(true);
+        panelEtape1.setLayout(null);
+        panelEtape1.setBounds(0,0,300, 150);
+        panelEtape1.setBackground(Color.red);
+        // Listes deroulantes Etape 1
+        listeVolume.setBounds(10, 10, 200, 30);
         listeVolume.addItem("--Choix volume--");
         listeVolume.addItem("Sphère");
         listeVolume.addItem("Cube");
         listeVolume.addItem("Cylindre");
-        listeVolume.addActionListener(this);
-        panelBoutons.add(listeVolume);
-
-
-
+        //listeVolume.addActionListener(this);
+        listeMatieres.setBounds(10, 45, 200, 30);
         listeMatieres.addItem("--Choix matière--");
         listeMatieres.addItem("Bois");
-        panelBoutons.add(listeMatieres);
+        //listeMatieres.addActionListener(this);
 
-        etapeSuiv.setBackground(Color.green);
+        etapeSuiv1.setBounds(10, 90, 200, 30);
+        etapeSuiv1.setBackground(Color.green);
+        //etapeSuiv1.addActionListener(this);
+
+        panelEtape1.add(listeVolume);
+        panelEtape1.add(listeMatieres);
+        panelEtape1.add(etapeSuiv1);
+        panelEtapes.add(panelEtape1);
+        // Panel Etape2
+        JPanel panelEtape2 = new JPanel();
+        panelEtape2.setVisible(true);
+        panelEtape2.setLayout(null);
+        panelEtape2.setBounds(0,150,300, 150);
+        panelEtape2.setBackground(Color.cyan);
+
+        panelEtapes.add(panelEtape2);
+        // Bu=utons d'etape2
+
+
+/*
+etapeSuiv.setBackground(Color.green);
         etapeSuiv.addActionListener(this);
-        panelBoutons.add(etapeSuiv);
+        panelEtape1.add(etapeSuiv);
 
         effRendu.setBackground(Color.red);
         effRendu.addActionListener(this);
-        panelBoutons.add(effRendu);
+        panelEtape1.add(effRendu);
 
         panelEtape2.setVisible(true);
         panelEtape2.setBackground(Color.red);
@@ -136,7 +165,7 @@ public class FenetreCoord extends JFrame{
 
 
     //}
-    public static void main (String[]args){ Fenetre f = new Fenetre(" IHM", 1000, 500);
+    public static void main (String[]args){ FenetreCoord f = new FenetreCoord(" IHM", 1000, 535);
 
     }
 }
