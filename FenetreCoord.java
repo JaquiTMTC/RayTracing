@@ -5,10 +5,11 @@ import java.awt.Color;
 import java.awt.event.*;
 import java.awt.*;
 import java.awt.Font;
-import java.awt.FlowLayout;
 
-public class Fenetre extends JFrame implements ActionListener{ // besoin de boutons pour le menu, le choix de la scène
-// taille fenêtre et attributs
+
+//public class FenetreCoord extends JFrame implements ActionListener{ // besoin de boutons pour le menu, le choix de la scène
+public class FenetreCoord extends JFrame{
+    // taille fenêtre et attributs
     int width;
     int height;
     // declaration des boutons en attribut qui seront utilises dans le ActionPerformed
@@ -19,10 +20,10 @@ public class Fenetre extends JFrame implements ActionListener{ // besoin de bout
     JPanel panelEtape2 = new JPanel();
     JButton testAffichage = new JButton("Test affichage");
     JLabel testRendu = new JLabel(" ");
-   // Window window ;
+    // Window window ;
 
     // constructeur
-    public Fenetre(String nom, int w, int h) {
+    public FenetreCoord(String nom, int w, int h) {
         super(nom);
         this.width= w;
         this.height= h;
@@ -31,102 +32,56 @@ public class Fenetre extends JFrame implements ActionListener{ // besoin de bout
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // panel
         JPanel panelGlobal = new JPanel();
-        panelGlobal.setLayout(new GridBagLayout());
-        GridBagConstraints cons = new GridBagConstraints();
         panelGlobal.setBounds(0,0, this.width, this.height); // panneau qui englobe tt la fenetre
         panelGlobal.setBackground(Color.blue);
 
         JPanel panelMenu = new JPanel();
-        cons.fill=GridBagConstraints.PAGE_START;
-        //cons.anchor= GridBagConstraints.PAGE_START;
-        cons.gridx=0;
-        cons.gridy=0;
-        cons.weightx=25;
-        panelMenu.setLayout(new GridBagLayout());
+
         panelMenu.setBackground(Color.orange);
-        panelGlobal.add(panelMenu,cons);
+        panelMenu.setLayout(null);
+        panelMenu.setBounds(0, 0, 300, 50);
+        panelGlobal.add(panelMenu);
 
         JLabel labelMenu = new JLabel ("-------------Menu---------------");
-        GridBagConstraints co = new GridBagConstraints();
-        co.fill = GridBagConstraints.CENTER;
-        co.ipady = 20;
-        panelMenu.add(labelMenu, co);
-
+        labelMenu.setBounds(125, 25, 20, 20 );
+        panelMenu.add(labelMenu);
+/*
         JPanel panelBoutons = new JPanel();
-        cons.fill=GridBagConstraints.HORIZONTAL;
-        cons.gridx=0;
-        cons.gridy=1;
-        //cons.gridwidth=2;
-        cons.weightx=25;
         panelBoutons.setVisible(true);
-        panelBoutons.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
         panelBoutons.setBackground(Color.yellow);
-        panelGlobal.add(panelBoutons,cons);
+        panelGlobal.add(panelBoutons);
 
         listeVolume.addItem("--Choix volume--");
         listeVolume.addItem("Sphère");
         listeVolume.addItem("Cube");
         listeVolume.addItem("Cylindre");
         listeVolume.addActionListener(this);
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx= 1; // place la case contenant listeVolume en x=1 (x=0, y=0: coin à gauche de l'objet)
-        c.gridy= 1;
-        c.gridwidth = 2;
-        c.ipady=30;
-        c.insets=new Insets(10,10,10,10);
-        panelBoutons.add(listeVolume, c);
+        panelBoutons.add(listeVolume);
 
-        // par défaut: Constraints en CENTER
+
 
         listeMatieres.addItem("--Choix matière--");
         listeMatieres.addItem("Bois");
-        c.anchor= GridBagConstraints.FIRST_LINE_START; // position a interieur de la case de la liste deroulante
-        c.fill = GridBagConstraints.HORIZONTAL; // important de mettre ces lignes après creation ComboBox en question
-        c.gridx= 1;
-        c.gridy= 2;
-        c.weighty= 1.0; // gere espace entre les menus deroulants
-        c.gridwidth = 2; // nb de colonnes que prend le composant de long (long= selon x)
-        c.ipady = 30; // augmente largeur de la liste déroulante (largeur= selon y)
-        c.insets=new Insets(10,10,10,10);
-        panelBoutons.add(listeMatieres, c);
+        panelBoutons.add(listeMatieres);
 
         etapeSuiv.setBackground(Color.green);
         etapeSuiv.addActionListener(this);
-        c.fill=GridBagConstraints.HORIZONTAL;
-        c.gridx= 1;
-        c.gridy= 3;
-        c.insets=new Insets(10,10,10,10);
-        panelBoutons.add(etapeSuiv, c);
+        panelBoutons.add(etapeSuiv);
 
         effRendu.setBackground(Color.red);
         effRendu.addActionListener(this);
-        c.fill=GridBagConstraints.HORIZONTAL;
-        c.gridx= 1;
-        c.gridy= 4;
-        c.insets=new Insets(10,10,10,10);
-        panelBoutons.add(effRendu, c);
+        panelBoutons.add(effRendu);
 
         panelEtape2.setVisible(true);
-        cons.fill=GridBagConstraints.SOUTH;
-        cons.gridx=0;
-        cons.gridy=2;
-        cons.weightx=25;
-        cons.weighty= 30;
         panelEtape2.setBackground(Color.red);
         panelEtape2.add(new JLabel("Coucou, c'est étape 2"));
         testAffichage.addActionListener(this);
         panelEtape2.add(testAffichage);
-        panelGlobal.add(panelEtape2,cons);
+        panelGlobal.add(panelEtape2);
 
         JPanel panelZoneAffichage=new JPanel();
         panelZoneAffichage.setBounds(200, 0, 300, 300);
         //cons.fill=;
-        cons.gridx=4;
-        cons.gridy=0;
-        cons.gridwidth=4; // largeur
-        cons.gridheight=4; // hauteur
-        cons.weightx=75;
         panelZoneAffichage.setVisible(true);
 
         JLabel labelVide = new JLabel ("Future zone de rendu                                        ////");
@@ -139,14 +94,15 @@ public class Fenetre extends JFrame implements ActionListener{ // besoin de bout
         panelZoneAffichage.add(testRendu);
 
         panelZoneAffichage.setBackground(Color.gray);
-        panelGlobal.add(panelZoneAffichage,cons);
+        panelGlobal.add(panelZoneAffichage);
         //window = new Window(0);: test pour lier IHM/Rendu en mettant window en para
+*/
 
         add(panelGlobal);
         this.setVisible(true);
     }
 
-    public void actionPerformed(ActionEvent e) {
+   /* public void actionPerformed(ActionEvent e) {
         System.out.println("Clic");
         if(e.getSource()==etapeSuiv){
             System.out.println("Etape suivante");
@@ -171,16 +127,19 @@ public class Fenetre extends JFrame implements ActionListener{ // besoin de bout
             Timer timer = new Timer(10, window);
             //timer.start();
 
-             */
+
             JLabel testRendu= new JLabel(new ImageIcon("./Crepe2.png"));
             //panelZoneAffichage.add(testRendu);
             testRendu.setVisible(true);
         }
+        */
 
 
-    }
+    //}
     public static void main (String[]args){ Fenetre f = new Fenetre(" IHM", 1000, 500);
 
     }
 }
-// A faire: reduire espace entre les listes deroulantes
+
+
+
