@@ -70,7 +70,7 @@ public class Camera {
         Ray ray = createRay(x, y);
         //System.out.println(x+" "+y);
         Color returnColor = renderRay(ray, scene, 5);
-        returnColor = ((returnColor==null) ? Color.RED : returnColor);
+        returnColor = ((returnColor==null) ? Color.red : returnColor);
         return (returnColor);
     }
 
@@ -111,7 +111,7 @@ public class Camera {
         return new Object[]{tMin, closestObject};
     }
 
-    public Image renderImage ( Scene scene, int maxBounces) {
+    public Image renderImage (Scene scene, int maxBounces) {
         BufferedImage imageRendu = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         for(int y=0; y<height; y++){
             for(int x=0; x<width; x++){
@@ -119,10 +119,7 @@ public class Camera {
                imageRendu.setRGB(x, y, color.getRGB());
             }
         }
-
-
         return imageRendu ;
-
     }
 
 
