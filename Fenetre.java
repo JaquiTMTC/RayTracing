@@ -142,6 +142,7 @@ public class Fenetre extends JFrame implements ActionListener{ // besoin de bout
         panelGlobal.add(panelZoneAffichage,cons);
         //window = new Window(0);: test pour lier IHM/Rendu en mettant window en para
 
+
         add(panelGlobal);
         this.setVisible(true);
     }
