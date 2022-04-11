@@ -144,7 +144,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
         ImageIcon renduIcon = new ImageIcon(laCamera.renderImage(laScene,10));
 
         JLabel labelIm = new JLabel(renduIcon);
-        labelIm.setLocation(0,0);
+        labelIm.setLocation(0,-5);
         labelIm.setSize(300,535);
         panelZoneAffichage.add(labelIm);
 
@@ -188,14 +188,21 @@ public class FenetreCoord extends JFrame implements ActionListener{
         }
 
     }
-
-
         public static void main (String[]args){
             FenetreCoord f = new FenetreCoord(" IHM", 1000, 535);
 
         }
-
 }
 
 
-
+// TO DO :
+// ptit pbm du bandeau gris en haut
+// faire la version par défaut --> 1 cam / défaut + 1 scene par defaut
+// créer les listes qui se remplissent avec les demandes de l'utilisateur
+// esthétique : rendre l'interface sympa
+//      placement
+//      couleurs
+// faire la fenêtre de bienvenue / intro / explications
+// faire la fenêtre d'au revoir
+// nettoyage du code
+// commentaires
