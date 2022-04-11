@@ -19,8 +19,10 @@ public class FenetreCoord extends JFrame implements ActionListener{
     JButton effRendu = new JButton("Effacer le rendu");
     JButton sortie = new JButton(" Sortie du programme");
     JPanel panelEtape2 = new JPanel();
-    JButton testAffichage = new JButton("Test affichage");
+    JButton testAffichage = new JButton("Test");
     JLabel testRendu = new JLabel(" ");
+    Icon cub = new ImageIcon("spheregrise.png");
+    JButton testAFF= new JButton(cub);
     // Window window ;
 
     // constructeur
@@ -119,12 +121,25 @@ public class FenetreCoord extends JFrame implements ActionListener{
         //labelVide.setText(" RENDU");
         panelZoneAffichage.add(labelVide);
 
+
+        testAFF.setBackground(Color.red);
+        testAFF.setBounds(0, 10, 200, 50);
+        panelEtape2.add(testAFF);
+        testAFF.setVisible(false);
+
         panelZoneAffichage.add(testRendu);
 
         panelZoneAffichage.setBackground(Color.gray);
         panelGlobal.add(panelZoneAffichage);
 
+
+
         //window = new Window(0);: test pour lier IHM/Rendu en mettant window en para
+        testAffichage.setBounds(0, 70, 100, 30);
+        testAffichage.addActionListener(this);
+        panelEtape2.add(testAffichage) ;
+        testAffichage.setVisible(true);
+
 
 
         add(panelGlobal);
@@ -136,13 +151,16 @@ public class FenetreCoord extends JFrame implements ActionListener{
         if (e.getSource() == etapeSuiv1) {
             System.out.println("Etape suivante");
         }
+
         if (e.getSource() == effRendu) {
             System.out.println(" Effacer");
         }
+
         if (listeVolume.getSelectedItem() == "Sphère") {
             System.out.println("Sphère sélectionnée");
             //panelEtape2.setVisible(true);
         }
+
         if (listeVolume.getSelectedItem() == "Cube") {
             System.out.println("Cube sélectionné");
             //panelEtape2.setVisible(true);
@@ -164,10 +182,17 @@ public class FenetreCoord extends JFrame implements ActionListener{
             Timer timer = new Timer(10, window);
             //timer.start();
             */
-            JLabel testAFF= new JLabel(new ImageIcon("./Crepe2.png"));
-            //panelZoneAffichage.add(testAFF);
+
+
+
             testAFF.setVisible(true);
-            panelEtape2.add(testAFF);
+            //panelZoneAffichage.add(testAFF);
+
+
+        }
+        if (e.getSource()== sortie) {
+           // exit du programme à faire
+
         }
 
     }
