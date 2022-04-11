@@ -46,27 +46,26 @@ public class Sphere extends Drawable {
      * @param ray the ray to check intersection with
      */
     public double closestIntersectionPoint(Ray ray) {
-        /*
-        * Computes the closest intersection point by using the method described at
-        * https://www.cs.colostate.edu/~cs410/yr2017fa/more_progress/pdfs/cs410_F17_Lecture10_Ray_Sphere.pdf
-        * page 10
-         */
-        //double rSq = Math.pow(radius, 2);
-        double cSq = center.sub(ray.getPos()).squared();
-        double t = center.sub(ray.getPos()).dot(ray.getDir());
-        if(t<0){
+        Vector3d toCenter = ray.pos.sub(center);
+        double a = 1;
+        double halfB = toCenter.dot(ray.dir);
+        double c = toCenter.normSq()-radius*radius;
+
+        double quarterDelta = halfB*halfB-a*c;
+        if(quarterDelta<0){
             return -1;
         }
-        Vector3d temp = ray.at(t);
-        double bSq = ray.at(t).sub(center).normSq();
-        //double bSq = ray.at(Math.sqrt(t)).sub(ray.getPos().sub(center)).normSq();
-        if (bSq>Math.pow(radius, 2)){
-            return -1;
+        double root = (-halfB-Math.sqrt(quarterDelta))/a;
+        if (root<0.0001){
+            root = (-halfB+Math.sqrt(quarterDelta))/a;
+            if(root<0.0001){
+                return -1;
+            }
         }
-        double vSq = cSq-bSq;
-        double d = Math.sqrt(rSq-(cSq-vSq));
-        //return ray.getPos().add(ray.getDir().mult(Math.sqrt(vSq)-d));
-        return Math.sqrt(vSq)-d;
+//        if(root<0){
+//            root = (-halfB+Math.sqrt(quarterDelta))/a;
+//        }
+        return root;
     }
 
     /**

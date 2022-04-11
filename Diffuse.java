@@ -11,9 +11,10 @@ public class Diffuse extends Material{
         double lightDistance = toLight.norm();
         Ray toLightRay = new Ray(pos, toLight);
         Object[] toLightIntersection = cam.getIntersection(scene, toLightRay);
-        double angle = normal.angle(toLight);
+        double angle = normal.angle(toLight)*7/8;
         if((double) toLightIntersection[0] <= lightDistance){  // If we are in the shadow of an object, we render black
-            angle = 2*Math.PI/6;
+            angle = (Math.PI/2)*7/8;
+            //angle += Math.PI/8;
             //return Color.red;
         }
 
