@@ -16,6 +16,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
     JButton effRendu = new JButton("Effacer le rendu");
     JButton sortie = new JButton(" Sortie du programme");
     JButton testAffichage = new JButton("Test");
+    JButton Defaut = new JButton();
     // panels
     JPanel panelEtape2 = new JPanel();
     JPanel panelZoneAffichage = new JPanel();
@@ -36,6 +37,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
         labelMenu.setBounds(125, 10, 50, 20);
 
         // composants etape 1
+
         listeVolume.setBounds(10, 10, 200, 30);
         listeVolume.addItem("--Choix volume--");
         listeVolume.addItem("Sphère");
@@ -87,6 +89,9 @@ public class FenetreCoord extends JFrame implements ActionListener{
         labelIm.setSize(700,500);
 
         drawableUtil=new LinkedList<Drawable>();
+
+        // Camera par defaut et geometrie par defaut : une scène, un plan, un cube
+
 
         // PANNEAUX
 
@@ -196,6 +201,10 @@ public class FenetreCoord extends JFrame implements ActionListener{
         if (e.getSource() == testAffichage) {
             System.out.println("Bouton test affichage cliqué");
         }
+        if(e.getSource()== Defaut){
+            // afficher rendu par defaut
+
+        }
 
         if (e.getSource() == effRendu) {
             System.out.println(" Effacer");
@@ -221,7 +230,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
 
 // TO DO :
 
-// faire la version par défaut --> 1 cam / défaut + 1 scene par defaut : C
+// faire la version par défaut --> 1 cam / défaut + 1 scene par defaut + si clic sur bouton version par defaut recup image: C
 // créer les listes qui se remplissent avec les demandes de l'utilisateur: A
 // esthétique : rendre l'interface sympa: pdt vacances
 //      placement

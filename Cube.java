@@ -105,6 +105,9 @@ public class Cube extends Drawable {
             return Normales;
 
         }
+        public Vector3d normal(Vector3d v){
+        return null;
+        }
 
         public void Plan (Vector3d point) {
 
