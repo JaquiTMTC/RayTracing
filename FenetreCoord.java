@@ -12,11 +12,13 @@ public class FenetreCoord extends JFrame implements ActionListener{
     JComboBox listeVolume = new JComboBox();
     JComboBox listeMatieres = new JComboBox();
     // boutons
+    JButton accueil = new JButton("A propos");
     JButton etapeSuiv1 = new JButton("Passer étape suivante");
     JButton effRendu = new JButton("Effacer le rendu");
     JButton sortie = new JButton(" Sortie du programme");
     JButton testAffichage = new JButton("Test");
-    JButton Defaut = new JButton();
+    JButton Defaut = new JButton(" Afficher le rendu par défaut");
+    JLabel lDefaut = new JLabel();
     // panels
     JPanel panelEtape2 = new JPanel();
     JPanel panelZoneAffichage = new JPanel();
@@ -34,26 +36,34 @@ public class FenetreCoord extends JFrame implements ActionListener{
 
         // composants menu
         JLabel labelMenu = new JLabel("Menu");
-        labelMenu.setBounds(125, 10, 50, 20);
+        labelMenu.setBounds(20, 10, 50, 20);
+        accueil.setBounds(90, 10, 100, 30);
+        accueil.setBackground(Color.green);
+        accueil.addActionListener(this);
+
 
         // composants etape 1
 
-        listeVolume.setBounds(10, 10, 200, 30);
+        listeVolume.setBounds(10, 5, 200, 30);
         listeVolume.addItem("--Choix volume--");
         listeVolume.addItem("Sphère");
         listeVolume.addItem("Cube");
         //listeVolume.addItem("Cylindre");
         listeVolume.addActionListener(this);
 
-        listeMatieres.setBounds(10, 45, 200, 30);
+        listeMatieres.setBounds(10, 40, 200, 30);
         listeMatieres.addItem("--Choix matière--");
         listeMatieres.addItem("Métal");
         listeMatieres.addItem("Matériau diffusif");
         listeMatieres.addActionListener(this);
 
-        etapeSuiv1.setBounds(10, 90, 200, 30);
+        etapeSuiv1.setBounds(10, 80, 200, 30);
         etapeSuiv1.setBackground(Color.green);
         etapeSuiv1.addActionListener(this);
+
+        Defaut.setBounds(10, 115, 200, 30);
+        Defaut.setBackground(Color.pink);
+        Defaut.addActionListener(this);
 
         // composants etape 2
         testAffichage.setBounds(0, 70, 100, 30);
@@ -97,7 +107,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
         Diffuse green = new Diffuse(Color.green);
 
         // Camera par defaut et geometrie par defaut : recup de ceux de Window
-        Camera camDefaut = new Camera(new Vector3d(0, 0, 0), new Vector3d(1, 0, 0), width, height, Math.PI/2);
+        Camera camDefaut = new Camera(new Vector3d(0, 0, 0), new Vector3d(1,0 ,0 ), width, height, Math.PI/2);
         LinkedList<Drawable> listeDefaut= new LinkedList<Drawable>();
         listeDefaut.add(new Sphere(new Vector3d(4, 0, 0), 1.5, blue));
         listeDefaut.add(new Sphere(new Vector3d(-0.5, 0.2, 0.2), 0.1, silver));
@@ -112,14 +122,13 @@ public class FenetreCoord extends JFrame implements ActionListener{
         Scene sceneDefaut = new Scene(listeDefaut, new Vector3d(1, 2*Math.cos(0), 2));
         ImageIcon renduParDefaut = new ImageIcon(camDefaut.renderImage(sceneDefaut,10));
 
-        JLabel lDefaut = new JLabel(renduParDefaut);
+
         lDefaut.setLocation(0,0);
         lDefaut.setSize(700,500);
+        lDefaut.setIcon(renduParDefaut);
+        lDefaut.setVisible(false);
 
         drawableUtil=new LinkedList<Drawable>();
-
-
-
 
 
 
@@ -130,8 +139,8 @@ public class FenetreCoord extends JFrame implements ActionListener{
         panelMenu.setLayout(null);
         panelMenu.setBounds(0, 0, 300, 50);
         panelMenu.setBackground(Color.orange);
-
         panelMenu.add(labelMenu);
+        panelMenu.add(accueil);
 
         // Panel etape 1
         JPanel panelEtape1 = new JPanel();
@@ -143,6 +152,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
         panelEtape1.add(listeVolume);
         panelEtape1.add(listeMatieres);
         panelEtape1.add(etapeSuiv1);
+        panelEtape1.add(Defaut);
 
         // Panel etape 2
         JPanel panelEtape2 = new JPanel();
@@ -178,7 +188,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
 
         panelZoneAffichage.setLayout(null);
         panelZoneAffichage.setBounds(300, 0, 700, 500);
-        panelZoneAffichage.setBackground(Color.gray);
+        panelZoneAffichage.setBackground(Color.blue);
         panelZoneAffichage.setVisible(true);
 
         //panelZoneAffichage.add(labelIm);
@@ -199,6 +209,10 @@ public class FenetreCoord extends JFrame implements ActionListener{
     } // fin du constructeur
 
     public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == accueil ){
+            // rendre visible une fenetre d'accueil
+
+        }
         if (listeVolume.getSelectedItem() == "Sphère") {
             System.out.println("Sphère sélectionnée");
             // parametres sphere par defaut
@@ -234,7 +248,8 @@ public class FenetreCoord extends JFrame implements ActionListener{
             System.out.println("Bouton test affichage cliqué");
         }
         if(e.getSource()== Defaut){
-            // afficher rendu par defaut
+            System.out.println(" Version par defaut");
+            lDefaut.setVisible(true);
 
         }
 
@@ -262,7 +277,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
 
 // TO DO :
 
-// faire la version par défaut --> 1 cam / défaut + 1 scene par defaut + si clic sur bouton version par defaut recup image: C
+//  version par défaut --> voir position optimale camera: C
 // créer les listes qui se remplissent avec les demandes de l'utilisateur: A
 // esthétique : rendre l'interface sympa: pdt vacances
 //      placement
