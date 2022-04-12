@@ -220,16 +220,16 @@ public class FenetreCoord extends JFrame implements ActionListener{
 
 
 // TO DO :
-// ptit pbm du bandeau gris en haut
-// faire la version par défaut --> 1 cam / défaut + 1 scene par defaut
-// créer les listes qui se remplissent avec les demandes de l'utilisateur
-// esthétique : rendre l'interface sympa
+
+// faire la version par défaut --> 1 cam / défaut + 1 scene par defaut : C
+// créer les listes qui se remplissent avec les demandes de l'utilisateur: A
+// esthétique : rendre l'interface sympa: pdt vacances
 //      placement
 //      couleurs
-// faire la fenêtre de bienvenue / intro / explications
-// faire la fenêtre d'au revoir
-// nettoyage du code
-// commentaires
+// faire la fenêtre de bienvenue / intro / explications : C
+// faire la fenêtre d'au revoir : A
+// nettoyage du code : pdt vacances
+// commentaires : au fur et à mesure
 
 
 // Test de modif de police de caractère
