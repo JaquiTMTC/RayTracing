@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Cube extends Drawable {
 
+        // Déclaration attributs
     private double largeur; // axe y
     private double hauteur; // axe z
     private double profondeur; // axe x
@@ -11,11 +12,16 @@ public class Cube extends Drawable {
     private boolean isReflective;
     private LinkedList <Vector3d> interBons; // Liste où l'on stocke les intersections du rayon avec les plans du cube
 
-    private LinkedList <Plane> listPlans;  // Liste des 6 plans constituants le cube
+    private LinkedList <Plane> listPlans;// Liste des 6 plans constituants le cube
 
-    public Cube(double _largeur, double _hauteur, double _profondeur, Vector3d _center, Material material) {
+    private LinkedList  <Plane> PlansInter;// Plans popur le calcul par rapport à la normale
+    private LinkedList  <Vector3d> Normales;
+
+    public Cube(double _largeur, double _hauteur, double _profondeur, Vector3d _center, Material material) {   // Initialisation des attributs
         listPlans = new LinkedList<Plane>();
         interBons = new LinkedList<Vector3d>();
+        PlansInter = new LinkedList <Plane>();
+        Normales = new LinkedList <Vector3d>();
         largeur = _largeur;
         hauteur = _hauteur;
         profondeur = _profondeur;
@@ -76,7 +82,7 @@ public class Cube extends Drawable {
         return (Math.abs(versCentre.x) < (profondeur+0.01)/2 && Math.abs(versCentre.y) < (largeur+0.01)/2 && Math.abs(versCentre.z) < (hauteur+0.01)/2); // renvoie true si le point intersection est dans le cube, false sinon
     }
 
-    Vector3d normal(Vector3d point) {
+    Vector3d normale(Vector3d point) {
         for (Plane unPlan : listPlans) {
            //return new Vector3d(unPlan.normal(new Vector3d (0,0,0)));
         }
@@ -88,22 +94,61 @@ public class Cube extends Drawable {
 
         return new Cube(largeur, hauteur, profondeur, center, material);
     }
+    // Bon plan pour drawable
 
-    /*public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Cube cube = (Cube) o;
-            for(Plane unPlan : listPlans) {
-                return Objects.equals(unPlan.normal(new Vector3d(0,0,0)), cube.normal(new Vector3d(0,0,0))) && Objects.equals(center, cube.center);
+        public  LinkedList<Vector3d> normalIntersect (Vector3d point) {
+            for(Plane unPlan : PlansInter) {
+
+                Normales.add(unPlan.normal(new Vector3d()));
+
+            }
+            return Normales;
+
+        }
+        public Vector3d normal(Vector3d v){
+        return null;
+        }
+
+        public void Plan (Vector3d point) {
+
+            Vector3d versCentre = center.sub(point);
+            if (versCentre.x > 0 && versCentre.x < 1 && versCentre.z > 0 && versCentre.z < 1 && versCentre.y == 0) {
+                PlansInter.add(listPlans.get(0));
             }
 
-            return true; // temporaire
-    }*/
+            if (versCentre.x < 0 && versCentre.x > -1 && versCentre.z > 0 && versCentre.z < 1 && versCentre.y == 0) {
+                PlansInter.add(listPlans.get(1));
+            }
 
+            if (versCentre.x == 0 && versCentre.y > 0 && versCentre.y < 1 && versCentre.z > 0 && versCentre.z < 1) {
+                PlansInter.add(listPlans.get(2));
+            }
+
+            if (versCentre.x == 0 && versCentre.y < 0 && versCentre.y > -1 && versCentre.z > 0 && versCentre.z < 1) {
+                PlansInter.add(listPlans.get(3));
+            }
+
+            if (versCentre.x > 0 && versCentre.x < 1 && versCentre.z > 0 && versCentre.z < 1 && versCentre.y == 0) {
+                PlansInter.add(listPlans.get(4));
+            }
+
+            if (versCentre.x > 0 && versCentre.x < 1 && versCentre.z < 0 && versCentre.z > -1 && versCentre.y == 0) {
+                PlansInter.add(listPlans.get(5));
+            }
+        }
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Cube cube = (Cube) o;
         return largeur == cube.largeur && hauteur == cube.hauteur && profondeur == cube.profondeur && isReflective == cube.isReflective && Objects.equals(center, cube.center);
+    }
+
+    public String toString(){
+        return "Pave{" +
+                "center=" + center +
+                ", largeur=" + largeur +
+                ", hauteur=" + hauteur +
+                ", profondeur=" + profondeur +
+                '}';
     }
 }

@@ -86,8 +86,8 @@ public class Fenetre extends JFrame implements ActionListener{ // besoin de bout
         c.gridx= 1;
         c.gridy= 2;
         c.weighty= 1.0; // gere espace entre les menus deroulants
-        c.gridwidth = 2; // nb de colonnes que prend le composant de long (long= selon x)
-        c.ipady = 30; // augmente largeur de la liste déroulante (largeur= selon y)
+        c.gridwidth = 2; // nb de colonnes que prend le composant de long (long = selon l'horizontale)
+        c.ipady = 30; // augmente largeur de la liste déroulante (largeur= selon la verticale)
         c.insets=new Insets(10,10,10,10);
         panelBoutons.add(listeMatieres, c);
 
@@ -141,6 +141,7 @@ public class Fenetre extends JFrame implements ActionListener{ // besoin de bout
         panelZoneAffichage.setBackground(Color.gray);
         panelGlobal.add(panelZoneAffichage,cons);
         //window = new Window(0);: test pour lier IHM/Rendu en mettant window en para
+
 
         add(panelGlobal);
         this.setVisible(true);
