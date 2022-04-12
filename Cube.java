@@ -106,7 +106,7 @@ public class Cube extends Drawable {
 
         }
         public Vector3d normal(Vector3d v){
-        return null;
+        return listPlans.getFirst().normal(new Vector3d());
         }
 
         public void Plan (Vector3d point) {

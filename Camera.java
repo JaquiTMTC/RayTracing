@@ -44,7 +44,7 @@ public class Camera {
      * @param y the y coordinate of the pixel
      * @return the ray
      */
-    public Ray createRay(int x, int y){
+    private Ray createRay(int x, int y){
 
         double xMax = Math.tan(horizontalFOV/2);
         double yMax = xMax*height/width;
@@ -63,18 +63,18 @@ public class Camera {
      * @param scene the scene that contains the geometry to render
      * @return the color of the given pixel
      */
-    public Color renderPixel(int x, int y, Scene scene){
+    private Color renderPixel(int x, int y, Scene scene, int maxBounces){
 //        if(x<=10 && y>=710){
 //            return Color.red;
 //        }
         Ray ray = createRay(x, y);
         //System.out.println(x+" "+y);
-        Color returnColor = renderRay(ray, scene, 5);
+        Color returnColor = renderRay(ray, scene, maxBounces);
         returnColor = ((returnColor==null) ? Color.red : returnColor);
         return (returnColor);
     }
 
-    public Color renderRay(Ray ray, Scene scene, int maxBounces){
+    private Color renderRay(Ray ray, Scene scene, int maxBounces){
 
         Object[] intersect = getIntersection(scene, ray);
 
@@ -115,8 +115,8 @@ public class Camera {
         BufferedImage imageRendu = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         for(int y=0; y<height; y++){
             for(int x=0; x<width; x++){
-                Color color = this.renderPixel(x, y, scene);
-               imageRendu.setRGB(x, y, color.getRGB());
+                Color color = this.renderPixel(x, y, scene, maxBounces);
+                imageRendu.setRGB(x, y, color.getRGB());
             }
         }
         return imageRendu ;

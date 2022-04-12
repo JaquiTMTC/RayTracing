@@ -4,11 +4,10 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 import java.util.LinkedList;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.Timer;
+import javax.swing.*;
 
 public class Window extends JPanel implements ActionListener {
 
@@ -20,12 +19,12 @@ public class Window extends JPanel implements ActionListener {
 
 
 
-    //public void paint(Graphics g) { plus utile, on se sert que de renderImage qui n'utilise pas paint
-        //Image img = drawImage(geometry);
-        //g.drawImage(img, 0, 0, this);
-    //}
+    public void paint(Graphics g) { // plus utile, on se sert que de renderImage qui n'utilise pas paint
+        Image img = drawImage();
+        g.drawImage(img, 0, 0, this);
+    }
 
-    public Image drawImage(LinkedList<Drawable> geometry){
+    public Image drawImage(){
 
         // Initializing scene
 
@@ -34,32 +33,27 @@ public class Window extends JPanel implements ActionListener {
 
         //BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
-        Camera camera = new Camera(new Vector3d(0, 0, 0), new Vector3d(1, 0, 0), width, height, Math.PI/2);
 
-        // Materials
+        Metal silver = new Metal(Color.black);
+        Diffuse white = new Diffuse(Color.white);
+        Diffuse red = new Diffuse(Color.red);
+        Diffuse blue = new Diffuse(Color.blue);
+        Diffuse green = new Diffuse(Color.green);
 
 
-        // creation liste plutôt qu'un tableau d'objets geometriques
-
-
-        /*Drawable[] geometry = {
-
-                new Sphere(new Vector3d(4, 0, 0), 1.5, blue),
-                new Sphere(new Vector3d(-0.5, 0.2, 0.2), 0.1, silver),
-                new Sphere(new Vector3d(0.5, -0.2, 0.2), 0.1, silver),
-
-                new Plane(new Vector3d(0, 1, 0), new Vector3d(0, -3, 0 ), red),
-                new Plane(new Vector3d(0, -1, 0), new Vector3d(0, 3, 0 ), green),
-                new Plane(new Vector3d(-1, 0, 0), new Vector3d(5, 0, 0), white),
-                new Plane(new Vector3d(0, 0, -1), new Vector3d(0, 0, 3), white),
-                new Plane(new Vector3d(0, 0, 1), new Vector3d(0, 0, -3), white),
-                new Plane(new Vector3d(1, 0, 0), new Vector3d(-5, 0, 0), white),
-
-                new Cube(1,1, 1, new Vector3d(2, .7, .7), green),
-
-        }; */
-
-        Scene scene = new Scene(geometry, new Vector3d(1, 2*Math.cos(2*theta), 2));
+        Camera camDefaut = new Camera(new Vector3d(0, 0, 0), new Vector3d(1, 0, 0), width, height, Math.PI/2);
+        LinkedList<Drawable> listeDefaut= new LinkedList<Drawable>();
+        listeDefaut.add(new Sphere(new Vector3d(4, 0, 0), 1.5, blue));
+        listeDefaut.add(new Sphere(new Vector3d(-0.5, 0.2, 0.2), 0.1, silver));
+        listeDefaut.add(new Plane(new Vector3d(0, 1, 0), new Vector3d(0, -3, 0 ), red));
+        listeDefaut.add(new Plane(new Vector3d(0, -1, 0), new Vector3d(0, 3, 0 ), green));
+        listeDefaut.add(new Plane(new Vector3d(-1, 0, 0), new Vector3d(5, 0, 0), white));
+        listeDefaut.add(new Plane(new Vector3d(0, 0, -1), new Vector3d(0, 0, 3), white));
+        listeDefaut.add(new Plane(new Vector3d(0, 0, 1), new Vector3d(0, 0, -3), white));
+        listeDefaut.add(new Plane(new Vector3d(1, 0, 0), new Vector3d(-5, 0, 0), white));
+        listeDefaut.add(new Cube(1,1, 1, new Vector3d(2, .7, .7), green));
+        // theta=0 dans la version par defaut
+        Scene sceneDefaut = new Scene(listeDefaut, new Vector3d(1, 2, 2));
 
         // Precompute values
 //        for(Drawable obj:geometry){
@@ -77,7 +71,7 @@ public class Window extends JPanel implements ActionListener {
         */
 
 
-        return camera.renderImage(scene, 10);
+        return camDefaut.renderImage(sceneDefaut, 10);
     }
 
     public void actionPerformed(ActionEvent e) {

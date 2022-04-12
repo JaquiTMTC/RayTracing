@@ -3,7 +3,6 @@ import java.awt.Color;
 public class Sphere extends Drawable {
     protected final Vector3d center;
     protected final double radius;
-    protected final double rSq; // Radius squared
 
     // Precomputed values
 
@@ -18,7 +17,6 @@ public class Sphere extends Drawable {
     public Sphere(Vector3d _center, double _radius, Material material){
         center = new Vector3d(_center);
         radius = _radius;
-        rSq = Math.pow(radius, 2);
         this.material = material;
     }
 
@@ -85,7 +83,6 @@ public class Sphere extends Drawable {
         return "Sphere{" +
                 "center=" + center +
                 ", radius=" + radius +
-                ", rSq=" + rSq +
                 '}';
     }
 }
