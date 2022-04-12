@@ -106,4 +106,13 @@ public class Cube extends Drawable {
         Cube cube = (Cube) o;
         return largeur == cube.largeur && hauteur == cube.hauteur && profondeur == cube.profondeur && isReflective == cube.isReflective && Objects.equals(center, cube.center);
     }
+
+    public String toString(){
+        return "Pave{" +
+                "center=" + center +
+                ", largeur=" + largeur +
+                ", hauteur=" + hauteur +
+                ", profondeur=" + profondeur +
+                '}';
+    }
 }

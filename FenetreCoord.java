@@ -1,29 +1,28 @@
 import java.util.LinkedList;
-import javax.swing.JFrame;
 import javax.swing.*;
-import java.awt.Color;
-import java.awt.event.*;
 import java.awt.*;
-import java.awt.Font;
+import java.awt.event.*;
 
-
-//public class FenetreCoord extends JFrame implements ActionListener{ // besoin de boutons pour le menu, le choix de la scène
 public class FenetreCoord extends JFrame implements ActionListener{
-    // taille fenêtre et attributs
+    // Attributs
     int width;
     int height;
-    // declaration des boutons en attribut qui seront utilises dans le ActionPerformed
+    // Declaration composants utilises dans le ActionPerformed
+    // menus deroulants
     JComboBox listeVolume = new JComboBox();
     JComboBox listeMatieres = new JComboBox();
+    // boutons
     JButton etapeSuiv1 = new JButton("Passer étape suivante");
     JButton effRendu = new JButton("Effacer le rendu");
     JButton sortie = new JButton(" Sortie du programme");
-    JPanel panelEtape2 = new JPanel();
     JButton testAffichage = new JButton("Test");
-    Icon cub = new ImageIcon("spheregrise.png");
-    JButton testAFF= new JButton(cub);
+    // panels
+    JPanel panelEtape2 = new JPanel();
+    JPanel panelZoneAffichage = new JPanel();
+    // listes (avec parametres rentres par l'utilisateur)
+    LinkedList<Drawable>drawableUtil;
 
-    // constructeur
+    // Constructeur
     public FenetreCoord(String nom, int w, int h) {
         super(nom);
         this.width = w;
@@ -31,102 +30,42 @@ public class FenetreCoord extends JFrame implements ActionListener{
         this.setSize(width, height);
         this.setLocation(100, 100);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // panel
-        JPanel panelGlobal = new JPanel();
-        panelGlobal.setBounds(0, 0, this.width, this.height); // panneau qui englobe tt la fenetre
-        panelGlobal.setBackground(Color.blue);
-        panelGlobal.setLayout(null);
 
-        JPanel panelMenu = new JPanel();
-        panelMenu.setBounds(0, 0, 300, 50);
-        panelMenu.setLayout(null);
-        panelMenu.setBackground(Color.orange);
-
+        // composants menu
         JLabel labelMenu = new JLabel("Menu");
         labelMenu.setBounds(125, 10, 50, 20);
-        panelMenu.add(labelMenu);
-        panelGlobal.add(panelMenu);
 
-        //PANEL GLOBAL DES ETAPES
-        JPanel panelEtapes = new JPanel();
-        panelEtapes.setVisible(true);
-        panelEtapes.setBackground(Color.yellow);
-        panelEtapes.setLayout(null);
-        panelEtapes.setBounds(0, 50, 300, 450);
-        panelGlobal.add(panelEtapes);
-
-        // Panel etape 1
-        JPanel panelEtape1 = new JPanel();
-        panelEtape1.setVisible(true);
-        panelEtape1.setLayout(null);
-        panelEtape1.setBounds(0, 0, 300, 150);
-        panelEtape1.setBackground(Color.red);
-        // Listes deroulantes Etape 1
+        // composants etape 1
         listeVolume.setBounds(10, 10, 200, 30);
         listeVolume.addItem("--Choix volume--");
         listeVolume.addItem("Sphère");
         listeVolume.addItem("Cube");
-        listeVolume.addItem("Cylindre");
+        //listeVolume.addItem("Cylindre");
         listeVolume.addActionListener(this);
+
         listeMatieres.setBounds(10, 45, 200, 30);
         listeMatieres.addItem("--Choix matière--");
-        listeMatieres.addItem("Bois");
+        listeMatieres.addItem("Métal");
+        listeMatieres.addItem("Matériau diffusif");
         listeMatieres.addActionListener(this);
 
         etapeSuiv1.setBounds(10, 90, 200, 30);
         etapeSuiv1.setBackground(Color.green);
         etapeSuiv1.addActionListener(this);
 
-        panelEtape1.add(listeVolume);
-        panelEtape1.add(listeMatieres);
-        panelEtape1.add(etapeSuiv1);
-        panelEtapes.add(panelEtape1);
-        // Panel Etape2
-        JPanel panelEtape2 = new JPanel();
-        panelEtape2.setVisible(true);
-        panelEtape2.setLayout(null);
-        panelEtape2.setBounds(0, 150, 300, 150);
-        panelEtape2.setBackground(Color.cyan);
-
-        panelEtapes.add(panelEtape2);
-        // Boutons d'etape2
-
-        // PanelEtape3
-        JPanel panelEtape3 = new JPanel();
-        panelEtape3.setVisible(true);
-        panelEtape3.setLayout(null);
-        panelEtape3.setBackground(Color.magenta);
-        panelEtape3.setBounds(0, 300, 300, 150);
-        panelEtapes.add(panelEtape3);
-        //Boutons d'etape 3
-        effRendu.setBounds(20, 20, 200, 50);
-        sortie.setBounds(20, 80, 200, 50);
-        effRendu.addActionListener(this);
-        panelEtape3.add(effRendu);
-        panelEtape3.add(sortie);
-
-        //PANEL AFFICHAGE RENDU
-        JPanel panelZoneAffichage = new JPanel();
-        panelZoneAffichage.setBounds(300, 0, 700, 535);
-        panelZoneAffichage.setVisible(true);
-
-        // Test de modif de police de caractère
-        // Font police = new Font(" Calibri ", Font.BOLD, 18);
-        // labelVide.setFont(police);
-        //labelVide.setText(" RENDU");
-
-        testAFF.setBackground(Color.red);
-        testAFF.setBounds(0, 10, 200, 50);
-        panelEtape2.add(testAFF);
-        testAFF.setVisible(false);
-
-        panelZoneAffichage.setBackground(Color.gray);
-        panelGlobal.add(panelZoneAffichage);
-
+        // composants etape 2
         testAffichage.setBounds(0, 70, 100, 30);
         testAffichage.addActionListener(this);
-        panelEtape2.add(testAffichage) ;
-        testAffichage.setVisible(true);
+        //testAffichage.setVisible(true);
+
+        // composants etape 3
+        effRendu.setBounds(20, 20, 200, 50);
+        effRendu.addActionListener(this);
+
+        sortie.setBounds(20, 80, 200, 50);
+        sortie.addActionListener(this);
+
+        // composants zone affichage
 
         // creation d'une camera (param par defaut) pour pouvoir appeler renderImage (qui renvoie l'image) (récup la ligne dans Windows)
         // creation d'une scene, avec les elements indiques par l'util (en parametre de laCamera.renderImage)
@@ -144,53 +83,138 @@ public class FenetreCoord extends JFrame implements ActionListener{
         ImageIcon renduIcon = new ImageIcon(laCamera.renderImage(laScene,10));
 
         JLabel labelIm = new JLabel(renduIcon);
-        labelIm.setLocation(0,-5);
-        labelIm.setSize(300,535);
+        labelIm.setLocation(0,0);
+        labelIm.setSize(700,500);
+
+        drawableUtil=new LinkedList<Drawable>();
+
+        // PANNEAUX
+
+        // Panel menu
+        JPanel panelMenu = new JPanel();
+        panelMenu.setLayout(null);
+        panelMenu.setBounds(0, 0, 300, 50);
+        panelMenu.setBackground(Color.orange);
+
+        panelMenu.add(labelMenu);
+
+        // Panel etape 1
+        JPanel panelEtape1 = new JPanel();
+        panelEtape1.setLayout(null);
+        panelEtape1.setBounds(0, 0, 300, 150);
+        panelEtape1.setBackground(Color.yellow);
+        panelEtape1.setVisible(true);
+
+        panelEtape1.add(listeVolume);
+        panelEtape1.add(listeMatieres);
+        panelEtape1.add(etapeSuiv1);
+
+        // Panel etape 2
+        JPanel panelEtape2 = new JPanel();
+        panelEtape2.setVisible(true);
+        panelEtape2.setLayout(null);
+        panelEtape2.setBounds(0, 150, 300, 150);
+        panelEtape2.setBackground(Color.cyan);
+
+        panelEtape2.add(testAffichage) ;
+
+        // Panel etape 3
+        JPanel panelEtape3 = new JPanel();
+        panelEtape3.setLayout(null);
+        panelEtape3.setBounds(0, 300, 300, 150);
+        panelEtape3.setBackground(Color.magenta);
+        panelEtape3.setVisible(true);
+
+        panelEtape3.add(effRendu);
+        panelEtape3.add(sortie);
+
+        //Panel de toutes les etapes
+        JPanel panelEtapes = new JPanel();
+        panelEtapes.setLayout(null);
+        panelEtapes.setBounds(0, 50, 300, 450);
+        panelEtapes.setBackground(Color.yellow);
+        panelEtapes.setVisible(true);
+
+        panelEtapes.add(panelEtape1);
+        panelEtapes.add(panelEtape2);
+        panelEtapes.add(panelEtape3);
+
+        // Panel zone affichage du rendu 3D
+        panelZoneAffichage.setLayout(null);
+        panelZoneAffichage.setBounds(300, 0, 700, 500);
+        panelZoneAffichage.setBackground(Color.gray);
+        panelZoneAffichage.setVisible(true);
+
         panelZoneAffichage.add(labelIm);
 
+        // Panel fenetre
+        JPanel panelGlobal = new JPanel();
+        panelGlobal.setLayout(null);
+        panelGlobal.setBounds(0, 0, this.width, this.height);
+        panelGlobal.setBackground(Color.blue);
 
+        panelGlobal.add(panelMenu);
+        panelGlobal.add(panelEtapes);
+        panelGlobal.add(panelZoneAffichage);
 
-        add(panelGlobal);
+        this.add(panelGlobal);
         this.setVisible(true);
     } // fin du constructeur
 
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Clic");
+        if (listeVolume.getSelectedItem() == "Sphère") {
+            System.out.println("Sphère sélectionnée");
+            // parametres sphere par defaut
+            Vector3d center_default = new Vector3d(1,0,0); // sans paramètres : au centre
+            double radius_default = 0.25;
+            Material material_default = new Diffuse(Color.gray);
+            Sphere sphere = new Sphere(center_default,radius_default,material_default);
+            drawableUtil.add(sphere);
+        }
+        if (listeVolume.getSelectedItem() == "Cube") {
+            System.out.println("Cube sélectionné");
+            // parametres cube par defaut
+            double largeur_default=0.25;
+            double hauteur_default=0.25;
+            double profondeur_default=0.25;
+            Vector3d center_default=new Vector3d(1,0,0);
+            Material material_default=new Diffuse(Color.gray);
+            Cube cube = new Cube(largeur_default, hauteur_default, profondeur_default, center_default, material_default);
+            drawableUtil.add(cube);
+        }
+        if (listeMatieres.getSelectedItem() == "Métal") {
+            System.out.println("Métal sélectionné");
+        }
+        if (listeMatieres.getSelectedItem() == "Matériau diffusif") {
+            System.out.println("Matériau diffusif sélectionné");
+        }
+
         if (e.getSource() == etapeSuiv1) {
             System.out.println("Etape suivante");
         }
 
-        if (e.getSource() == effRendu) {
-            System.out.println(" Effacer");
-        }
-
-        if (listeVolume.getSelectedItem() == "Sphère") {
-            System.out.println("Sphère sélectionnée");
-            //panelEtape2.setVisible(true);
-        }
-
-        if (listeVolume.getSelectedItem() == "Cube") {
-            System.out.println("Cube sélectionné");
-            //panelEtape2.setVisible(true);
-        }
-        if (listeMatieres.getSelectedItem() == "Bois") {
-            System.out.println("Bois sélectionné");
-            //panelEtape2.setVisible(true);
-        }
         if (e.getSource() == testAffichage) {
             System.out.println("Bouton test affichage cliqué");
-            testAFF.setVisible(true);
-            //panelZoneAffichage.add(testAFF);
+        }
+
+        if (e.getSource() == effRendu) {
+            System.out.println(" Effacer");
+            panelZoneAffichage.setVisible(false);
         }
         if (e.getSource()== sortie) {
            // exit du programme à faire
+        }
 
+        // TESTS SUR LA LISTE
+        // A REMPLACER PAR UN FOR EACH (mais pas la syntaxe sous la main actuellement)
+        System.out.println("La liste avec les infos entrees par l'utilisateur contient :");
+        for (int i=0; i<drawableUtil.size();i++){
+            System.out.println(drawableUtil.get(i));
         }
 
     }
         public static void main (String[]args){
             FenetreCoord f = new FenetreCoord(" IHM", 1000, 535);
-
         }
 }
 
@@ -206,3 +230,9 @@ public class FenetreCoord extends JFrame implements ActionListener{
 // faire la fenêtre d'au revoir
 // nettoyage du code
 // commentaires
+
+
+// Test de modif de police de caractère
+// Font police = new Font(" Calibri ", Font.BOLD, 18);
+// labelVide.setFont(police);
+//labelVide.setText(" RENDU");
