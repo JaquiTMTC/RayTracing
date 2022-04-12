@@ -1,18 +1,32 @@
+import java.util.LinkedList;
 public class Scene {
-    protected Drawable[] geometry;
+    protected LinkedList<Drawable> geometry;
     protected Vector3d light;
-    public Scene(Drawable[] _geometry, Vector3d light_pos){
+    public Scene(LinkedList<Drawable> _geometry, Vector3d light_pos){
         geometry = _geometry;
         light = light_pos;
     }
 
-    public Drawable[] getGeometry() {
-        Drawable[] returnArray = new Drawable[geometry.length];
-        for(int i=0; i< returnArray.length; i++){
-            returnArray[i] = geometry[i].copy();
+    public LinkedList<Drawable> getGeometry() {
+        LinkedList<Drawable> returnList = new LinkedList<Drawable>();
+        for(Drawable geo: returnList){
+            returnList.add(geo.copy());
+
         }
-        return returnArray;
+
+        //for(int i=0; i< returnArray.length; i++){
+            //returnArray[i] = geometry[i].copy();
+        //}
+        return returnList;
     }
+
+    // version ancienne avec tableau
+    //public Drawable[] getGeometry() {
+    // Drawable[]returnArray = new Drawable[geometry.length];
+    // for(int i=0; i<returnArray.length; i++){
+    //returnArray[i]=geometry[i].copy();
+    //}
+    //return returnArray; }
 
     public Vector3d getLight() {
         return new Vector3d(light);

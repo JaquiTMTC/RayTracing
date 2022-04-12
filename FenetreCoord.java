@@ -73,24 +73,54 @@ public class FenetreCoord extends JFrame implements ActionListener{
         // creation d'une scene, avec les elements indiques par l'util (en parametre de laCamera.renderImage)
         // laCamera.renderImage --> nous renvoie une image
 
-        Camera laCamera = new Camera(new Vector3d(0, 0, 0), new Vector3d(1, 0, 0), width, height, Math.PI/2);
-        Drawable [] tab = new Drawable[1];
+        /*Camera laCamera = new Camera(new Vector3d(0, 0, 0), new Vector3d(1, 0, 0), width, height, Math.PI/2);
+        LinkedList<Drawable> tab = new LinkedList<Drawable>();
         Vector3d center = new Vector3d(1,0,0); // sans paramètres : au centre
         double radius = 0.25;
         Material material = new Diffuse(Color.gray);
-        tab[0]=new Sphere(center, radius, material);
+        tab.add(new Sphere(center, radius, material));
         Vector3d light_pos = new Vector3d();
         Scene laScene = new Scene(tab, light_pos);
 
         ImageIcon renduIcon = new ImageIcon(laCamera.renderImage(laScene,10));
 
+
         JLabel labelIm = new JLabel(renduIcon);
-        labelIm.setLocation(0,0);
-        labelIm.setSize(700,500);
+        //labelIm.setLocation(0,0);
+        //labelIm.setSize(700,500);*/
+
+
+        Metal silver = new Metal(Color.black);
+        Diffuse white = new Diffuse(Color.white);
+        Diffuse red = new Diffuse(Color.red);
+        Diffuse blue = new Diffuse(Color.blue);
+        Diffuse green = new Diffuse(Color.green);
+
+        // Camera par defaut et geometrie par defaut : recup de ceux de Window
+        Camera camDefaut = new Camera(new Vector3d(0, 0, 0), new Vector3d(1, 0, 0), width, height, Math.PI/2);
+        LinkedList<Drawable> listeDefaut= new LinkedList<Drawable>();
+        listeDefaut.add(new Sphere(new Vector3d(4, 0, 0), 1.5, blue));
+        listeDefaut.add(new Sphere(new Vector3d(-0.5, 0.2, 0.2), 0.1, silver));
+        listeDefaut.add(new Plane(new Vector3d(0, 1, 0), new Vector3d(0, -3, 0 ), red));
+        listeDefaut.add(new Plane(new Vector3d(0, -1, 0), new Vector3d(0, 3, 0 ), green));
+        listeDefaut.add(new Plane(new Vector3d(-1, 0, 0), new Vector3d(5, 0, 0), white));
+        listeDefaut.add(new Plane(new Vector3d(0, 0, -1), new Vector3d(0, 0, 3), white));
+        listeDefaut.add(new Plane(new Vector3d(0, 0, 1), new Vector3d(0, 0, -3), white));
+        listeDefaut.add(new Plane(new Vector3d(1, 0, 0), new Vector3d(-5, 0, 0), white));
+        listeDefaut.add(new Cube(1,1, 1, new Vector3d(2, .7, .7), green));
+        // theta=0 dans la version par defaut
+        Scene sceneDefaut = new Scene(listeDefaut, new Vector3d(1, 2*Math.cos(0), 2));
+        ImageIcon renduParDefaut = new ImageIcon(camDefaut.renderImage(sceneDefaut,10));
+
+        JLabel lDefaut = new JLabel(renduParDefaut);
+        lDefaut.setLocation(0,0);
+        lDefaut.setSize(700,500);
 
         drawableUtil=new LinkedList<Drawable>();
 
-        // Camera par defaut et geometrie par defaut : une scène, un plan, un cube
+
+
+
 
 
         // PANNEAUX
@@ -145,12 +175,14 @@ public class FenetreCoord extends JFrame implements ActionListener{
         panelEtapes.add(panelEtape3);
 
         // Panel zone affichage du rendu 3D
+
         panelZoneAffichage.setLayout(null);
         panelZoneAffichage.setBounds(300, 0, 700, 500);
         panelZoneAffichage.setBackground(Color.gray);
         panelZoneAffichage.setVisible(true);
 
-        panelZoneAffichage.add(labelIm);
+        //panelZoneAffichage.add(labelIm);
+        panelZoneAffichage.add(lDefaut);
 
         // Panel fenetre
         JPanel panelGlobal = new JPanel();
