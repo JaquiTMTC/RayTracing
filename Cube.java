@@ -35,7 +35,7 @@ public class Cube extends Drawable {
         Vector3d centrePlans; // Variable pour stocker le centre des plans, pour alléger les expressions
 
         centrePlans = (center.add(new Vector3d (profondeur/2, 0, 0)));  // On centre les plans selon les 3 directions x, y et z
-        listPlans.add(new Plane(new Vector3d(1, 0, 0), centrePlans, material));
+        listPlans.add(new Plane(new Vector3d(1, 0, 0), centrePlans, material));   // Voir classe Plane pour la modélisation d'un plan
 
         centrePlans = (center.add(new Vector3d (-profondeur/2, 0, 0)));
         listPlans.add(new Plane(new Vector3d(-1, 0, 0), centrePlans, material));
@@ -82,7 +82,7 @@ public class Cube extends Drawable {
         return (Math.abs(versCentre.x) < (profondeur+0.01)/2 && Math.abs(versCentre.y) < (largeur+0.01)/2 && Math.abs(versCentre.z) < (hauteur+0.01)/2); // renvoie true si le point intersection est dans le cube, false sinon
     }
 
-    Vector3d normale(Vector3d point) {
+    Vector3d normale (Vector3d point) {
         for (Plane unPlan : listPlans) {
            //return new Vector3d(unPlan.normal(new Vector3d (0,0,0)));
         }
@@ -105,34 +105,35 @@ public class Cube extends Drawable {
             return Normales;
 
         }
+
         public Vector3d normal(Vector3d v){
         return listPlans.getFirst().normal(new Vector3d());
         }
 
         public void Plan (Vector3d point) {
 
-            Vector3d versCentre = center.sub(point);
-            if (versCentre.x > 0 && versCentre.x < 1 && versCentre.z > 0 && versCentre.z < 1 && versCentre.y == 0) {
+             Vector3d versCentre = center.sub(point);
+            if (versCentre.x == profondeur/2  && Math.abs(versCentre.z) > 0 && Math.abs(versCentre.z) < (hauteur+0.01) && Math.abs(versCentre.y) > 0 && Math.abs(versCentre.y) < (largeur+0.01)) {
                 PlansInter.add(listPlans.get(0));
             }
 
-            if (versCentre.x < 0 && versCentre.x > -1 && versCentre.z > 0 && versCentre.z < 1 && versCentre.y == 0) {
+            if (versCentre.x == -profondeur/2  && Math.abs(versCentre.z) > 0 && Math.abs(versCentre.z) < (hauteur+0.01) && Math.abs(versCentre.y) > 0 && Math.abs(versCentre.y) < (largeur+0.01) ) {
                 PlansInter.add(listPlans.get(1));
             }
 
-            if (versCentre.x == 0 && versCentre.y > 0 && versCentre.y < 1 && versCentre.z > 0 && versCentre.z < 1) {
+            if (versCentre.y == largeur/2 && Math.abs(versCentre.x) > 0 && Math.abs(versCentre.x) < (profondeur+0.01) && Math.abs(versCentre.z) > 0 && Math.abs(versCentre.z) < (hauteur+0.01)) {
                 PlansInter.add(listPlans.get(2));
             }
 
-            if (versCentre.x == 0 && versCentre.y < 0 && versCentre.y > -1 && versCentre.z > 0 && versCentre.z < 1) {
+            if (versCentre.y == -largeur/2 && Math.abs(versCentre.x) > 0 && Math.abs(versCentre.x) < (profondeur+0.01) && Math.abs(versCentre.z) > 0 && Math.abs(versCentre.z) < (hauteur+0.01)) {
                 PlansInter.add(listPlans.get(3));
             }
 
-            if (versCentre.x > 0 && versCentre.x < 1 && versCentre.z > 0 && versCentre.z < 1 && versCentre.y == 0) {
+            if (versCentre.z == hauteur/2 && Math.abs(versCentre.x) > 0 && Math.abs(versCentre.x) < (profondeur+0.01) && Math.abs(versCentre.y) > 0  && Math.abs(versCentre.y) < (largeur+0.01)) {
                 PlansInter.add(listPlans.get(4));
             }
 
-            if (versCentre.x > 0 && versCentre.x < 1 && versCentre.z < 0 && versCentre.z > -1 && versCentre.y == 0) {
+            if (versCentre.z == -hauteur/2  && Math.abs(versCentre.x) > 0  && Math.abs(versCentre.x) < (profondeur+0.01) && Math.abs(versCentre.y) > 0  && Math.abs(versCentre.y) < (largeur+0.01)) {
                 PlansInter.add(listPlans.get(5));
             }
         }
