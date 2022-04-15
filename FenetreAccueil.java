@@ -20,10 +20,10 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 
         //creation des composants
 
-        JLabel Description = new JLabel();
-        Description.setBounds(10, 10, 300, 300);
+        JTextArea Description = new JTextArea();
+        Description.setBounds(10, 10, 500, 350);
         Description.setBackground(Color.magenta);
-        //String ls = System.lineSeparator();
+        //String ls = System.lineSeparator(); // phrases à recouper.
         Description.setText(" Bienvenue !" +"\n" + "Voici un aperçu des fonctionnalités de notre programme. "  +"\n"+
                 "Il repose sur la technique du raytracing, utilisée dans le cinéma. " +"\n"+
                         "Elle permet de visualiser des objets en 3D. " +"\n"+
@@ -54,6 +54,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         panelGlobal.setBackground(Color.blue);
         panelGlobal.setVisible(true);
         Accueil.add(Description);
+        panelGlobal.add(Accueil);
 
         this.add(panelGlobal);
 

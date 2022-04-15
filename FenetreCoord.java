@@ -48,7 +48,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
         listeVolume.addItem("--Choix volume--");
         listeVolume.addItem("Sphère");
         listeVolume.addItem("Cube");
-        //listeVolume.addItem("Cylindre");
+        listeVolume.addItem("Plan");
         listeVolume.addActionListener(this);
 
         listeMatieres.setBounds(10, 40, 200, 30);
@@ -210,7 +210,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
 
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == accueil ){
-            // rendre visible une fenetre d'accueil
+            FenetreAccueil fa = new FenetreAccueil("Bienvenue", 1000, 1000);
 
         }
         if (listeVolume.getSelectedItem() == "Sphère") {
@@ -277,17 +277,19 @@ public class FenetreCoord extends JFrame implements ActionListener{
 
 // TO DO :
 
-//  version par défaut --> voir position optimale camera: C
+//  version par défaut --> voir position optimale camera: A
 // créer les listes qui se remplissent avec les demandes de l'utilisateur: A
-// esthétique : rendre l'interface sympa: pdt vacances
-//      placement
-//      couleurs
-// faire la fenêtre de bienvenue / intro / explications : C
-// faire la fenêtre d'au revoir : A
-// nettoyage du code : pdt vacances
+// volume à rajouter: plan placé par un point et les coordonnées de sa normale : C (item ComboBox: choix Cube )
 // commentaires : au fur et à mesure
+//detail qui fait quoi, CR en expliquant contenu des dossiers en annexe
 
+// nettoyage du code  : pdt vacances
+// gestion erreurs utilisateur (si ecrit caractere bizarre) : C
+// bouton validation des choix de sphère pour retour en arrière: A
 
+// esthétique : rendre l'interface sympa: pdt vacances
+// placement, mise en forle du texte Fenetre Accuei/ Adieu
+// couleurs
 // Test de modif de police de caractère
 // Font police = new Font(" Calibri ", Font.BOLD, 18);
 // labelVide.setFont(police);
