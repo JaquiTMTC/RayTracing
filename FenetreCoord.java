@@ -233,6 +233,14 @@ public class FenetreCoord extends JFrame implements ActionListener{
             Cube cube = new Cube(largeur_default, hauteur_default, profondeur_default, center_default, material_default);
             drawableUtil.add(cube);
         }
+        if (listeVolume.getSelectedItem() == "Plan") {
+            System.out.println("Plan sélectionné");
+            Vector3d normal_default = new Vector3d(0, 1, 0); // choix de la normale par defaut en selectionnant un des plans rendu
+            Vector3d center_default = new Vector3d(0, -3, 0);
+            Material material_default = new Diffuse(Color.red);
+            Plane plan = new Plane(normal_default, center_default, material_default);
+            drawableUtil.add(plan);
+        }
         if (listeMatieres.getSelectedItem() == "Métal") {
             System.out.println("Métal sélectionné");
         }
@@ -262,6 +270,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
         }
 
         // TESTS SUR LA LISTE
+        // POUR l'instant à chaque clic sur n'importe quel bouton le system.out.println s'affiche dans terminal
         // A REMPLACER PAR UN FOR EACH (mais pas la syntaxe sous la main actuellement)
         System.out.println("La liste avec les infos entrees par l'utilisateur contient :");
         for (int i=0; i<drawableUtil.size();i++){
@@ -279,7 +288,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
 
 //  version par défaut --> voir position optimale camera: A
 // créer les listes qui se remplissent avec les demandes de l'utilisateur: A
-// volume à rajouter: plan placé par un point et les coordonnées de sa normale : C (item ComboBox: choix Cube )
+// volume à rajouter: plan placé par un point et les coordonnées de sa normale : C (item ComboBox: choix plan ) fait
 // commentaires : au fur et à mesure
 //detail qui fait quoi, CR en expliquant contenu des dossiers en annexe
 
@@ -288,7 +297,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
 // bouton validation des choix de sphère pour retour en arrière: A
 
 // esthétique : rendre l'interface sympa: pdt vacances
-// placement, mise en forle du texte Fenetre Accuei/ Adieu
+// placement, mise en forme du texte Fenetre Accuei/ Adieu
 // couleurs
 // Test de modif de police de caractère
 // Font police = new Font(" Calibri ", Font.BOLD, 18);
