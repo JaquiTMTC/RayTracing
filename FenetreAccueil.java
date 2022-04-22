@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.Font;
 
+
 public class FenetreAccueil extends JFrame implements ActionListener {
     // Attributs
     int width;
@@ -23,8 +24,8 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 
         JTextArea Description = new JTextArea();
         Description.setBounds(10, 10, 300, 260);
-        Description.setBackground(Color.magenta);
-        //String ls = System.lineSeparator(); // phrases à recouper.
+        Color lightBlue = new Color(204, 209, 255);
+        Description.setBackground(lightBlue);
         Description.setText("  Bienvenue ! " + "Voici les fonctionnalités " + "\n" +
                 "  de notre programme qui repose sur la technique du " + "\n" +
                 "  raytracing, utilisée dans le cinéma. " + "Elle permet de " + "\n" +
@@ -43,43 +44,59 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 
         Font police = new Font(" Arial ",Font.ROMAN_BASELINE,11);
         Description.setFont(police);
-
         Description.setVisible(true);
 
         JLabel metalMat = new JLabel();
-        metalMat.setBounds(10, 10, 185, 130);
-        ImageIcon imageMetal = new ImageIcon("metal.png");
+       //metalMat.setLayout (new FlowLayout ()));
+        metalMat.setBounds(300, 10, 185, 130);
+        ImageIcon imageMetal = new ImageIcon("GIT/RayTracing/metal.png");
         metalMat.setIcon(imageMetal);
         metalMat.setVisible(true);
 
+
         JLabel diffuseMat = new JLabel();
         diffuseMat.setBounds(205,10,185,130);
-        ImageIcon imageDiffuse = new ImageIcon("diffuse.png");
+        ImageIcon imageDiffuse = new ImageIcon("GIT/RayTracing/diffuse.png");
         diffuseMat.setIcon(imageDiffuse);
         diffuseMat.setVisible(true);
 
         JLabel color = new JLabel("Voici les coloris disponibles : ");
         color.setLocation(5, 5);
-        color.setSize(300, 10);
+        color.setSize(300, 15);
+
+        JLabel blue = new JLabel();
+        blue.setBounds(20, 20, 70, 10);
+        ImageIcon cubeBleu = new ImageIcon(" GIT/RayTracing/palette.png");
+        blue.setIcon(cubeBleu);
+        blue.setVisible(true);
+
+        JLabel sphere = new JLabel(" Sphere");
+        sphere.setBounds(20, 20, 50, 50);
+        sphere.setForeground(Color.orange);
+
 
         // panels
         // PANEL PRESENTATION MATERIAUX
         JPanel panelMat = new JPanel();
-        panelMat.setLayout(null);
+        //panelMat.setLayout(new FlowLayout());
+        //panelMat.setLayout(null);
         panelMat.setBounds(330,10, 400, 260);
-        panelMat.setBackground(Color.yellow);
+        Color kingBlue = new Color(0, 128, 255);
+        panelMat.setBackground(kingBlue);
         panelMat.add(metalMat);
         panelMat.add(diffuseMat);
         panelMat.setVisible(true);
 
         // PANEL PRES COULEURS
         JPanel panelCol = new JPanel();
-        panelCol.setLayout(null);
-        panelCol.setBounds(10,280, 720, 70);
-        panelCol.setBackground(Color.red);
+        //panelCol.setLayout(null);
+        panelCol.setBounds(10,280, 720, 90);
+        Color blueSky= new Color(153, 100, 255);
+        panelCol.setBackground(blueSky);
         //panelCol.add(metalMat);
        // panelCol.add(diffuseMat);
         panelCol.add(color);
+        panelCol.add(blue);
         panelCol.setVisible(true);
 
 
@@ -87,6 +104,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         JPanel panelGeo = new JPanel();
         panelGeo.setLayout(null);
         panelGeo.setBounds(10,370, 720, 300);
+        panelGeo.add(sphere);
         panelGeo.setBackground(Color.white);
         panelGeo.setVisible(true);
 
@@ -95,7 +113,8 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         JPanel panelGlobal = new JPanel();
         panelGlobal.setLayout(null);
         panelGlobal.setBounds(50,0, width, height);
-        panelGlobal.setBackground(Color.blue);
+        Color lavande = new Color(153, 153, 255);
+        panelGlobal.setBackground(lavande);
         panelGlobal.setVisible(true);
 
         panelGlobal.add(Description);
