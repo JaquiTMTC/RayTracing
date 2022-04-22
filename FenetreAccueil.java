@@ -47,8 +47,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         Description.setVisible(true);
 
         JLabel metalMat = new JLabel();
-       //metalMat.setLayout (new FlowLayout ()));
-        metalMat.setBounds(300, 10, 185, 130);
+        metalMat.setBounds(10, 10, 185, 130);
         ImageIcon imageMetal = new ImageIcon("metal.png");
         metalMat.setIcon(imageMetal);
         metalMat.setVisible(true);
@@ -56,17 +55,17 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 
         JLabel diffuseMat = new JLabel();
         diffuseMat.setBounds(205,10,185,130);
-        ImageIcon imageDiffuse = new ImageIcon("GIT/RayTracing/diffuse.png");
+        ImageIcon imageDiffuse = new ImageIcon("diffuse.png");
         diffuseMat.setIcon(imageDiffuse);
         diffuseMat.setVisible(true);
 
         JLabel color = new JLabel("Voici les coloris disponibles : ");
         color.setLocation(5, 5);
-        color.setSize(300, 15);
+        color.setSize(300, 10);
 
         JLabel blue = new JLabel();
-        blue.setBounds(20, 20, 70, 10);
-        ImageIcon cubeBleu = new ImageIcon(" GIT/RayTracing/palette.png");
+        blue.setBounds(20, 20, 600, 50);
+        ImageIcon cubeBleu = new ImageIcon("palette.png");
         blue.setIcon(cubeBleu);
         blue.setVisible(true);
 
@@ -78,8 +77,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         // panels
         // PANEL PRESENTATION MATERIAUX
         JPanel panelMat = new JPanel();
-        //panelMat.setLayout(new FlowLayout());
-        //panelMat.setLayout(null);
+        panelMat.setLayout(null);
         panelMat.setBounds(330,10, 400, 260);
         Color kingBlue = new Color(0, 128, 255);
         panelMat.setBackground(kingBlue);
@@ -89,7 +87,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 
         // PANEL PRES COULEURS
         JPanel panelCol = new JPanel();
-        //panelCol.setLayout(null);
+        panelCol.setLayout(null);
         panelCol.setBounds(10,280, 720, 90);
         Color blueSky= new Color(153, 100, 255);
         panelCol.setBackground(blueSky);
