@@ -49,7 +49,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         JLabel metalMat = new JLabel();
        //metalMat.setLayout (new FlowLayout ()));
         metalMat.setBounds(300, 10, 185, 130);
-        ImageIcon imageMetal = new ImageIcon("GIT/RayTracing/metal.png");
+        ImageIcon imageMetal = new ImageIcon("metal.png");
         metalMat.setIcon(imageMetal);
         metalMat.setVisible(true);
 
