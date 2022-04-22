@@ -119,7 +119,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
     }
 
 }
-
+/// version images qui s'affichent
 
 
 
