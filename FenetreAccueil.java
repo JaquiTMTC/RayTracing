@@ -1,8 +1,9 @@
 import java.util.LinkedList;
 import javax.swing.JFrame;
 import javax.swing.*;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.*;
+import java.awt.Font;
 
 public class FenetreAccueil extends JFrame implements ActionListener {
     // Attributs
@@ -39,27 +40,32 @@ public class FenetreAccueil extends JFrame implements ActionListener {
                 "  tu peux placer: cubes, plans, sphères. Voici  " + "\n" +
                 "  ci-dessous un guide d'utilisation.  ");
 
+        Font police = new Font(" Arial ",Font.ROMAN_BASELINE,11);
+        Description.setFont(police);
+
         Description.setVisible(true);
 
         JLabel metalMat = new JLabel();
+        metalMat.setBounds(10, 10, 185, 130);
         //metalMat.setSize(185, 130);
-        metalMat.setLocation(10, 10);
+        // metalMat.setLocation(10, 10);
         //metalMat.setBackground(Color.green);
-        Icon imageMetal = new ImageIcon("/Images/metal.png");
-        metalMat.setIcon(imageMetal);
+        Icon imageMetal = new ImageIcon("./Images/metal.png");
+        metalMat.setIcon(new ImageIcon("./Images/metal.png"));
         metalMat.setVisible(true);
 
 
-        JLabel diffuseMat = new JLabel(" ");
+        JLabel diffuseMat = new JLabel(" y ");
         //diffuseMat.setSize(185, 130);
         diffuseMat.setLocation(205, 10);
-        //diffuseMat.setBackground(Color.black);
-        Icon imageDiffuse = new ImageIcon("/diffuse.png");
-        diffuseMat.setIcon(new ImageIcon("/diffuse.png"));
+        diffuseMat.setBackground(Color.black);
+       // Icon imageDiffuse = new ImageIcon("./Images/diffuse.png");
+        //diffuseMat.setIcon(imageDiffuse);
 
-       // diffuseMat.setVisible(true);
 
-        //JLabel color = new JLabel();
+        JLabel color = new JLabel(" Voici les coloris disponibles: ");
+        color.setLocation(5, 5);
+        color.setSize(30, 10);
 
 
         // panels
@@ -75,17 +81,18 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         // PANEL PRES COULEURS
         JPanel panelCol=  new JPanel();
         //panelCol.setLayout(null);
-        panelCol.setBounds(10,280, 720, 50);
+        panelCol.setBounds(10,280, 720, 70);
         panelCol.setBackground(Color.red);
         //panelCol.add(metalMat);
        // panelCol.add(diffuseMat);
+        panelCol.add(color);
         panelCol.setVisible(true);
 
 
         // PANEL PRES OBJETS
         JPanel panelGeo=  new JPanel();
         //panelGeo.setLayout(null);
-        panelGeo.setBounds(10,350, 720, 300);
+        panelGeo.setBounds(10,370, 720, 300);
         panelGeo.setBackground(Color.white);
         panelGeo.setVisible(true);
 
