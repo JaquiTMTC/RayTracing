@@ -39,6 +39,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
         // composants menu
         JLabel labelMenu = new JLabel("Menu");
         labelMenu.setBounds(20, 10, 50, 20);
+
         accueil.setBounds(90, 10, 100, 30);
         accueil.setBackground(Color.green);
         accueil.addActionListener(this);

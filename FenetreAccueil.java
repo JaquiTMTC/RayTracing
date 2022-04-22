@@ -10,6 +10,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
     int width;
     int height;
 
+    // Constructeur
     public FenetreAccueil(String nom, int w, int h) {
         super(nom);
         this.width = w;
@@ -47,30 +48,23 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 
         JLabel metalMat = new JLabel();
         metalMat.setBounds(10, 10, 185, 130);
-        //metalMat.setSize(185, 130);
-        // metalMat.setLocation(10, 10);
-        //metalMat.setBackground(Color.green);
-        Icon imageMetal = new ImageIcon("./Images/metal.png");
-        metalMat.setIcon(new ImageIcon("./Images/metal.png"));
+        ImageIcon imageMetal = new ImageIcon("metal.png");
+        metalMat.setIcon(imageMetal);
         metalMat.setVisible(true);
 
+        JLabel diffuseMat = new JLabel();
+        diffuseMat.setBounds(205,10,185,130);
+        ImageIcon imageDiffuse = new ImageIcon("diffuse.png");
+        diffuseMat.setIcon(imageDiffuse);
+        diffuseMat.setVisible(true);
 
-        JLabel diffuseMat = new JLabel(" y ");
-        //diffuseMat.setSize(185, 130);
-        diffuseMat.setLocation(205, 10);
-        diffuseMat.setBackground(Color.black);
-       // Icon imageDiffuse = new ImageIcon("./Images/diffuse.png");
-        //diffuseMat.setIcon(imageDiffuse);
-
-
-        JLabel color = new JLabel(" Voici les coloris disponibles: ");
+        JLabel color = new JLabel("Voici les coloris disponibles : ");
         color.setLocation(5, 5);
-        color.setSize(30, 10);
-
+        color.setSize(300, 10);
 
         // panels
         // PANEL PRESENTATION MATERIAUX
-        JPanel panelMat=  new JPanel();
+        JPanel panelMat = new JPanel();
         panelMat.setLayout(null);
         panelMat.setBounds(330,10, 400, 260);
         panelMat.setBackground(Color.yellow);
@@ -79,8 +73,8 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         panelMat.setVisible(true);
 
         // PANEL PRES COULEURS
-        JPanel panelCol=  new JPanel();
-        //panelCol.setLayout(null);
+        JPanel panelCol = new JPanel();
+        panelCol.setLayout(null);
         panelCol.setBounds(10,280, 720, 70);
         panelCol.setBackground(Color.red);
         //panelCol.add(metalMat);
@@ -90,8 +84,8 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 
 
         // PANEL PRES OBJETS
-        JPanel panelGeo=  new JPanel();
-        //panelGeo.setLayout(null);
+        JPanel panelGeo = new JPanel();
+        panelGeo.setLayout(null);
         panelGeo.setBounds(10,370, 720, 300);
         panelGeo.setBackground(Color.white);
         panelGeo.setVisible(true);
@@ -103,6 +97,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         panelGlobal.setBounds(50,0, width, height);
         panelGlobal.setBackground(Color.blue);
         panelGlobal.setVisible(true);
+
         panelGlobal.add(Description);
         panelGlobal.add(panelMat);
         panelGlobal.add(panelCol);
@@ -119,7 +114,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 
     }
     public static void main(String[]args){
-        FenetreAccueil bienvenue = new FenetreAccueil("Bienvenue!", 800, 800 );
+        FenetreAccueil bienvenue = new FenetreAccueil("Bienvenue !", 800, 800 );
 
     }
 
