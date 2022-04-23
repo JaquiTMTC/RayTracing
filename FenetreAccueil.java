@@ -1,4 +1,4 @@
-import java.util.LinkedList;
+
 import javax.swing.JFrame;
 import javax.swing.*;
 import java.awt.*;
@@ -31,18 +31,16 @@ public class FenetreAccueil extends JFrame implements ActionListener {
                 "  raytracing, utilisée dans le cinéma. " + "Elle permet de " + "\n" +
                 "  visualiser des objets en 3D. " + "Pour cela, une caméra " + "\n" +
                 "  est positionnée dans l'espace. " + "On définit ensuite une " + "\n" +
-                "  scène, qui contient les objets à afficher: " + "Des sphères," + "\n" +
-                "  des cubes par exemple. " + "Enfin, des rayons sont envoyés " + "\n" +
+                "  scène, qui contient les objets à afficher: " + "Des sphères" + "\n" +
+                "  par exemple. " + "Enfin, des rayons sont envoyés " + "\n" +
                 "  de la camera vers la scène. " + "On calcule l'intersection" + "\n" +
                 "  entre les rayons et l'objet. " + "Les réflexions sont " + "\n" +
-                "  prises en compte, et dépendent du matériau de l'objet" + "\n" +
+                "  prises en compte, et dépendent du matériau de l'objet." + "\n" +
                 "  Voici les paramètres que tu peux modifier: la position, " + "\n" +
                 "  la taille, le nombre, le matériau, la couleur et  " + " \n" +
-                "  le type des objets. Voici les types d'objets que  " + "\n" +
-                "  tu peux placer: cubes, plans, sphères. Voici  " + "\n" +
-                "  ci-dessous un guide d'utilisation.  ");
+                "  le type des objets. Voici ci-après les options disponibles.  ");
 
-        Font police = new Font(" Arial ",Font.ROMAN_BASELINE,11);
+        Font police = new Font(" Arial ",Font.PLAIN,12);
         Description.setFont(police);
         Description.setVisible(true);
 
@@ -64,15 +62,27 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         color.setSize(300, 10);
 
         JLabel blue = new JLabel();
-
-        ImageIcon cubeBleu = new ImageIcon("palette.png");
+        ImageIcon palette = new ImageIcon("palette.png");
         blue.setBounds(20, 20, 600, 50);
-        blue.setIcon(cubeBleu);
+        blue.setIcon(palette);
         blue.setVisible(true);
 
+        JLabel mat = new JLabel(" Choix des matériaux: METALLIQUE  ou DIFFUSIF ");
+        mat.setBounds(5, 5, 300, 20);
+        mat.setForeground(Color.white);
+
+        JLabel geo = new JLabel(" Choix des objets a placer");
+        geo.setBounds(20, 20, 300, 15);
+
         JLabel sphere = new JLabel(" Sphere");
-        sphere.setBounds(20, 20, 50, 50);
+        sphere.setBounds(20, 40, 50, 20);
         sphere.setForeground(Color.orange);
+
+        JLabel sphereIcon = new JLabel();
+        sphereIcon.setBounds(35, 60, 400, 250);
+        ImageIcon sp = new ImageIcon(" SPHERE.gif");
+        sphereIcon.setIcon(sp);
+
 
 
         // panels
@@ -80,10 +90,10 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         JPanel panelMat = new JPanel();
         panelMat.setLayout(null);
         panelMat.setBounds(330,10, 400, 260);
-        Color kingBlue = new Color(0, 128, 255);
-        panelMat.setBackground(kingBlue);
+        panelMat.setBackground(Color.black);
         panelMat.add(metalMat);
         panelMat.add(diffuseMat);
+        panelMat.add(mat);
         panelMat.setVisible(true);
 
         // PANEL PRES COULEURS
@@ -92,20 +102,20 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         panelCol.setBounds(10,280, 720, 90);
         Color blueSky= new Color(153, 100, 255);
         panelCol.setBackground(blueSky);
-        //panelCol.add(metalMat);
-       // panelCol.add(diffuseMat);
+        panelCol.setVisible(true);
         panelCol.add(color);
         panelCol.add(blue);
-        panelCol.setVisible(true);
 
 
         // PANEL PRES OBJETS
         JPanel panelGeo = new JPanel();
         panelGeo.setLayout(null);
         panelGeo.setBounds(10,370, 720, 300);
-        panelGeo.add(sphere);
         panelGeo.setBackground(Color.white);
         panelGeo.setVisible(true);
+        panelGeo.add(sphere);
+        panelGeo.add(geo);
+        panelGeo.add(sphereIcon);
 
 
         // PANEL GLOBAL
@@ -132,7 +142,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 
     }
     public static void main(String[]args){
-        FenetreAccueil bienvenue = new FenetreAccueil("Bienvenue !", 800, 800 );
+        FenetreAccueil bienvenue = new FenetreAccueil("Accueil", 750, 750 );
 
     }
 
