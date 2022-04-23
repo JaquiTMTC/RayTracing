@@ -64,9 +64,9 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         color.setSize(300, 10);
 
         JLabel blue = new JLabel();
-        blue.setBounds(20, 20, 600, 50);
+
         ImageIcon cubeBleu = new ImageIcon("palette.png");
-        blue.setBounds(20, 20, 70, 10);
+        blue.setBounds(20, 20, 600, 50);
         blue.setIcon(cubeBleu);
         blue.setVisible(true);
 
