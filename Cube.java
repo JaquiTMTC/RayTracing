@@ -144,6 +144,10 @@ public class Cube extends Drawable {
         return largeur == cube.largeur && hauteur == cube.hauteur && profondeur == cube.profondeur && isReflective == cube.isReflective && Objects.equals(center, cube.center);
     }
 
+    public Vector3d getUVCoordinates(Vector3d point) {
+        return null;
+    }
+
     public String toString(){
         return "Pave{" +
                 "center=" + center +

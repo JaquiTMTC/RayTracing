@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.util.LinkedList;
 
 public class Camera {
     protected Vector3d normal;
@@ -76,39 +77,37 @@ public class Camera {
 
     private Color renderRay(Ray ray, Scene scene, int maxBounces){
 
-        Object[] intersect = getIntersection(scene, ray);
+        HitInfo info= getIntersection(scene, ray);
 
-        double tMin = (double) intersect[0];
-        Drawable closestObject = (Drawable) intersect[1];
 
-        if (closestObject==null){
+        if (info==null){
             return null;
         }
 
-        Vector3d intersection = ray.at(tMin);
-        Vector3d normalGeometry = closestObject.normal(intersection);
-
-        if(closestObject.material.bounces()){
-            return renderRay(closestObject.material.bouncedRay(ray, normalGeometry, intersection), scene, maxBounces-1);
+        if(info.closestObject.material.bounces()){
+            return renderRay(info.closestObject.material.bouncedRay(ray, info.normal, info.position), scene, maxBounces-1);
         } else {
-            return closestObject.material.getColor(intersection, normalGeometry, scene, this);
+            return info.closestObject.material.getColor(info, scene, this);
         }
     }
 
-    public Object[] getIntersection(Scene scene, Ray ray){
+    public HitInfo getIntersection(Scene scene, Ray ray){
         double tMin = Double.MAX_VALUE;
         double t;
         Drawable closestObject = null;
 
-        // For each drawable object of the scene, we calculate its intersection with the ray
-        for(Drawable obj:scene.geometry){
+        for(Drawable obj: scene.geometry){
             t = obj.closestIntersectionPoint(ray);
-            if(t>0.0001 && t<tMin){ // If we intersect and the intersection is the closest one yet, we save it
+            if(t>0.0001 && t<tMin){
                 tMin = t;
                 closestObject = obj;
             }
         }
-        return new Object[]{tMin, closestObject};
+        if(closestObject==null){
+            return null;
+        }
+
+        return new HitInfo(tMin, ray, closestObject);
     }
 
     public Image renderImage (Scene scene, int maxBounces) {
