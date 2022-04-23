@@ -53,7 +53,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 
         JLabel diffuseMat = new JLabel();
         diffuseMat.setBounds(205,10,185,130);
-        ImageIcon imageDiffuse = new ImageIcon("diffuse.png");
+        ImageIcon imageDiffuse = new ImageIcon("bois.png");
         diffuseMat.setIcon(imageDiffuse);
         diffuseMat.setVisible(true);
 
@@ -67,8 +67,8 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         blue.setIcon(palette);
         blue.setVisible(true);
 
-        JLabel mat = new JLabel(" Choix des matériaux: METALLIQUE  ou DIFFUSIF ");
-        mat.setBounds(5, 5, 300, 20);
+        JLabel mat = new JLabel("                            Choix des matériaux: METALLIQUE  ou DIFFUSIF ");
+        mat.setBounds(5, 5, 700, 20);
         mat.setForeground(Color.white);
 
         JLabel geo = new JLabel(" Choix des objets a placer");
@@ -79,9 +79,21 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         sphere.setForeground(Color.orange);
 
         JLabel sphereIcon = new JLabel();
-        sphereIcon.setBounds(35, 60, 400, 250);
-        ImageIcon sp = new ImageIcon(" SPHERE.gif");
+        sphereIcon.setBounds(0, 60, 350, 250);
+        ImageIcon sp = new ImageIcon("sp.gif");
         sphereIcon.setIcon(sp);
+
+        JLabel cubeIcon = new JLabel();
+        cubeIcon.setBounds(390, 60, 200, 250);
+        ImageIcon cb = new ImageIcon("square2.jpg");
+        cubeIcon.setIcon(cb);
+
+        JLabel planarIcon = new JLabel();
+        planarIcon.setBounds(600, 60, 400, 250);
+        ImageIcon plan = new ImageIcon("plan.png");
+        planarIcon.setIcon(plan);
+
+
 
 
 
@@ -89,7 +101,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         // PANEL PRESENTATION MATERIAUX
         JPanel panelMat = new JPanel();
         panelMat.setLayout(null);
-        panelMat.setBounds(330,10, 400, 260);
+        panelMat.setBounds(330,10, 630, 260);
         panelMat.setBackground(Color.black);
         panelMat.add(metalMat);
         panelMat.add(diffuseMat);
@@ -99,7 +111,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         // PANEL PRES COULEURS
         JPanel panelCol = new JPanel();
         panelCol.setLayout(null);
-        panelCol.setBounds(10,280, 720, 90);
+        panelCol.setBounds(10,280, 950, 90);
         Color blueSky= new Color(153, 100, 255);
         panelCol.setBackground(blueSky);
         panelCol.setVisible(true);
@@ -110,13 +122,14 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         // PANEL PRES OBJETS
         JPanel panelGeo = new JPanel();
         panelGeo.setLayout(null);
-        panelGeo.setBounds(10,370, 720, 300);
+        panelGeo.setBounds(10,375, 950, 300);
         panelGeo.setBackground(Color.white);
         panelGeo.setVisible(true);
         panelGeo.add(sphere);
         panelGeo.add(geo);
         panelGeo.add(sphereIcon);
-
+        panelGeo.add(cubeIcon);
+        panelGeo.add(planarIcon);
 
         // PANEL GLOBAL
         JPanel panelGlobal = new JPanel();
@@ -142,7 +155,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 
     }
     public static void main(String[]args){
-        FenetreAccueil bienvenue = new FenetreAccueil("Accueil", 750, 750 );
+        FenetreAccueil bienvenue = new FenetreAccueil("Accueil", 1000, 750);
 
     }
 
