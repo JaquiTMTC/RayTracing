@@ -57,7 +57,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         diffuseMat.setIcon(imageDiffuse);
         diffuseMat.setVisible(true);
 
-        JLabel color = new JLabel("Voici les coloris disponibles : ");
+        JLabel color = new JLabel("Voici les coloris disponibles :");
         color.setLocation(5, 5);
         color.setSize(300, 10);
 
@@ -67,20 +67,20 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         blue.setIcon(palette);
         blue.setVisible(true);
 
-        JLabel mat = new JLabel(" Choix des matériaux: METALLIQUE  ou DIFFUSIF ");
+        JLabel mat = new JLabel("Choix des matériaux : METALLIQUE  ou DIFFUSIF");
         mat.setBounds(5, 5, 300, 20);
         mat.setForeground(Color.white);
 
-        JLabel geo = new JLabel(" Choix des objets a placer");
+        JLabel geo = new JLabel("Choix des objets a placer");
         geo.setBounds(20, 20, 300, 15);
 
-        JLabel sphere = new JLabel(" Sphere");
+        JLabel sphere = new JLabel("Sphere");
         sphere.setBounds(20, 40, 50, 20);
         sphere.setForeground(Color.orange);
 
         JLabel sphereIcon = new JLabel();
         sphereIcon.setBounds(35, 60, 400, 250);
-        ImageIcon sp = new ImageIcon(" SPHERE.gif");
+        ImageIcon sp = new ImageIcon("SPHERE.gif");
         sphereIcon.setIcon(sp);
 
 

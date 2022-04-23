@@ -16,16 +16,28 @@ public class FenetreCoord extends JFrame implements ActionListener{
     JButton AffDefaut = new JButton(" Afficher le rendu par défaut");
     JButton effRendu = new JButton("Effacer le rendu");
     JButton etapeSuiv1 = new JButton("Passer étape suivante");
+    JButton etapeSuiv2 = new JButton("Valider les coordonées");
     // labels
     JLabel lDefaut = new JLabel();
+    JLabel lUtil = new JLabel();
+    // textFields
+    JTextField rayonSphere = new JTextField();
+    JTextField xCentreSphere = new JTextField();
+    JTextField yCentreSphere = new JTextField();
+    JTextField zCentreSphere = new JTextField();
     // panels
     JPanel panelEtape2 = new JPanel();
     JPanel panelEtape2Sphere = new JPanel();
+    JPanel panelEtape2SphereParam = new JPanel();
     JPanel panelEtape2Cube = new JPanel();
     JPanel panelEtape2Plan = new JPanel();
     JPanel panelZoneAffichage = new JPanel();
     // listes (avec parametres rentres par l'utilisateur)
     LinkedList<Drawable>drawableUtil;
+    int rUtil;
+    int xUtil;
+    int yUtil;
+    int zUtil;
 
     // Constructeur
     public FenetreCoord(String nom, int w, int h) {
@@ -68,13 +80,32 @@ public class FenetreCoord extends JFrame implements ActionListener{
         listeMatieres.addItem("Texture - uniquement pour un plan");
         listeMatieres.addActionListener(this);
 
-        //etapeSuiv1.setBounds(10, 80, 200, 30);
         etapeSuiv1.setBounds(10, 100, 200, 30);
         etapeSuiv1.setBackground(Color.green);
         etapeSuiv1.addActionListener(this);
 
         // composants etape 2
+            // composants etape2Sphere
+                // composants etape2SphereParam
+                JLabel lRayon = new JLabel("Rayon");
+                JLabel lCoord = new JLabel("Coordonnées du centre de la sphère");
+                JLabel lx = new JLabel("x");
+                JLabel ly = new JLabel("y");
+                JLabel lz = new JLabel("z");
 
+                lRayon.setBounds(20,10,100, 20);
+                rayonSphere.setBounds(20,30,50,20);
+                lx.setBounds(150,10,100,20);
+                xCentreSphere.setBounds(150,30,50,20);
+                ly.setBounds(250,10,100,20);
+                yCentreSphere.setBounds(250, 30,50,20);
+                lz.setBounds(350,10,100,20);
+                zCentreSphere.setBounds(350,30,50,20 );
+                lCoord.setBounds(150,60,300,20);
+
+                etapeSuiv2.setBounds(20,70,200,20);
+                etapeSuiv2.setBackground(Color.green);
+                etapeSuiv2.addActionListener(this);
 
         // composants etape 3
 
@@ -135,7 +166,8 @@ public class FenetreCoord extends JFrame implements ActionListener{
         lDefaut.setIcon(renduParDefaut);
         lDefaut.setVisible(false); // deviendra visible quand l'utilisateur cliquera sur le bouton "afficher la version par defaut"
 
-        drawableUtil=new LinkedList<Drawable>();
+        drawableUtil=new LinkedList<Drawable>(); // instanciation
+
 
         // PANNEAUX
 
@@ -160,31 +192,47 @@ public class FenetreCoord extends JFrame implements ActionListener{
         panelEtape1.add(listeMatieres);
         panelEtape1.add(etapeSuiv1);
 
-        // Panel etape 2
-        panelEtape2.setVisible(true);
-        panelEtape2.setLayout(null);
-        panelEtape2.setBounds(0, 150, 425, 150);
-        panelEtape2.setBackground(new Color(209,242,235));
+        // Panels etape 2
+
+        panelEtape2SphereParam.setVisible(true);
+        panelEtape2SphereParam.setLayout(null);
+        panelEtape2SphereParam.setBounds(0, 0, 425, 100);
+        panelEtape2SphereParam.setBackground(Color.cyan);
+
+        panelEtape2SphereParam.add(lRayon);
+        panelEtape2SphereParam.add(rayonSphere);
+        panelEtape2SphereParam.add(xCentreSphere);
+        panelEtape2SphereParam.add(lx);
+        panelEtape2SphereParam.add(yCentreSphere);
+        panelEtape2SphereParam.add(ly);
+        panelEtape2SphereParam.add(zCentreSphere);
+        panelEtape2SphereParam.add(lz);
+        panelEtape2SphereParam.add(lCoord);
+        panelEtape2SphereParam.add(etapeSuiv2);
 
         panelEtape2Sphere.setVisible(false);
         panelEtape2Sphere.setLayout(null);
         panelEtape2Sphere.setBounds(0, 150, 425, 150);
         panelEtape2Sphere.setBackground(Color.blue);
 
+        panelEtape2Sphere.add(panelEtape2SphereParam);
+
         panelEtape2Cube.setVisible(false);
         panelEtape2Cube.setLayout(null);
         panelEtape2Cube.setBounds(0, 150, 425, 150);
         panelEtape2Cube.setBackground(Color.green);
 
-
+        panelEtape2.setVisible(true);
+        panelEtape2.setLayout(null);
+        panelEtape2.setBounds(0, 150, 425, 150);
+        panelEtape2.setBackground(new Color(209,242,235));
 
         // Panel etape 3
         JPanel panelEtape3 = new JPanel();
+        panelEtape3.setVisible(true);
         panelEtape3.setLayout(null);
         panelEtape3.setBounds(0, 300, 425, 150);
         panelEtape3.setBackground(new Color(163,228,215));
-        panelEtape3.setVisible(true);
-
 
         //Panel de toutes les etapes
         JPanel panelEtapes = new JPanel();
@@ -196,8 +244,8 @@ public class FenetreCoord extends JFrame implements ActionListener{
         panelEtapes.add(panelEtape1);
         panelEtapes.add(panelEtape2);
         panelEtapes.add(panelEtape2Sphere);
-        panelEtape1.add(panelEtape2Cube);
-        panelEtape1.add(panelEtape2Plan);
+        panelEtapes.add(panelEtape2Cube);
+        panelEtapes.add(panelEtape2Plan);
         panelEtapes.add(panelEtape3);
 
         // Panel zone affichage du rendu 3D
@@ -209,6 +257,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
 
         //panelZoneAffichage.add(labelIm); ///////// POUR L'EXEMPLE --> A SUPPRIMER APRES
         panelZoneAffichage.add(lDefaut);
+        panelZoneAffichage.add(lUtil);
 
         // Panel global fenetre
         JPanel panelGlobal = new JPanel();
@@ -228,14 +277,56 @@ public class FenetreCoord extends JFrame implements ActionListener{
         if(e.getSource() == accueil ){
             FenetreAccueil fa = new FenetreAccueil("Bienvenue", 1000, 1000);
         }
+        if(e.getSource()== AffDefaut){
+            System.out.println(" Version par defaut");
+            panelZoneAffichage.setVisible(true); // sert dans le cas ou on veut afficher le rendu par defaut apres avoir clique sur le bouton
+            // effacer le rendu (qui setVisible ce pannel a false)
+            lDefaut.setVisible(true);
+        }
+        if (e.getSource() == effRendu) {
+            System.out.println(" Effacer");
+            panelZoneAffichage.setVisible(false);
+        }
+
         if (listeVolume.getSelectedItem() == "--Choix volume--"){
             panelEtape2.setVisible(true);
         }
+
         if (listeVolume.getSelectedItem() == "Sphère"){
             System.out.println("Sphère sélectionnée");
             panelEtape2.setVisible(false); // on "allume" le panel qu'on veut par rapport au menu deroulant
             panelEtape2Sphere.setVisible(true);
             panelEtape2Cube.setVisible(false);
+
+            if (e.getSource()==etapeSuiv2) {
+                rUtil = Integer.parseInt(rayonSphere.getText());
+                xUtil = Integer.parseInt(xCentreSphere.getText());
+                yUtil = Integer.parseInt(yCentreSphere.getText());
+                zUtil = Integer.parseInt(zCentreSphere.getText());
+                Vector3d centerUtil = new Vector3d(xUtil,yUtil,zUtil);
+                Sphere sp=new Sphere(centerUtil,rUtil,new Metal(Color.gray));
+                drawableUtil.add(sp);
+                // visualisation dans la scene :
+                Scene sceneUtil = new Scene(drawableUtil, new Vector3d(1, 2*Math.cos(0), 2));
+                Camera camDefaut = new Camera(new Vector3d(-4, -2.5, 0), new Vector3d(1,0 ,0 ), width, height, Math.PI/2);
+                ImageIcon renduUtil = new ImageIcon(camDefaut.renderImage(sceneUtil,10));
+
+
+                lUtil.setLocation(0,0); // label qui contient l'Icon
+                lUtil.setSize(1275,1000);
+                lUtil.setIcon(renduUtil);
+                lUtil.setVisible(true);
+            }
+            /*
+            System.out.println(r);
+            System.out.println(x);
+            System.out.println(y);
+            System.out.println(z);
+            */
+
+            // on va dire qu'ici pour les tests quand on clique sur valider les coordonnées ça a le même effet
+            // que si on cliquait sur ajouter le volume à la scene et aussi afficher la scene
+
         }
         if (listeVolume.getSelectedItem() == "Cube"){
             System.out.println("Cube sélectionné");
@@ -253,40 +344,22 @@ public class FenetreCoord extends JFrame implements ActionListener{
             System.out.println("Matériau diffusif sélectionné");
         }
 
-        // conditions pour pouvoir passer a l'etape suivante :
-        // avoir choisi un volume ET une matiere
-
-        if (e.getSource() == etapeSuiv1 && (listeVolume.getSelectedItem()=="--Choix volume--"||listeMatieres.getSelectedItem()=="--Choix matière--")) {
-            System.out.println("Il faut sélectionner un volume et une matière pour pouvoir passer à l'étape suivante");
-        }
-        if(e.getSource()== AffDefaut){
-            System.out.println(" Version par defaut");
-            panelZoneAffichage.setVisible(true); // sert dans le cas ou on veut afficher le rendu par defaut apres avoir clique sur le bouton
-            // effacer le rendu (qui setVisible ce pannel a false)
-            lDefaut.setVisible(true);
-        }
-        if (e.getSource() == effRendu) {
-            System.out.println(" Effacer");
-            panelZoneAffichage.setVisible(false);
-        }
-
 
         // TESTS SUR LA LISTE
         // POUR l'instant à chaque clic sur n'importe quel bouton le system.out.println s'affiche dans terminal
         // A REMPLACER PAR UN FOR EACH (mais pas la syntaxe sous la main actuellement)
-        /*System.out.println("La liste avec les infos entrees par l'utilisateur contient :");
+        System.out.println("La liste avec les infos entrees par l'utilisateur contient :");
         for (int i=0; i<drawableUtil.size();i++){
             System.out.println(drawableUtil.get(i));
         }
 
-         */
 
-    }
+    }// fin du actionPerformed
+
         public static void main (String[]args){
             FenetreCoord f = new FenetreCoord(" IHM", 1700, 1000);
         }
 }
-
 
 // TO DO :
 
@@ -305,6 +378,8 @@ public class FenetreCoord extends JFrame implements ActionListener{
 // esthétique : rendre l'interface sympa: pdt vacances
 // placement, mise en forme du texte Fenetre Accuei/ Adieu
 // couleurs
+
+
 // Test de modif de police de caractère
 // Font police = new Font(" Calibri ", Font.BOLD, 18);
 // labelVide.setFont(police);
@@ -334,4 +409,8 @@ public class FenetreCoord extends JFrame implements ActionListener{
     Material material_default = new Diffuse(Color.red);
     Plane plan = new Plane(normal_default, center_default, material_default);
     drawableUtil.add(plan);
+
+    if (e.getSource() == etapeSuiv1 && (listeVolume.getSelectedItem()=="--Choix volume--"||listeMatieres.getSelectedItem()=="--Choix matière--")) {
+        System.out.println("Il faut sélectionner un volume et une matière pour pouvoir passer à l'étape suivante");
+    }
  */
