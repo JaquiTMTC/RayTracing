@@ -15,15 +15,14 @@ public class FenetreCoord extends JFrame implements ActionListener{
     JButton accueil = new JButton("A propos");
     JButton AffDefaut = new JButton("Afficher le rendu par défaut");
     JButton effRendu = new JButton("Effacer le rendu");
-    JButton etapeSuiv1 = new JButton("Passer étape suivante");
-    JButton etapeSuiv2 = new JButton("Valider les coordonées");
+    JButton etapeSuiv1 = new JButton("Passer étape suivante 0 action");
+    JButton etapeSuiv2 = new JButton("Valider les coordonées 0 action");
     JButton ajout = new JButton("Ajouter le volume à la liste");
     JButton affUtil = new JButton("Afficher mon rendu");
     // labels
     JLabel lDefaut = new JLabel();
     JLabel lUtil = new JLabel();
     JLabel labelTestRenduUtil = new JLabel();
-
     // textFields
     JTextField rayonSphere = new JTextField();
     JTextField xCentreSphere = new JTextField();
@@ -39,11 +38,14 @@ public class FenetreCoord extends JFrame implements ActionListener{
     // listes
     LinkedList<Drawable> listeDefaut;
     LinkedList<Drawable>drawableUtil;
-
     // cameras
     Camera camDefaut;
     // scenes
     Scene sceneDefaut;
+    // vecteurs
+    Vector3d centerUtil;
+    // spheres
+    Sphere spUtil;
     int rUtil;
     int xUtil;
     int yUtil;
@@ -162,30 +164,31 @@ public class FenetreCoord extends JFrame implements ActionListener{
 */
         listeDefaut= new LinkedList<Drawable>();
 
+        // remplissage de la listeDefaut
+        Metal silver = new Metal(Color.black);
+        Diffuse white = new Diffuse(Color.white);
+        Diffuse red = new Diffuse(Color.red);
+        Diffuse blue = new Diffuse(Color.blue);
+        Diffuse green = new Diffuse(Color.green);
 
+        listeDefaut.add(new Sphere(new Vector3d(4, 0, 0), 1.5, blue));
+        listeDefaut.add(new Sphere(new Vector3d(-0.5, 0.2, 0.2), 0.1, silver));
+        listeDefaut.add(new Plane(new Vector3d(0, 1, 0), new Vector3d(0, -3, 0 ), red));
+        listeDefaut.add(new Plane(new Vector3d(0, -1, 0), new Vector3d(0, 3, 0 ), green));
+        listeDefaut.add(new Plane(new Vector3d(-1, 0, 0), new Vector3d(5, 0, 0), white));
+        listeDefaut.add(new Plane(new Vector3d(0, 0, -1), new Vector3d(0, 0, 3), white));
+        listeDefaut.add(new Plane(new Vector3d(0, 0, 1), new Vector3d(0, 0, -3), white));
+        listeDefaut.add(new Plane(new Vector3d(1, 0, 0), new Vector3d(-5, 0, 0), white));
+        listeDefaut.add(new Cube(1,1, 1, new Vector3d(2, .7, .7), green));
+        // theta=0 dans la version par defaut
 
-
-
-
-
-
-
-
-
-
-
-
-
-        //ImageIcon renduParDefaut = new ImageIcon(camDefaut.renderImage(sceneDefaut,10));
-
-
-
-
-        //lDefaut.setIcon(renduParDefaut);
+        sceneDefaut = new Scene(listeDefaut, new Vector3d(1, 2*Math.cos(0), 2));
+        lDefaut = genereLabel(camDefaut, listeDefaut,sceneDefaut);
+        lDefaut.setBounds(0,0,1275,1000);
         lDefaut.setVisible(false); // deviendra visible quand l'utilisateur cliquera sur le bouton "afficher la version par defaut"
 
-        drawableUtil=new LinkedList<Drawable>(); // instanciation
 
+        drawableUtil = new LinkedList<Drawable>(); // instanciation
 
         // PANNEAUX
 
@@ -270,7 +273,6 @@ public class FenetreCoord extends JFrame implements ActionListener{
         panelEtapes.add(panelEtape3);
 
         // Panel zone affichage du rendu 3D
-
         panelZoneAffichage.setLayout(null);
         panelZoneAffichage.setBounds(425, 0, 1275, 1000);
         panelZoneAffichage.setBackground(new Color(232,248,245)); // même couleur que le pannel Global
@@ -307,37 +309,10 @@ public class FenetreCoord extends JFrame implements ActionListener{
             FenetreAccueil fa = new FenetreAccueil("Bienvenue", 1000, 1000);
         }
         if(e.getSource()== AffDefaut){
-            System.out.println(" Version par defaut");
-            panelZoneAffichage.setVisible(true); // sert dans le cas ou on veut afficher le rendu par defaut apres avoir clique sur le bouton
-            // effacer le rendu (qui setVisible ce pannel a false)
-
-
-            Metal silver = new Metal(Color.black);
-            Diffuse white = new Diffuse(Color.white);
-            Diffuse red = new Diffuse(Color.red);
-            Diffuse blue = new Diffuse(Color.blue);
-            Diffuse green = new Diffuse(Color.green);
-
-            listeDefaut.add(new Sphere(new Vector3d(4, 0, 0), 1.5, blue));
-            listeDefaut.add(new Sphere(new Vector3d(-0.5, 0.2, 0.2), 0.1, silver));
-            listeDefaut.add(new Plane(new Vector3d(0, 1, 0), new Vector3d(0, -3, 0 ), red));
-            listeDefaut.add(new Plane(new Vector3d(0, -1, 0), new Vector3d(0, 3, 0 ), green));
-            listeDefaut.add(new Plane(new Vector3d(-1, 0, 0), new Vector3d(5, 0, 0), white));
-            listeDefaut.add(new Plane(new Vector3d(0, 0, -1), new Vector3d(0, 0, 3), white));
-            listeDefaut.add(new Plane(new Vector3d(0, 0, 1), new Vector3d(0, 0, -3), white));
-            listeDefaut.add(new Plane(new Vector3d(1, 0, 0), new Vector3d(-5, 0, 0), white));
-            listeDefaut.add(new Cube(1,1, 1, new Vector3d(2, .7, .7), green));
-            // theta=0 dans la version par defaut
-            sceneDefaut = new Scene(listeDefaut, new Vector3d(1, 2*Math.cos(0), 2));
-
-            lDefaut = genereLabel(camDefaut, listeDefaut,sceneDefaut);
-            lDefaut.setLocation(0,0); // label Defaut qui contient l'Icon
-            lDefaut.setSize(1275,1000);
-
-
-
+            System.out.println("Version par defaut");
+            panelZoneAffichage.setVisible(true); // sert dans le cas ou on veut afficher le rendu par defaut apres avoir
+            // clique sur le bouton effacer le rendu (qui setVisible ce pannel a false)
             lDefaut.setVisible(true);
-
         }
         if (e.getSource() == effRendu) {
             System.out.println("Effacer");
@@ -347,7 +322,6 @@ public class FenetreCoord extends JFrame implements ActionListener{
         if (listeVolume.getSelectedItem() == "--Choix volume--"){
             panelEtape2.setVisible(true);
         }
-
         if (listeVolume.getSelectedItem() == "Sphère"){
             System.out.println("Sphère sélectionnée");
             panelEtape2.setVisible(false); // on "allume" le panel qu'on veut par rapport au menu deroulant
@@ -356,13 +330,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
             // on va dire qu'ici pour les tests quand on clique sur valider les coordonnées ça a le même effet
             // que si on cliquait sur ajouter le volume à la scene et aussi afficher la scene
         }
-
         if (e.getSource()==etapeSuiv2) {
-
-            // visualisation dans la scene :
-            //Scene sceneUtil = new Scene(drawableUtil, new Vector3d(1, 2*Math.cos(0), 2));
-            //Camera camDefaut = new Camera(new Vector3d(-4, -2.5, 0), new Vector3d(1,0 ,0 ), width, height, Math.PI/2);
-            //ImageIcon renduUtil = new ImageIcon(camDefaut.renderImage(sceneUtil,10));
 /*
                 lUtil.setLocation(0,0); // label qui contient l'Icon
                 lUtil.setSize(1275,1000);
@@ -371,12 +339,6 @@ public class FenetreCoord extends JFrame implements ActionListener{
 
  */
         }
-            /*
-            System.out.println(r);
-            System.out.println(x);
-            System.out.println(y);
-            System.out.println(z);
-            */
         if (listeVolume.getSelectedItem() == "Cube"){
             System.out.println("Cube sélectionné");
             panelEtape2.setVisible(false);
@@ -395,34 +357,53 @@ public class FenetreCoord extends JFrame implements ActionListener{
 
         if (e.getSource()==ajout){
             System.out.println("Avant la récupération des champs, la liste drawableUtil a une size de :"+drawableUtil.size());
-            rUtil = Integer.parseInt(rayonSphere.getText());
-            xUtil = Integer.parseInt(xCentreSphere.getText());
-            yUtil = Integer.parseInt(yCentreSphere.getText());
-            zUtil = Integer.parseInt(zCentreSphere.getText());
-            Vector3d centerUtil = new Vector3d(xUtil,yUtil,zUtil);
-            Sphere sp=new Sphere(centerUtil,rUtil,new Metal(Color.gray));
-            drawableUtil.add(sp);
+            // recuperation des champs non vides
+            if (!(rayonSphere.getText()).isEmpty()&&!(xCentreSphere.getText()).isEmpty()&&
+                    !(yCentreSphere.getText()).isEmpty()&&!(zCentreSphere.getText()).isEmpty()){
+                System.out.println("Tous les champs de la sphère sont non-vides");
+                rUtil = Integer.parseInt(rayonSphere.getText());
+                xUtil = Integer.parseInt(xCentreSphere.getText());
+                yUtil = Integer.parseInt(yCentreSphere.getText());
+                zUtil = Integer.parseInt(zCentreSphere.getText());
+            // else if (tous les param de cube sont non-vides) {
+                // recuperation des param de cube
+                // }
+            // else if (tous les param de plan sont non-vides {
+                // recuperation des param de plan
+                // }
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(null,
+                        "Veuillez compléter les champs manquants");
+            }
+            centerUtil = new Vector3d(xUtil,yUtil,zUtil);
+            spUtil=new Sphere(centerUtil,rUtil,new Metal(Color.gray));
+            // AJOUT
+            drawableUtil.add(spUtil);
             System.out.println("Après la récupération des champs, la liste drawableUtil a une size de :"+drawableUtil.size());
             // JUSTE POUR DES TESTS, MAIS UN FOR EACH C'EST MIEUX POUR UNE LINKEDLIST ///
             for (int i = 0; i<drawableUtil.size(); i++){
                 System.out.println(drawableUtil.get(i));
             }
         }
-        if (e.getSource()==affUtil){
+        if (e.getSource()==affUtil&&drawableUtil.size()!=0){
+            // pour pouvoir afficher son rendu l'utilisateur doit cliquer sur le bouton "Afficher mon rendu" après avoir
+            // ajouté au moins un volume à sa liste
             System.out.println("L'utilisateur souhaite afficher son rendu");
             System.out.println("La liste drawableUtil contient actuellement "+drawableUtil.size()+" élément(s)" );
+            /*
             labelTestRenduUtil.setBounds(10,10,300,300);
             labelTestRenduUtil.setForeground(Color.blue);
             labelTestRenduUtil.setText("Coucou");
-            ImageIcon im_test=new ImageIcon("bois.png");
+            ImageIcon im_test = new ImageIcon("bois.png");
             labelTestRenduUtil.setIcon(im_test);
             labelTestRenduUtil.setVisible(true);
+             */
 
-            lUtil.setBounds(0,0,1275,1000);
             Scene sceneUtil = new Scene(drawableUtil,new Vector3d (1, 2*Math.cos(0), 2));
-            ImageIcon rendu_util = new ImageIcon(camDefaut.renderImage(sceneUtil,10));
-            lUtil.setIcon(rendu_util);
+            lUtil = genereLabel(camDefaut,drawableUtil,sceneUtil);
+            lUtil.setBounds(0,0,1275,1000);
             lUtil.setVisible(true);
+
         }
 
         // TESTS SUR LA LISTE
@@ -446,6 +427,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
 
 //  version par défaut --> voir position optimale camera : A, fait
 // créer les listes qui se remplissent avec les demandes de l'utilisateur: A
+// Lors de la selection des param de la sphere : ajouter des boutons "réinitialiser les coordonnées", "réinitialiser le rayon" : A
 // separer les contenus multimedia du code --> et donc mdifier les chemins d'acces aux images : A
 // textures dans les plans (nos images)
 // volume à rajouter: plan placé par un point et les coordonnées de sa normale : C (item ComboBox: choix plan ) fait
