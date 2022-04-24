@@ -310,13 +310,14 @@ public class FenetreCoord extends JFrame implements ActionListener{
         }
         if(e.getSource()== AffDefaut){
             System.out.println("Version par defaut");
-            panelZoneAffichage.setVisible(true); // sert dans le cas ou on veut afficher le rendu par defaut apres avoir
+            //panelZoneAffichage.setVisible(true); // sert dans le cas ou on veut afficher le rendu par defaut apres avoir
             // clique sur le bouton effacer le rendu (qui setVisible ce pannel a false)
             lDefaut.setVisible(true);
         }
         if (e.getSource() == effRendu) {
             System.out.println("Effacer");
-            panelZoneAffichage.setVisible(false);
+            //panelZoneAffichage.setVisible(false);
+            lDefaut.setVisible(false);
         }
 
         if (listeVolume.getSelectedItem() == "--Choix volume--"){
@@ -376,7 +377,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
                         "Veuillez compléter les champs manquants");
             }
             centerUtil = new Vector3d(xUtil,yUtil,zUtil);
-            spUtil=new Sphere(centerUtil,rUtil,new Metal(Color.gray));
+            spUtil=new Sphere(centerUtil,rUtil,new Diffuse(Color.gray));
             // AJOUT
             drawableUtil.add(spUtil);
             System.out.println("Après la récupération des champs, la liste drawableUtil a une size de :"+drawableUtil.size());
@@ -402,7 +403,9 @@ public class FenetreCoord extends JFrame implements ActionListener{
             Scene sceneUtil = new Scene(drawableUtil,new Vector3d (1, 2*Math.cos(0), 2));
             lUtil = genereLabel(camDefaut,drawableUtil,sceneUtil);
             lUtil.setBounds(0,0,1275,1000);
+            panelZoneAffichage.add(lUtil);
             lUtil.setVisible(true);
+            panelZoneAffichage.setVisible(true);
 
         }
 
