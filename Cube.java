@@ -145,7 +145,7 @@ public class Cube extends Drawable {
     }
 
     public Vector3d getUVCoordinates(Vector3d point) {
-        return null;
+        return Vector3d.XDIR;
     }
 
     public String toString(){

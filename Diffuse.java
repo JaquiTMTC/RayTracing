@@ -18,8 +18,6 @@ public class Diffuse extends Material{
         double angle = info.normal.angle(toLight)*7/8;
         if(infoLight != null && infoLight.t <= lightDistance){  // If we are in the shadow of an object, we render black
             angle = (Math.PI/2)*7/8;
-            //angle += Math.PI/8;
-            //return Color.red;
         }
 
         // We get the color of a point based on the color of the object and the angle of the surface to the light
@@ -27,6 +25,10 @@ public class Diffuse extends Material{
         double gColor = Math.max(getPrimaryColor(info).getGreen() * Math.cos(angle), 0);
         double bColor = Math.max(getPrimaryColor(info).getBlue() * Math.cos(angle), 0);
         return new Color((int) rColor, (int) gColor, (int) bColor);
+    }
+
+    protected Color getPrimaryColor(HitInfo info) {
+        return color;
     }
 
     boolean bounces() {

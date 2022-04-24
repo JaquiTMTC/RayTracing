@@ -71,7 +71,7 @@ public class Camera {
         Ray ray = createRay(x, y);
         //System.out.println(x+" "+y);
         Color returnColor = renderRay(ray, scene, maxBounces);
-        returnColor = ((returnColor==null) ? Color.red : returnColor);
+        returnColor = ((returnColor==null) ? sky(ray) : returnColor);
         return (returnColor);
     }
 
@@ -119,6 +119,12 @@ public class Camera {
             }
         }
         return imageRendu ;
+    }
+
+    private Color sky(Ray ray) {
+        double blueProportion = 1-(Math.abs(ray.dir.z*0.75));
+        //System.out.println(blueProportion);
+        return new Color((int)(blueProportion*255), (int)(blueProportion*255), 255);
     }
 
 

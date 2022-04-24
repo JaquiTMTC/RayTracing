@@ -7,8 +7,4 @@ public abstract class Material {
     }
     abstract boolean bounces();
     abstract Ray bouncedRay(Ray ray, Vector3d normal, Vector3d pos);
-
-    public Color getPrimaryColor(HitInfo info) {
-        return color;
-    }
 }
