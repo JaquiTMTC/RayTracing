@@ -75,6 +75,15 @@ public class Sphere extends Drawable {
         return point.sub(center).normalize();
     }
 
+    Vector3d getUVCoordinates(Vector3d point) {
+        Vector3d toPoint = point.sub(center);
+        // We convert to polar coordinates
+        double r = toPoint.norm();
+        double theta = Math.acos(toPoint.z/r);
+        double phi = Math.atan(toPoint.y/toPoint.x);
+        return new Vector3d(phi, theta, 0);
+    }
+
     public Sphere copy() {
         return new Sphere(center, radius, material);
     }

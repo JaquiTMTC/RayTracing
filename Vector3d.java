@@ -1,4 +1,12 @@
 public class Vector3d {
+
+    // Static constants
+    public static final Vector3d XDIR = new Vector3d(1, 0, 0);
+    public static final Vector3d YDIR = new Vector3d(0, 1, 0);
+    public static final Vector3d ZDIR = new Vector3d(0, 0, 1);
+
+    // Attributes
+
     double x;
     double y;
     double z;
@@ -64,6 +72,10 @@ public class Vector3d {
 
     public String toString(){
         return "("+x+", "+y+", "+z+")";
+    }
+
+    public boolean isColinear (Vector3d v){
+        return normalize().equals(v.normalize()) || normalize().equals(v.normalize().mult(-1));
     }
 
     public boolean equals(Object o) {

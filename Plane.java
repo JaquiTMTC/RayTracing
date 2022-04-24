@@ -31,6 +31,20 @@ public class Plane extends Drawable{
         return new Plane(normal, center, material);
     }
 
+    Vector3d getUVCoordinates(Vector3d point) {
+        Vector3d xDir;
+        Vector3d yDir;
+        if(normal.isColinear(Vector3d.ZDIR)){
+            xDir = Vector3d.XDIR;
+            yDir = Vector3d.YDIR;
+        } else {
+            xDir = normal.cross(Vector3d.ZDIR).normalize();
+            yDir = normal.cross(xDir).normalize();
+        }
+        Vector3d toPoint = point.sub(center);
+        return new Vector3d(toPoint.dot(xDir), toPoint.dot(yDir), 0);
+    }
+
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

@@ -4,14 +4,20 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class Window extends JPanel implements ActionListener {
 
     double theta;
+
+    static int width = 1080;
+    static int height = 1080;
 
     public Window(double theta){
         this.theta = theta;
@@ -28,9 +34,6 @@ public class Window extends JPanel implements ActionListener {
 
         // Initializing scene
 
-        int width = 720;
-        int height = 720;
-
         //BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
 
@@ -40,18 +43,33 @@ public class Window extends JPanel implements ActionListener {
         Diffuse blue = new Diffuse(Color.blue);
         Diffuse green = new Diffuse(Color.green);
 
+        BufferedImage textureImg = null;
+        try {
+            textureImg = ImageIO.read(new File("textures/wood.jpg"));
+        } catch (IOException e) {
+            System.out.println("Error : couldn't import file");
+        }
+        Texture wood = new Texture(textureImg);
+
+        try {
+            textureImg = ImageIO.read(new File("textures/brick.jpg"));
+        } catch (IOException e) {
+            System.out.println("Error : couldn't import file");
+        }
+        Texture bricks = new Texture(textureImg);
+
 
         Camera camDefaut = new Camera(new Vector3d(0, 0, 0), new Vector3d(1, 0, 0), width, height, Math.PI/2);
         LinkedList<Drawable> listeDefaut= new LinkedList<Drawable>();
-        listeDefaut.add(new Sphere(new Vector3d(4, 0, 0), 1.5, blue));
+        listeDefaut.add(new Sphere(new Vector3d(4, 0, 0), 1.5, wood));
         listeDefaut.add(new Sphere(new Vector3d(-0.5, 0.2, 0.2), 0.1, silver));
-        listeDefaut.add(new Plane(new Vector3d(0, 1, 0), new Vector3d(0, -3, 0 ), red));
-        listeDefaut.add(new Plane(new Vector3d(0, -1, 0), new Vector3d(0, 3, 0 ), green));
-        listeDefaut.add(new Plane(new Vector3d(-1, 0, 0), new Vector3d(5, 0, 0), white));
-        listeDefaut.add(new Plane(new Vector3d(0, 0, -1), new Vector3d(0, 0, 3), white));
-        listeDefaut.add(new Plane(new Vector3d(0, 0, 1), new Vector3d(0, 0, -3), white));
+        //listeDefaut.add(new Plane(new Vector3d(0, 1, 0), new Vector3d(0, -3, 0 ), bricks));
+        //listeDefaut.add(new Plane(new Vector3d(0, -1, 0), new Vector3d(0, 3, 0 ), green));
+        //listeDefaut.add(new Plane(new Vector3d(-1, 0, 0), new Vector3d(5, 0, 0), white));
+        //listeDefaut.add(new Plane(new Vector3d(0, 0, -1), new Vector3d(0, 0, 3), white));
+        //listeDefaut.add(new Plane(new Vector3d(0, 0, 1), new Vector3d(0, 0, -3), wood));
         listeDefaut.add(new Plane(new Vector3d(1, 0, 0), new Vector3d(-5, 0, 0), white));
-        listeDefaut.add(new Cube(1,1, 1, new Vector3d(2, .7, .7), green));
+        //listeDefaut.add(new Cube(1,1, 1, new Vector3d(2, .7, .7), green));
         // theta=0 dans la version par defaut
         Scene sceneDefaut = new Scene(listeDefaut, new Vector3d(1, 2, 2));
 
@@ -85,7 +103,7 @@ public class Window extends JPanel implements ActionListener {
         frame.getContentPane().add(window);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(720, 720);
+        frame.setSize(width, height);
         frame.setVisible(true);
 
         Timer timer = new Timer(10, window);

@@ -7,4 +7,6 @@ public abstract class Drawable {
     abstract Vector3d normal(Vector3d point);
     //abstract void precomputeCamera(Vector3d pos);
     abstract Drawable copy();
+
+    abstract Vector3d getUVCoordinates(Vector3d point);
 }

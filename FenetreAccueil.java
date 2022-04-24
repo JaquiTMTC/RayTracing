@@ -68,9 +68,9 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         color.setSize(300, 15);
 
         JLabel blue = new JLabel();
-        ImageIcon palette = new ImageIcon("degrade.png");
-        blue.setBounds(20, 20, 600, 60);
-        blue.setIcon(palette);
+        blue.setBounds(20, 20, 600, 50);
+        ImageIcon cubeBleu = new ImageIcon("palette.png");
+        blue.setIcon(cubeBleu);
         blue.setVisible(true);
 
         JLabel mat = new JLabel("                          Choix des matériaux:      METALLIQUE  ou DIFFUSIF ");
