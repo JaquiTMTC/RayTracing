@@ -35,7 +35,12 @@ public class Diffuse extends Material{
         return false;
     }
 
-    Ray bouncedRay(Ray ray, Vector3d normal, Vector3d pos) {
-        return null;
+    Ray[] bouncedRays(HitInfo info) {
+        return new Ray[0];
     }
+
+    double[] getCoeffs(HitInfo info) {
+        return new double[0];
+    }
+
 }

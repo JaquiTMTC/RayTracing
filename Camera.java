@@ -1,7 +1,6 @@
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.util.LinkedList;
 
 public class Camera {
     protected Vector3d normal;
@@ -85,7 +84,7 @@ public class Camera {
         }
 
         if(info.closestObject.material.bounces()){
-            return renderRay(info.closestObject.material.bouncedRay(ray, info.normal, info.position), scene, maxBounces-1);
+            return renderRay(info.rayIn.bounce(info.position, info.normal), scene, maxBounces-1);
         } else {
             return info.closestObject.material.getColor(info, scene, this);
         }

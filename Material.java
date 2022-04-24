@@ -6,5 +6,7 @@ public abstract class Material {
         return color;
     }
     abstract boolean bounces();
-    abstract Ray bouncedRay(Ray ray, Vector3d normal, Vector3d pos);
+    abstract Ray[] bouncedRays(HitInfo info);
+
+    abstract double[] getCoeffs(HitInfo info);
 }
