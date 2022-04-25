@@ -8,7 +8,7 @@ public class Glass extends Material{
 
     public Glass(double index){
         this.index = index;
-        color = Color.WHITE;
+        color = Color.GREEN;
     };
 
     public boolean bounces() {
@@ -16,11 +16,27 @@ public class Glass extends Material{
     }
 
     public double[] getCoeffs(HitInfo info){
+        boolean outside = info.rayIn.dir.dot(info.normal) < 0; // Is the ray coming from outside
         double[] coeffs;
         if(canRefract(info)){
             coeffs = new double[2];
-            coeffs[0] = (1-Math.abs(info.rayIn.dir.dot(info.normal)));
-            coeffs[1] = (Math.abs(info.rayIn.dir.dot(info.normal)));
+            if(outside){
+                double i = info.rayIn.dir.angle(info.normal.mult(-1));
+                double sinr = Math.sin(i) / index;
+                double cosr = Math.sqrt(1 - Math.pow(sinr, 2));
+                double r = Math.asin(sinr);
+                coeffs[0] = 0.5*(Math.pow(Math.tan(i-r), 2)/Math.pow(Math.tan(i+r), 2))+0.5*(Math.pow(Math.sin(i-r), 2)/Math.pow(Math.sin(i+r), 2));
+            } else {
+                double i = info.rayIn.dir.angle(info.normal);
+                double sinr = Math.sin(i) * index;
+                double cosr = Math.sqrt(1 - Math.pow(sinr, 2));
+                double r = Math.asin(sinr);
+                coeffs[0] = 0.5*(Math.pow(Math.tan(i-r), 2)/Math.pow(Math.tan(i+r), 2))+0.5*(Math.pow(Math.sin(i-r), 2)/Math.pow(Math.sin(i+r), 2));
+            }
+            //System.out.println(coeffs[0]);
+            coeffs[1] = 1-coeffs[0];
+//            coeffs[0] = (1-Math.abs(info.rayIn.dir.dot(info.normal)));
+//            coeffs[1] = (Math.abs(info.rayIn.dir.dot(info.normal)));
         } else {
             coeffs = new double[1];
             coeffs[0] = 1;

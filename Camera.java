@@ -76,7 +76,7 @@ public class Camera {
 
     private Color renderRay(Ray ray, Scene scene, int maxBounces){
 
-        HitInfo info= getIntersection(scene, ray);
+        HitInfo info = getIntersection(scene, ray);
 
 
         if (info==null){
@@ -84,7 +84,38 @@ public class Camera {
         }
 
         if(info.closestObject.material.bounces()){
-            return renderRay(info.rayIn.bounce(info.position, info.normal), scene, maxBounces-1);
+            Ray[] bouncedRays = info.closestObject.material.bouncedRays(info);
+//            if(bouncedRays.length==1){
+//                return renderRay(info.closestObject.material.bouncedRays(info)[0], scene, maxBounces-1);
+//            }
+            double[] coeffs = info.closestObject.material.getCoeffs(info);
+//            Color newColor1 = renderRay(bouncedRays[0], scene, maxBounces-1);
+//            Color newColor2 = renderRay(bouncedRays[1], scene, maxBounces-1);
+//            newColor1 = newColor1==null ? sky(ray) : newColor1;
+//            newColor2 = newColor2==null ? sky(ray) : newColor2;
+//            int red = (int)(coeffs[0]*newColor1.getRed()+coeffs[1]*newColor2.getRed());
+//            int green = (int)(coeffs[0]*newColor1.getGreen()+coeffs[1]*newColor2.getGreen());
+//            int blue = (int)(coeffs[0]*newColor1.getBlue()+coeffs[1]*newColor2.getBlue());
+            double coeffTotal = coeffs[0];
+            Color avgColor = renderRay(bouncedRays[0], scene, maxBounces-1);
+            avgColor = avgColor==null ? sky(ray) : avgColor;
+            //avgColor = Color.white;
+            for(int i=1; i<bouncedRays.length; i++){
+                Color newColor = renderRay(bouncedRays[i], scene, maxBounces-1);
+                newColor = newColor==null ? sky(ray) : newColor;
+                int red = (int)((coeffTotal*avgColor.getRed()+coeffs[i]*newColor.getRed())/(coeffTotal+coeffs[i]));
+                int green = (int)((coeffTotal*avgColor.getGreen()+coeffs[i]*newColor.getGreen())/(coeffTotal+coeffs[i]));
+                int blue = (int)((coeffTotal*avgColor.getBlue()+coeffs[i]*newColor.getBlue())/(coeffTotal+coeffs[i]));
+//                System.out.println(avgColor.getRed());
+//                System.out.println(newColor.getRed());
+//                System.out.println(red);
+//                System.out.println("---------");
+                coeffTotal += coeffs[i];
+                //System.out.println(coeffTotal);
+                avgColor = new Color(red, green, blue);
+            }
+            return avgColor;
+            //return renderRay(info.rayIn.bounce(info.position, info.normal), scene, maxBounces-1);
         } else {
             return info.closestObject.material.getColor(info, scene, this);
         }
