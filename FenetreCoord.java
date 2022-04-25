@@ -310,13 +310,13 @@ public class FenetreCoord extends JFrame implements ActionListener{
         }
         if(e.getSource()== AffDefaut){
             System.out.println("Version par defaut");
-            //panelZoneAffichage.setVisible(true); // sert dans le cas ou on veut afficher le rendu par defaut apres avoir
+            panelZoneAffichage.setVisible(true); // sert dans le cas ou on veut afficher le rendu par defaut apres avoir
             // clique sur le bouton effacer le rendu (qui setVisible ce pannel a false)
             lDefaut.setVisible(true);
         }
         if (e.getSource() == effRendu) {
             System.out.println("Effacer");
-            //panelZoneAffichage.setVisible(false);
+            panelZoneAffichage.setVisible(false);
             lDefaut.setVisible(false);
         }
 
@@ -399,13 +399,15 @@ public class FenetreCoord extends JFrame implements ActionListener{
             labelTestRenduUtil.setIcon(im_test);
             labelTestRenduUtil.setVisible(true);
              */
-
+            lDefaut.setVisible(false);
+            lUtil.setVisible(false);
             Scene sceneUtil = new Scene(drawableUtil,new Vector3d (1, 2*Math.cos(0), 2));
             lUtil = genereLabel(camDefaut,drawableUtil,sceneUtil);
             lUtil.setBounds(0,0,1275,1000);
             panelZoneAffichage.add(lUtil);
             lUtil.setVisible(true);
             panelZoneAffichage.setVisible(true);
+            lUtil.repaint();
 
         }
 
