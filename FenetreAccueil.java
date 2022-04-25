@@ -26,18 +26,19 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         Description.setBounds(10, 10, 350, 260);
         Color lightBlue = new Color(204, 209, 255);
         Description.setBackground(lightBlue);
-        Description.setText("  Bienvenue ! " + "Voici les fonctionnalités de notre" + "\n" +
-                "  programme qui repose sur la technique du raytracing, utilisée" + "\n" +
-                "  dans le cinéma. " + "Elle permet de visualiser des objets " + "\n" +
-                "  en 3D. " + "Pour cela, une caméra  est positionnée  dans " + "\n" +
-                "  l'espace. " + "On définit ensuite une scène, qui contient" + "\n" +
-                "  les objets à afficher: " + "Des sphères par exemple." + "\n" +
-                "  Enfin, des rayons sont envoyés de la camera vers la scène. " + "\n" +
-                "  On calcule l'intersection entre les rayons et l'objet." + "\n" +
-                "  Les réflexions sont prises en compte, et dépendent du " + "\n" +
-                "  matériau de l'objet. Tu peux modifier les paramètres suivants: " + "\n" +
-                "  la position, la taille, le nombre, le matériau, la couleur, " + "\n" +
-                "  la texture ainsi que le type des objets dans la scène.  " + " \n" +
+        Description.setText("  Bienvenue ! " +"\n"+
+                "  Voici les fonctionnalités de notre programme qui repose " + "\n" +
+                "  sur la technique du raytracing, utilisée dans le cinéma." + "\n" +
+                "  Elle permet de visualiser des objets en 3D. Pour cela," + "\n" +
+                "  une caméra  est positionnée  dans l'espace. On définit " + "\n" +
+                "  ensuite une scène, qui contient les objets à afficher:" + "\n" +
+                "  des sphères par exemple. Enfin, des rayons sont  envoyés" + "\n" +
+                "  de la camera vers la scène. On calcule l'intersection " + "\n" +
+                "  entre les rayons et l'objet. Les réflexions sont prises" + "\n" +
+                "  en compte, et dépendent du matériau de l'objet. Tu peux" + "\n" +
+                "  modifier les paramètres suivants: la position, la taille," + "\n" +
+                "  le nombre, le matériau, la couleur, la texture ainsi que " + "\n" +
+                "  le type des objets dans la scène.  " + " \n" +
                 "  Voici  les options disponibles.  ");
 
         Font police = new Font(" Arial ",Font.PLAIN,12);
@@ -57,7 +58,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         diffuseMat.setIcon(imageDiffuse);
         diffuseMat.setVisible(true);
 
-        JLabel textures = new JLabel( "                     Choix des textures:     MUR DE BRIQUE  ou PLANCHER ");
+        JLabel textures = new JLabel( "                     Choix des textures :     MUR DE BRIQUE  ou BOIS ");
         textures.setBounds(20, 135, 500, 20);
         textures.setForeground(Color.white);
         Font police2 = new Font(" Arial ",Font.BOLD,14);
@@ -69,11 +70,11 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 
         JLabel blue = new JLabel();
         blue.setBounds(20, 20, 600, 50);
-        ImageIcon cubeBleu = new ImageIcon("palette.png");
+        ImageIcon cubeBleu = new ImageIcon("degrade.png");
         blue.setIcon(cubeBleu);
         blue.setVisible(true);
 
-        JLabel mat = new JLabel("                          Choix des matériaux:      METALLIQUE  ou DIFFUSIF ");
+        JLabel mat = new JLabel("                          Choix des matériaux :      METALLIQUE  ou DIFFUSIF ");
         mat.setBounds(5, 10, 700, 20);
         mat.setForeground(Color.white);
         mat.setFont(police2);
@@ -109,9 +110,15 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         plans.setBounds(630, 60, 250, 20);
         plans.setForeground(Color.black);
 
+        JLabel brickIcon = new JLabel();
+        brickIcon.setBounds(100, 165, 350, 50);
+        ImageIcon brick = new ImageIcon("brickwall.jpg");
+        brickIcon.setIcon(brick);
 
-
-
+        JLabel woodIcon = new JLabel();
+        woodIcon.setBounds(350, 165, 350, 50);
+        ImageIcon wood = new ImageIcon("wood.jpg");
+        woodIcon.setIcon(wood);
 
         // panels
         // PANEL PRESENTATION MATERIAUX
@@ -123,6 +130,8 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         panelMat.add(diffuseMat);
         panelMat.add(mat);
         panelMat.add(textures);
+        panelMat.add(brickIcon);
+        panelMat.add(woodIcon);
         panelMat.setVisible(true);
 
         // PANEL PRES COULEURS
