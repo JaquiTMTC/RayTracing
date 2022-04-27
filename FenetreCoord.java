@@ -15,7 +15,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
     JButton accueil = new JButton("A propos");
     JButton AffDefaut = new JButton("Afficher le rendu par défaut");
     JButton effRendu = new JButton("Effacer le rendu");
-    JButton valModeCoul = new JButton("✓");
+
     JButton etapeSuiv1 = new JButton("Passer étape suivante 0 action");
     JButton etapeSuiv2 = new JButton("Valider les coordonées 0 action");
     JButton ajout = new JButton("Ajouter le volume à la liste");
@@ -35,6 +35,10 @@ public class FenetreCoord extends JFrame implements ActionListener{
     JLabel lUtil = new JLabel();
     JLabel labelTestRenduUtil = new JLabel();
     // textFields
+    JTextField fR = new JTextField();
+    JTextField fG = new JTextField();
+    JTextField fB = new JTextField();
+
     JTextField rayonSphere = new JTextField();
     JTextField xCentreSphere = new JTextField();
     JTextField yCentreSphere = new JTextField();
@@ -55,6 +59,8 @@ public class FenetreCoord extends JFrame implements ActionListener{
     // panels
     JPanel panelCouleur = new JPanel();
     JPanel panelCouleur1 = new JPanel();
+    JPanel panelCouleurBasique = new JPanel();
+    JPanel panelCouleurRGB = new JPanel();
     JPanel panelEtape2 = new JPanel();
     JPanel panelEtape2Sphere = new JPanel();
     JPanel panelEtape2SphereParam = new JPanel();
@@ -129,16 +135,54 @@ public class FenetreCoord extends JFrame implements ActionListener{
         etapeSuiv1.addActionListener(this);
 
         // composants panelCouleur
-        // panelCouleur1
+            // panelCouleur1
         JLabel lSeleCoul = new JLabel("--Choix couleur--");
         lSeleCoul.setBounds(5,5,175,20);
+
         rBtnCoulBasique.setBounds(5, 5,80,20);
         rBtnCoulRGB.setBounds(90,5,80,20);
+
+        rBtnCoulBasique.addActionListener(this);
+        rBtnCoulRGB.addActionListener(this);
+
         ButtonGroup bg = new ButtonGroup();
         bg.add(rBtnCoulBasique);
         bg.add(rBtnCoulRGB);
-        valModeCoul.setBounds(5,30,45,20);
-        valModeCoul.addActionListener(this);
+
+            // panelCouleurBasique
+        rBtnNoir.setBounds(5,3,80,20);
+        rBtnBleu.setBounds(5,26,80,20);
+        rBtnVert.setBounds(5,49,80,20);
+        rBtnJaune.setBounds(90,3,80,20);
+        rBtnOrange.setBounds(90,26,80,20);
+        rBtnRouge.setBounds(90,49,80,20);
+
+        rBtnNoir.addActionListener(this);
+        rBtnBleu.addActionListener(this);
+        rBtnVert.addActionListener(this);
+        rBtnJaune.addActionListener(this);
+        rBtnOrange.addActionListener(this);
+        rBtnRouge.addActionListener(this);
+
+        ButtonGroup grpCoul = new ButtonGroup();
+        grpCoul.add(rBtnNoir);
+        grpCoul.add(rBtnBleu);
+        grpCoul.add(rBtnVert);
+        grpCoul.add(rBtnJaune);
+        grpCoul.add(rBtnOrange);
+        grpCoul.add(rBtnRouge);
+
+            // panel CouleurRGB
+        JLabel lR = new JLabel("Red");
+        lR.setBounds(5,5,80,20);
+        JLabel lG = new JLabel("Green");
+        lG.setBounds(50,5,80,20);
+        JLabel lB = new JLabel("Blue");
+        lB.setBounds(95,5,80,20);
+
+        fR.setBounds(5,25,40,20);
+        fG.setBounds(50,25,40,20);
+        fB.setBounds(95,25,40,20);
 
 
         // composants etape 2
@@ -294,23 +338,41 @@ public class FenetreCoord extends JFrame implements ActionListener{
 
         panelCouleur1.setVisible(true);
         panelCouleur1.setLayout(null);
-        panelCouleur1.setBounds(0,25,175,80);
+        panelCouleur1.setBounds(0,25,175,30);
         panelCouleur1.setBackground(Color.cyan);
+
+        panelCouleurBasique.setVisible(false); // deviendra visible si le rBtnCoulBasique est selectionne
+        panelCouleurBasique.setLayout(null);
+        panelCouleurBasique.setBounds(0,60,175,80);
+        panelCouleurBasique.setBackground(Color.pink);
+
+        panelCouleurBasique.add(rBtnNoir);
+        panelCouleurBasique.add(rBtnBleu);
+        panelCouleurBasique.add(rBtnVert);
+        panelCouleurBasique.add(rBtnJaune);
+        panelCouleurBasique.add(rBtnOrange);
+        panelCouleurBasique.add(rBtnRouge);
+
+        panelCouleurRGB.setVisible(false); // deviendra visible si le rBtnCoulRGB est selectionne
+        panelCouleurRGB.setLayout(null);
+        panelCouleurRGB.setBounds(0,60,175,80);
+        panelCouleurRGB.setBackground(Color.magenta);
+
+        panelCouleurRGB.add(lR);
+        panelCouleurRGB.add(lG);
+        panelCouleurRGB.add(lB);
+        panelCouleurRGB.add(fR);
+        panelCouleurRGB.add(fG);
+        panelCouleurRGB.add(fB);
+
 
         panelCouleur1.add(rBtnCoulBasique);
         panelCouleur1.add(rBtnCoulRGB);
-        panelCouleur1.add(valModeCoul);
 
         panelCouleur.add(lSeleCoul);
         panelCouleur.add(panelCouleur1);
-        panelCouleur.add(rBtnNoir);
-        panelCouleur.add(rBtnBleu);
-        panelCouleur.add(rBtnVert);
-        panelCouleur.add(rBtnJaune);
-        panelCouleur.add(rBtnOrange);
-        panelCouleur.add(rBtnRouge);
-
-
+        panelCouleur.add(panelCouleurBasique);
+        panelCouleur.add(panelCouleurRGB);
 
         JPanel panelEtape1 = new JPanel();
         panelEtape1.setLayout(null);
@@ -521,6 +583,17 @@ public class FenetreCoord extends JFrame implements ActionListener{
             System.out.println("Matériau diffusif sélectionné");
         }
 
+        if(rBtnCoulBasique.isSelected()){
+            System.out.println("Bouton basique coché détécté");
+            panelCouleurRGB.setVisible(false);
+            panelCouleurBasique.setVisible(true);
+        }
+        if(rBtnCoulRGB.isSelected()){
+            System.out.println("Bouton RGB coché détécté");
+            panelCouleurBasique.setVisible(false);
+            panelCouleurRGB.setVisible(true);
+        }
+
         if (e.getSource()==ajout){
             System.out.println("Avant la récupération des champs, la liste drawableUtil a une size de :"+drawableUtil.size());
             // recuperation des champs non vides
@@ -647,3 +720,6 @@ public class FenetreCoord extends JFrame implements ActionListener{
         System.out.println("Il faut sélectionner un volume et une matière pour pouvoir passer à l'étape suivante");
     }
  */
+//JButton valModeCoul = new JButton("✓");
+//        valModeCoul.setBounds(5,30,45,20);
+//        valModeCoul.addActionListener(this);
