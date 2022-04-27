@@ -786,7 +786,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
 // TO DO :
 
 //  version par défaut --> voir position optimale camera : A, fait
-// créer les listes qui se remplissent avec les demandes de l'utilisateur: A
+// créer les listes qui se remplissent avec les demandes de l'utilisateur: A,fait
 // Lors de la selection des param de la sphere : ajouter des boutons "réinitialiser les coordonnées", "réinitialiser le rayon" : A
 // separer les contenus multimedia du code --> et donc mdifier les chemins d'acces aux images : A
 // textures dans les plans (nos images)
@@ -797,6 +797,11 @@ public class FenetreCoord extends JFrame implements ActionListener{
 // nettoyage du code  : pdt vacances
 // gestion erreurs utilisateur (si ecrit caractere bizarre) : C
 // bouton validation des choix de sphère pour retour en arrière: A
+
+
+// pour plus de facilité dans le placement des volumes par l'utilisateur : un schema du systeme de coord avec la camera qu'on a choisie
+// zone où on peut voir le contenu de la liste "en temps réel"
+
 
 // esthétique : rendre l'interface sympa: pdt vacances
 // placement, mise en forme du texte Fenetre Accuei/ Adieu
@@ -831,6 +836,3 @@ public class FenetreCoord extends JFrame implements ActionListener{
         System.out.println("Il faut sélectionner un volume et une matière pour pouvoir passer à l'étape suivante");
     }
  */
-//JButton valModeCoul = new JButton("✓");
-//        valModeCoul.setBounds(5,30,45,20);
-//        valModeCoul.addActionListener(this);
