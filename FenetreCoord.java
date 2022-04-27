@@ -39,6 +39,19 @@ public class FenetreCoord extends JFrame implements ActionListener{
     JTextField xCentreSphere = new JTextField();
     JTextField yCentreSphere = new JTextField();
     JTextField zCentreSphere = new JTextField();
+
+    JTextField areteCube = new JTextField();
+    JTextField xCentreCube = new JTextField();
+    JTextField yCentreCube = new JTextField();
+    JTextField zCentreCube = new JTextField();
+
+    JTextField xVecteurNormalPlan = new JTextField();
+    JTextField yVecteurNormalPlan = new JTextField();
+    JTextField zVecteurNormalPlan = new JTextField();
+    JTextField xCentrePlan = new JTextField();
+    JTextField yCentrePlan = new JTextField();
+    JTextField zCentrePlan = new JTextField();
+
     // panels
     JPanel panelCouleur = new JPanel();
     JPanel panelCouleur1 = new JPanel();
@@ -46,7 +59,9 @@ public class FenetreCoord extends JFrame implements ActionListener{
     JPanel panelEtape2Sphere = new JPanel();
     JPanel panelEtape2SphereParam = new JPanel();
     JPanel panelEtape2Cube = new JPanel();
+    JPanel panelEtape2CubeParam= new JPanel();
     JPanel panelEtape2Plan = new JPanel();
+    JPanel panelEtape2PlanParam = new JPanel();
     JPanel panelZoneAffichage = new JPanel();
     // listes
     LinkedList<Drawable> listeDefaut;
@@ -148,6 +163,45 @@ public class FenetreCoord extends JFrame implements ActionListener{
                 etapeSuiv2.setBounds(20,70,200,20);
                 etapeSuiv2.setBackground(Color.green);
                 etapeSuiv2.addActionListener(this);
+
+                // composants etape2CubeParam
+
+                JLabel lArete = new JLabel("Longueur Arete");
+                JLabel lCentre = new JLabel("Coordonnées du centre du cube");
+                JLabel lx1 = new JLabel("x");
+                JLabel ly1 = new JLabel("y");
+                JLabel lz1 = new JLabel("z");
+
+                lArete.setBounds(20,10,100, 20);
+                areteCube.setBounds(20,30,50,20);
+                lx1.setBounds(150,10,100,20);
+                xCentreCube.setBounds(150,30,50,20);
+                ly1.setBounds(250,10,100,20);
+                yCentreCube.setBounds(250, 30,50,20);
+                lz1.setBounds(350,10,100,20);
+                zCentreCube.setBounds(350,30,50,20 );
+                lCentre.setBounds(150,60,300,20);
+
+                // composants etape2PlanParam
+
+                JLabel lVecteurNormal = new JLabel("Coord vecteur normal");
+                JLabel lPoint = new JLabel("Coordonnées d'un point du plan");
+                JLabel lx2 = new JLabel("x");
+                JLabel ly2 = new JLabel("y");
+                JLabel lz2 = new JLabel("z");
+
+                lVecteurNormal.setBounds(10,2,200, 15);// a modif
+                xVecteurNormalPlan.setBounds(10,20,50,20);
+                yVecteurNormalPlan.setBounds(70,20,50,20);
+                zVecteurNormalPlan.setBounds(130,20,50,20);
+                lx2.setBounds(30,50,30,20);
+                ly2.setBounds(90,50,30,20);
+                lz2.setBounds(150,50,30,20);
+                xCentrePlan.setBounds(10,90,50,20);
+                yCentrePlan.setBounds(70, 90,50,20);
+                zCentrePlan.setBounds(130,90,50,20 );
+                lPoint.setBounds(10,70,300,15);
+
 
         // composants etape 3
         ajout.setBounds(10,10,200,30);
@@ -294,10 +348,55 @@ public class FenetreCoord extends JFrame implements ActionListener{
 
         panelEtape2Sphere.add(panelEtape2SphereParam);
 
+        // PANEL CUBE
+
+        panelEtape2CubeParam. setLayout(null);
+        panelEtape2CubeParam.setBounds(0, 0, 425, 100);
+        panelEtape2CubeParam.setBackground(Color.red);
+
+        panelEtape2CubeParam.add(lArete);
+        panelEtape2CubeParam.add(areteCube);
+        panelEtape2CubeParam.add(xCentreCube);
+        panelEtape2CubeParam.add(lx1);
+        panelEtape2CubeParam.add(yCentreCube);
+        panelEtape2CubeParam.add(ly1);
+        panelEtape2CubeParam.add(zCentreCube);
+        panelEtape2CubeParam.add(lz1);
+        panelEtape2CubeParam.add(lCentre);
+
         panelEtape2Cube.setVisible(false);
         panelEtape2Cube.setLayout(null);
         panelEtape2Cube.setBounds(0, 150, 425, 150);
         panelEtape2Cube.setBackground(Color.green);
+
+        panelEtape2Cube.add(panelEtape2CubeParam);
+
+        // PANEL PLAN
+
+        panelEtape2PlanParam. setLayout(null);
+        panelEtape2PlanParam.setBounds(0, 0, 425, 140);
+        panelEtape2PlanParam.setBackground(Color.red);
+
+        panelEtape2PlanParam.add(lVecteurNormal);
+        panelEtape2PlanParam.add(xVecteurNormalPlan);
+        panelEtape2PlanParam.add(xCentrePlan);
+        panelEtape2PlanParam.add(lx2);
+        panelEtape2PlanParam.add(yVecteurNormalPlan);
+        panelEtape2PlanParam.add(yCentrePlan);
+        panelEtape2PlanParam.add(ly2);
+        panelEtape2PlanParam.add(zVecteurNormalPlan);
+        panelEtape2PlanParam.add(zCentrePlan);
+        panelEtape2PlanParam.add(lz2);
+        panelEtape2PlanParam.add(lPoint);
+
+        panelEtape2Plan.setVisible(false);
+        panelEtape2Plan.setLayout(null);
+        panelEtape2Plan.setBounds(0, 150, 425, 150);
+        panelEtape2Plan.setBackground(Color.green);
+
+        panelEtape2Plan.add(panelEtape2PlanParam);
+
+        // Panel etape 2 global
 
         panelEtape2.setVisible(true);
         panelEtape2.setLayout(null);
@@ -386,6 +485,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
             panelEtape2.setVisible(false); // on "allume" le panel qu'on veut par rapport au menu deroulant
             panelEtape2Sphere.setVisible(true);
             panelEtape2Cube.setVisible(false);
+            panelEtape2Plan.setVisible(false);
             // on va dire qu'ici pour les tests quand on clique sur valider les coordonnées ça a le même effet
             // que si on cliquait sur ajouter le volume à la scene et aussi afficher la scene
         }
@@ -402,10 +502,17 @@ public class FenetreCoord extends JFrame implements ActionListener{
             System.out.println("Cube sélectionné");
             panelEtape2.setVisible(false);
             panelEtape2Sphere.setVisible(false);
+            panelEtape2Plan.setVisible(false);
             panelEtape2Cube.setVisible(true);
         }
         if (listeVolume.getSelectedItem() == "Plan"){
             System.out.println("Plan sélectionné");
+            panelEtape2.setVisible(false);
+            panelEtape2Sphere.setVisible(false);
+            panelEtape2Cube.setVisible(false);
+            panelEtape2Plan.setVisible(true);
+
+
         }
         //if (listeMatieres.getSelectedItem() == "Métal"){
             //System.out.println("Métal sélectionné");
@@ -510,12 +617,6 @@ public class FenetreCoord extends JFrame implements ActionListener{
 // esthétique : rendre l'interface sympa: pdt vacances
 // placement, mise en forme du texte Fenetre Accuei/ Adieu
 // couleurs
-
-
-// Test de modif de police de caractère
-// Font police = new Font(" Calibri ", Font.BOLD, 18);
-// labelVide.setFont(police);
-//labelVide.setText(" RENDU");
 
 
 /*
