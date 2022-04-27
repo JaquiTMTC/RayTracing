@@ -48,25 +48,46 @@ public class Cube extends Drawable{
     }
 
     Vector3d normal(Vector3d point) {
+        int maxAt = getPlane(point);
         Vector3d toPoint = point.sub(center);
-        double[] dim = new double[3];
-        for (int i = 0; i < 3; i++) {
-            dim[i] = Math.abs(toPoint.dot(basis[i])/dimensions[i]);
-        }
+        double[] dim = inLocalCoordinates(point);
+        return dim[maxAt]==toPoint.dot(basis[maxAt])/dimensions[maxAt] ? planes[2*maxAt].normal(Vector3d.ZDIR) : planes[2*maxAt+1].normal(Vector3d.ZDIR);
+    }
+
+    private int getPlane(Vector3d point) {
+        double[] dim = inLocalCoordinates(point);
 
         int maxAt = 0;
         for (int i = 0; i < 3; i++) {
             maxAt = dim[i] > dim[maxAt] ? i : maxAt;
         }
-        return dim[maxAt]==toPoint.dot(basis[maxAt])/dimensions[maxAt] ? planes[2*maxAt].normal(Vector3d.ZDIR) : planes[2*maxAt+1].normal(Vector3d.ZDIR);
-
+        return maxAt;
     }
 
-    Drawable copy() {
-        return null;
+    private double[] inLocalCoordinates(Vector3d point){
+        Vector3d toPoint = point.sub(center);
+        double[] dim = new double[3];
+        for (int i = 0; i < 3; i++) {
+            dim[i] = Math.abs(toPoint.dot(basis[i])/dimensions[i]);
+        }
+        return dim;
     }
 
     Vector3d getUVCoordinates(Vector3d point) {
+        int maxAt = getPlane(point);
+        Vector3d planeUV = planes[2*maxAt].getUVCoordinates(point);
+        int vector1 = (maxAt+1)%3;
+        int vector2 = maxAt == 0 ? 2 : maxAt-1;
+        if(vector2 == 0){
+            int temp = vector2;
+            vector2 = vector1;
+            vector1 = temp;
+        }
+        Vector3d toPoint = point.sub(planes[2*maxAt].getCenter());
+        return new Vector3d(toPoint.dot(basis[vector1]), toPoint.dot(basis[vector2]), 0);
+    }
+
+    Drawable copy() {
         return null;
     }
 }

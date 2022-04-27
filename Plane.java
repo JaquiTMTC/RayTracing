@@ -63,4 +63,8 @@ public class Plane extends Drawable{
                 ", center=" + center +
                 '}';
     }
+
+    public Vector3d getCenter() {
+        return new Vector3d(center);
+    }
 }
