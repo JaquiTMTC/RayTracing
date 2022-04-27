@@ -1,7 +1,6 @@
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.util.LinkedList;
 
 public class Camera {
     protected Vector3d normal;
@@ -15,27 +14,22 @@ public class Camera {
 
     /**
      * Initializes a new camera object with the given parameters
-     * @param _pos the position of the camera
-     * @param _normal the normal vector of the camera
-     * @param _width the width in pixel
-     * @param _height the height in pixel
-     * @param _horizontalFOV the field of view in radians of the camera
+     * @param pos the position of the camera
+     * @param normal the normal vector of the camera
+     * @param width the width in pixel
+     * @param height the height in pixel
+     * @param horizontalFOV the field of view in radians of the camera
      */
-    public Camera(Vector3d _pos, Vector3d _normal, int _width, int _height, double _horizontalFOV){
-        pos = new Vector3d(_pos);
-        normal = new Vector3d(_normal).normalize();
-        width = _width;
-        height = _height;
+    public Camera(Vector3d pos, Vector3d normal, int width, int height, double horizontalFOV){
+        this.pos = new Vector3d(pos);
+        this.normal = new Vector3d(normal).normalize();
+        this.width = width;
+        this.height = height;
         xDir = normal.cross(new Vector3d(0, 0, 1)).normalize();
         yDir = normal.cross(xDir).normalize();
 
-        horizontalFOV = _horizontalFOV;
+        this.horizontalFOV = horizontalFOV;
         verticalFOV = horizontalFOV*height/width;
-        //System.out.println(verticalFOV);
-
-//        System.out.println(normal);
-//        System.out.println(xDir);
-//        System.out.println(yDir);
 
     }
 
@@ -65,11 +59,8 @@ public class Camera {
      * @return the color of the given pixel
      */
     private Color renderPixel(int x, int y, Scene scene, int maxBounces){
-//        if(x<=10 && y>=710){
-//            return Color.red;
-//        }
+
         Ray ray = createRay(x, y);
-        //System.out.println(x+" "+y);
         Color returnColor = renderRay(ray, scene, maxBounces);
         returnColor = ((returnColor==null) ? sky(ray) : returnColor);
         return (returnColor);
@@ -77,37 +68,31 @@ public class Camera {
 
     private Color renderRay(Ray ray, Scene scene, int maxBounces){
 
-        HitInfo info= getIntersection(scene, ray);
-
+        HitInfo info = scene.getIntersection(ray);
 
         if (info==null){
             return null;
         }
 
-        if(info.closestObject.material.bounces()){
-            return renderRay(info.closestObject.material.bouncedRay(ray, info.normal, info.position), scene, maxBounces-1);
-        } else {
-            return info.closestObject.material.getColor(info, scene, this);
-        }
-    }
-
-    public HitInfo getIntersection(Scene scene, Ray ray){
-        double tMin = Double.MAX_VALUE;
-        double t;
-        Drawable closestObject = null;
-
-        for(Drawable obj: scene.geometry){
-            t = obj.closestIntersectionPoint(ray);
-            if(t>0.0001 && t<tMin){
-                tMin = t;
-                closestObject = obj;
+        if(info.closestObject.material.bounces(info) && maxBounces != 0){
+            Ray[] bouncedRays = info.closestObject.material.bouncedRays(info);
+            double[] coeffs = info.closestObject.material.getCoeffs(info);
+            double coeffTotal = coeffs[0];
+            Color avgColor = renderRay(bouncedRays[0], scene, maxBounces-1);
+            avgColor = avgColor==null ? sky(ray) : avgColor;
+            for(int i=1; i<bouncedRays.length; i++){
+                Color newColor = renderRay(bouncedRays[i], scene, maxBounces-1);
+                newColor = newColor==null ? sky(ray) : newColor;
+                int red = (int)((coeffTotal*avgColor.getRed()+coeffs[i]*newColor.getRed())/(coeffTotal+coeffs[i]));
+                int green = (int)((coeffTotal*avgColor.getGreen()+coeffs[i]*newColor.getGreen())/(coeffTotal+coeffs[i]));
+                int blue = (int)((coeffTotal*avgColor.getBlue()+coeffs[i]*newColor.getBlue())/(coeffTotal+coeffs[i]));
+                coeffTotal += coeffs[i];
+                avgColor = new Color(red, green, blue);
             }
+            return avgColor;
+        } else {
+            return info.closestObject.material.getColor(info, scene);
         }
-        if(closestObject==null){
-            return null;
-        }
-
-        return new HitInfo(tMin, ray, closestObject);
     }
 
     public Image renderImage (Scene scene, int maxBounces) {
@@ -121,44 +106,14 @@ public class Camera {
         return imageRendu ;
     }
 
-    private Color sky(Ray ray) {
+    private static Color sky(Ray ray) {
         double blueProportion = 1-(Math.abs(ray.dir.z*0.75));
-        //System.out.println(blueProportion);
         return new Color((int)(blueProportion*255), (int)(blueProportion*255), 255);
     }
-
 
     // Getters and Setters
 
     public Vector3d getNormal() {
         return new Vector3d(normal);
-    }
-
-    public Vector3d getxDir() {
-        return new Vector3d(xDir);
-    }
-
-    public Vector3d getyDir() {
-        return new Vector3d(yDir);
-    }
-
-    public Vector3d getPos() {
-        return new Vector3d(pos);
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public double getVerticalFOV() {
-        return verticalFOV;
-    }
-
-    public double getHorizontalFOV() {
-        return horizontalFOV;
     }
 }

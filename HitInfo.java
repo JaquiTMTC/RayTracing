@@ -1,3 +1,6 @@
+/**
+ * Object that contains informations related to one ray hit to intersection
+ */
 public class HitInfo {
     public final double t;
     public final Vector3d position;

@@ -9,15 +9,29 @@ public class Scene {
 
     public LinkedList<Drawable> getGeometry() {
         LinkedList<Drawable> returnList = new LinkedList<Drawable>();
-        for(Drawable geo: returnList){
+        for(Drawable geo: geometry){
             returnList.add(geo.copy());
+        }
+        return returnList;
+    }
 
+    public HitInfo getIntersection(Ray ray){
+        double tMin = Double.MAX_VALUE;
+        double t;
+        Drawable closestObject = null;
+
+        for(Drawable obj: geometry){
+            t = obj.closestIntersectionPoint(ray);
+            if(t>0.0001 && t<tMin){
+                tMin = t;
+                closestObject = obj;
+            }
+        }
+        if(closestObject==null){
+            return null;
         }
 
-        //for(int i=0; i< returnArray.length; i++){
-            //returnArray[i] = geometry[i].copy();
-        //}
-        return returnList;
+        return new HitInfo(tMin, ray, closestObject);
     }
 
     // version ancienne avec tableau
