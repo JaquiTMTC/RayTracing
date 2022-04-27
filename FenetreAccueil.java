@@ -18,7 +18,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         this.height = h;
         this.setSize(width, height);
         this.setLocation(100, 100);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // pour fermer uniquement cette fenetre et pas FenetreCoord en même temps
 
         //creation des composants
 
@@ -51,7 +51,6 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         metalMat.setIcon(imageMetal);
         metalMat.setVisible(true);
 
-
         JLabel diffuseMat = new JLabel();
         diffuseMat.setBounds(350,10,185,130);
         ImageIcon imageDiffuse = new ImageIcon("bois.png");
@@ -68,11 +67,11 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         color.setLocation(5, 5);
         color.setSize(300, 15);
 
-        JLabel blue = new JLabel();
-        blue.setBounds(20, 20, 600, 50);
-        ImageIcon cubeBleu = new ImageIcon("degrade.png");
-        blue.setIcon(cubeBleu);
-        blue.setVisible(true);
+        JLabel degrade = new JLabel();
+        degrade.setBounds(20, 20, 600, 50);
+        ImageIcon palette = new ImageIcon("degrade.png");
+        degrade.setIcon(palette);
+        degrade.setVisible(true);
 
         JLabel mat = new JLabel("                          Choix des matériaux :      METALLIQUE  ou DIFFUSIF ");
         mat.setBounds(5, 10, 700, 20);
@@ -88,16 +87,16 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         sphere.setForeground(Color.black);
 
         JLabel sphereIcon = new JLabel();
-        sphereIcon.setBounds(0, 90, 350, 250);
+        sphereIcon.setBounds(40, 70, 250, 250);
         ImageIcon sp = new ImageIcon("sp.gif");
         sphereIcon.setIcon(sp);
 
         JLabel cube = new JLabel(" Cube. Choix du centre, de l'arête.");
-        cube.setBounds(410, 60, 200, 20);
+        cube.setBounds(320, 60, 200, 20);
         cube.setForeground(Color.black);
 
         JLabel cubeIcon = new JLabel();
-        cubeIcon.setBounds(390, 90, 200, 250);
+        cubeIcon.setBounds(340, 90, 200, 250);
         ImageIcon cb = new ImageIcon("square2.jpg");
         cubeIcon.setIcon(cb);
 
@@ -121,6 +120,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         woodIcon.setIcon(wood);
 
         // panels
+
         // PANEL PRESENTATION MATERIAUX
         JPanel panelMat = new JPanel();
         panelMat.setLayout(null);
@@ -142,7 +142,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         panelCol.setBackground(blueSky);
         panelCol.setVisible(true);
         panelCol.add(color);
-        panelCol.add(blue);
+        panelCol.add(degrade);
 
 
         // PANEL PRES OBJETS
@@ -188,7 +188,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
     }
 
 }
-/// version images qui s'affichent
+
 
 
 
