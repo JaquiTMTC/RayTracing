@@ -47,13 +47,13 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 
         JLabel metalMat = new JLabel();
         metalMat.setBounds(100, 10, 185, 130);
-        ImageIcon imageMetal = new ImageIcon("metal.png");
+        ImageIcon imageMetal = new ImageIcon("images/metal.png");
         metalMat.setIcon(imageMetal);
         metalMat.setVisible(true);
 
         JLabel diffuseMat = new JLabel();
         diffuseMat.setBounds(350,10,185,130);
-        ImageIcon imageDiffuse = new ImageIcon("bois.png");
+        ImageIcon imageDiffuse = new ImageIcon("images/bois.png");
         diffuseMat.setIcon(imageDiffuse);
         diffuseMat.setVisible(true);
 
@@ -69,7 +69,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 
         JLabel degrade = new JLabel();
         degrade.setBounds(20, 20, 600, 50);
-        ImageIcon palette = new ImageIcon("degrade.png");
+        ImageIcon palette = new ImageIcon("images/degrade.png");
         degrade.setIcon(palette);
         degrade.setVisible(true);
 
@@ -88,7 +88,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 
         JLabel sphereIcon = new JLabel();
         sphereIcon.setBounds(40, 70, 250, 250);
-        ImageIcon sp = new ImageIcon("sp.gif");
+        ImageIcon sp = new ImageIcon("images/sp.gif");
         sphereIcon.setIcon(sp);
 
         JLabel cube = new JLabel(" Cube. Choix du centre, de l'arête.");
@@ -102,7 +102,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 
         JLabel planarIcon = new JLabel();
         planarIcon.setBounds(600, 90, 400, 250);
-        ImageIcon plan = new ImageIcon("planarSurface.png");
+        ImageIcon plan = new ImageIcon("images/planarSurface.png");
         planarIcon.setIcon(plan);
 
         JLabel plans = new JLabel(" Plan. Choix d'un point, d'un vecteur normal. ");
@@ -111,12 +111,12 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 
         JLabel brickIcon = new JLabel();
         brickIcon.setBounds(100, 165, 350, 50);
-        ImageIcon brick = new ImageIcon("brickwall.jpg");
+        ImageIcon brick = new ImageIcon("images/brickwall.jpg");
         brickIcon.setIcon(brick);
 
         JLabel woodIcon = new JLabel();
         woodIcon.setBounds(350, 165, 350, 50);
-        ImageIcon wood = new ImageIcon("wood.jpg");
+        ImageIcon wood = new ImageIcon("images/wood.jpg");
         woodIcon.setIcon(wood);
 
         // panels
