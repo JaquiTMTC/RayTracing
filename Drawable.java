@@ -1,13 +1,12 @@
-import java.awt.Color;
-
 public abstract class Drawable {
     Material material;
     /**
-     * Computes the parameter of the closest intersection point given en certain ray, you can access the intersection
-     * point by using ray.at on the return value.
+     * Computes the distance of the closest intersection from the start of the ray.
      * @param ray the ray to check intersection with
+     * @param min the minimum distance
+     * @param max the maximum distance
      */
-    abstract double closestIntersectionPoint(Ray ray);
+    abstract double closestIntersectionPoint(Ray ray, double min, double max);
 
     /**
      * Computes the normal vector of the drawable at a given point.

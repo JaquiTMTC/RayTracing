@@ -351,7 +351,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
         listeDefaut.add(new Plane(new Vector3d(0, 0, -1), new Vector3d(0, 0, 3), white));
         listeDefaut.add(new Plane(new Vector3d(0, 0, 1), new Vector3d(0, 0, -3), white));
         listeDefaut.add(new Plane(new Vector3d(1, 0, 0), new Vector3d(-5, 0, 0), white));
-        listeDefaut.add(new Cube(1,1, 1, new Vector3d(2, .7, .7), green));
+        listeDefaut.add(new Cube(new Vector3d(2, .7, .7), 1, 1, 1, 0, green));
         // theta=0 dans la version par defaut
 
         sceneDefaut = new Scene(listeDefaut, new Vector3d(1, 2*Math.cos(0), 2));
@@ -732,7 +732,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
             }
             centerUtil = new Vector3d(xSpUtil,ySpUtil,zSpUtil);
             spUtil = new Sphere(centerUtil,rSpUtil,materialUtil);
-            cubeUtil = new Cube(longAreteUtil,longAreteUtil,longAreteUtil,new Vector3d(xCubeUtil,yCubeUtil,zCubeUtil),materialUtil);
+            cubeUtil = new Cube(new Vector3d(xCubeUtil,yCubeUtil,zCubeUtil),longAreteUtil,longAreteUtil,longAreteUtil,0,materialUtil);
             plUtil = new Plane(new Vector3d(xNormPl,yNormPl,zNormPl), new Vector3d (xPtPl,yPtPl,zPtPl),materialUtil);
             // AJOUT
             if (listeVolume.getSelectedItem()=="Sphère"){

@@ -21,8 +21,9 @@ public class Scene {
         Drawable closestObject = null;
 
         for(Drawable obj: geometry){
-            t = obj.closestIntersectionPoint(ray);
-            if(t>0.0001 && t<tMin){
+            // The min value is empirically the value which dos not produces visual artifacts
+            t = obj.closestIntersectionPoint(ray, 0.000000000001, tMin);
+            if(t>0){
                 tMin = t;
                 closestObject = obj;
             }

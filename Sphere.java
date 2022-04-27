@@ -14,7 +14,7 @@ public class Sphere extends Drawable {
         this.material = material;
     }
 
-    public double closestIntersectionPoint(Ray ray) {
+    public double closestIntersectionPoint(Ray ray, double min, double max){
         Vector3d toCenter = ray.pos.sub(center);
         double a = 1;
         double halfB = toCenter.dot(ray.dir);
@@ -25,9 +25,9 @@ public class Sphere extends Drawable {
             return -1;
         }
         double root = (-halfB-Math.sqrt(quarterDelta))/a;
-        if (root<0.0001){
+        if (root<min || root > max){
             root = (-halfB+Math.sqrt(quarterDelta))/a;
-            if(root<0.0001){
+            if(root<min || root > max){
                 return -1;
             }
         }

@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.util.Objects;
 
 public class Plane extends Drawable{
@@ -17,11 +16,15 @@ public class Plane extends Drawable{
         this.material = material;
     }
 
-    double closestIntersectionPoint(Ray ray) {
-        if (ray.getDir().dot(normal) == 0) { // If ray is parallel to plane
+    double closestIntersectionPoint(Ray ray, double min, double max) {
+        if(ray.getDir().dot(normal)==0){ // If ray is parallel to plane
             return -1; // We do not consider important the case where the camera is in the plane (where the ray should intersect the plane)
         }
-        return center.sub(ray.getPos()).dot(normal)/ray.getDir().dot(normal);
+        double t = center.sub(ray.getPos()).dot(normal)/ray.getDir().dot(normal);
+        if(t<min || t>max){
+            return -1;
+        }
+        return t;
     }
 
     Vector3d normal(Vector3d point) {
