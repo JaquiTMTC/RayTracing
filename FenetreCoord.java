@@ -29,6 +29,8 @@ public class FenetreCoord extends JFrame implements ActionListener{
     JRadioButton rBtnJaune = new JRadioButton("Jaune");
     JRadioButton rBtnOrange = new JRadioButton("Orange");
     JRadioButton rBtnRouge = new JRadioButton("Rouge");
+    JRadioButton rBtnBrique = new JRadioButton();
+    JRadioButton rBtnBois = new JRadioButton();
 
     // labels
     JLabel lDefaut = new JLabel();
@@ -61,6 +63,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
     JPanel panelCouleur1 = new JPanel();
     JPanel panelCouleurBasique = new JPanel();
     JPanel panelCouleurRGB = new JPanel();
+    JPanel panelTexture = new JPanel();
     JPanel panelEtape2 = new JPanel();
     JPanel panelEtape2Sphere = new JPanel();
     JPanel panelEtape2SphereParam = new JPanel();
@@ -78,16 +81,36 @@ public class FenetreCoord extends JFrame implements ActionListener{
     Scene sceneDefaut;
     // vecteurs
     Vector3d centerUtil;
-    // spheres
+    // volumes utilisateur
     Sphere spUtil;
+    Cube cubeUtil;
+    Plane plUtil;
     // matieres
     Material materialUtil;
     // couleurs
     Color colorUtil;
-    double rUtil;
-    double xUtil;
-    double yUtil;
-    double zUtil;
+    // param recup util
+    // pour le cas de la sphere
+    double rSpUtil;
+    double xSpUtil;
+    double ySpUtil;
+    double zSpUtil;
+    // pour le cas du cube
+    double longAreteUtil;
+    double xCubeUtil;
+    double yCubeUtil;
+    double zCubeUtil;
+    // pour le cas du plan
+    double xNormPl;
+    double yNormPl;
+    double zNormPl;
+    double xPtPl;
+    double yPtPl;
+    double zPtPl;
+    // pour les couleurs
+    int rRGBUtil;
+    int gRGBUtil;
+    int bRGBUtil;
 
     // Constructeur
     public FenetreCoord(String nom, int w, int h) {
@@ -184,6 +207,27 @@ public class FenetreCoord extends JFrame implements ActionListener{
         fG.setBounds(50,25,40,20);
         fB.setBounds(95,25,40,20);
 
+            // panel Textures
+        JLabel lBrique = new JLabel();
+        ImageIcon imBriqueSmall = new ImageIcon(new ImageIcon("./textures/brick.jpg").getImage().getScaledInstance(80,80,Image.SCALE_SMOOTH));
+        lBrique.setIcon(imBriqueSmall);
+        lBrique.setBounds(5,5,80,80);
+
+        JLabel lBois = new JLabel();
+        ImageIcon imBoisSmall = new ImageIcon(new ImageIcon("./textures/wood.jpg").getImage().getScaledInstance(80,80,Image.SCALE_SMOOTH));
+        lBois.setIcon(imBoisSmall);
+        lBois.setBounds(90,5,80,80);
+
+        rBtnBrique.setBounds(35,90,20,20);
+        rBtnBois.setBounds(120,90,20,20);
+
+        ButtonGroup grpTexture = new ButtonGroup();
+        grpTexture.add(rBtnBrique);
+        grpTexture.add(rBtnBois);
+
+        rBtnBrique.addActionListener(this);
+        rBtnBois.addActionListener(this);
+
 
         // composants etape 2
             // composants etape2Sphere
@@ -228,7 +272,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
 
                 // composants etape2PlanParam
 
-                JLabel lVecteurNormal = new JLabel("Coord vecteur normal");
+                JLabel lVecteurNormal = new JLabel("Coordonnées d'un vecteur normal");
                 JLabel lPoint = new JLabel("Coordonnées d'un point du plan");
                 JLabel lx2 = new JLabel("x");
                 JLabel ly2 = new JLabel("y");
@@ -290,7 +334,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
         // si on  fait varier x : impression de se rapprocher (x augmente) ou de s'eloigner (x diminue) de la scene
         // si on fait varier z : impression de regarder la scene de plus haut (z augmente) ou de plus bas (z diminue)
 */
-        listeDefaut= new LinkedList<Drawable>();
+        listeDefaut= new LinkedList<>();
 
         // remplissage de la listeDefaut
         Metal silver = new Metal(Color.black);
@@ -316,7 +360,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
         lDefaut.setVisible(false); // deviendra visible quand l'utilisateur cliquera sur le bouton "afficher la version par defaut"
 
 
-        drawableUtil = new LinkedList<Drawable>(); // instanciation
+        drawableUtil = new LinkedList<>(); // instanciation
 
         // PANNEAUX
 
@@ -331,15 +375,14 @@ public class FenetreCoord extends JFrame implements ActionListener{
         panelMenu.add(effRendu);
 
         // Panel etape 1
-        panelCouleur.setVisible(true);
-        panelCouleur.setLayout(null);
-        panelCouleur.setBounds(230,10,175,375);
-        panelCouleur.setBackground(Color.green);
 
         panelCouleur1.setVisible(true);
         panelCouleur1.setLayout(null);
         panelCouleur1.setBounds(0,25,175,30);
         panelCouleur1.setBackground(Color.cyan);
+
+        panelCouleur1.add(rBtnCoulBasique);
+        panelCouleur1.add(rBtnCoulRGB);
 
         panelCouleurBasique.setVisible(false); // deviendra visible si le rBtnCoulBasique est selectionne
         panelCouleurBasique.setLayout(null);
@@ -365,14 +408,25 @@ public class FenetreCoord extends JFrame implements ActionListener{
         panelCouleurRGB.add(fG);
         panelCouleurRGB.add(fB);
 
-
-        panelCouleur1.add(rBtnCoulBasique);
-        panelCouleur1.add(rBtnCoulRGB);
+        panelCouleur.setVisible(false); // deviendra visible quand l'utilisateur aura clique sur un materiau qui accepte une couleur (cad Metal ou Diffusif)
+        panelCouleur.setLayout(null);
+        panelCouleur.setBounds(230,10,175,375);
+        panelCouleur.setBackground(Color.green);
 
         panelCouleur.add(lSeleCoul);
         panelCouleur.add(panelCouleur1);
         panelCouleur.add(panelCouleurBasique);
         panelCouleur.add(panelCouleurRGB);
+
+        panelTexture.setVisible(false); // deviendra visible quand l'utilisateur choisira "Textures" dans la liste des matières dispos
+        panelTexture.setLayout(null);
+        panelTexture.setBounds(230,10,175,375);
+        panelTexture.setBackground(Color.gray);
+
+        panelTexture.add(lBrique);
+        panelTexture.add(rBtnBrique);
+        panelTexture.add(lBois);
+        panelTexture.add(rBtnBois);
 
         JPanel panelEtape1 = new JPanel();
         panelEtape1.setLayout(null);
@@ -384,6 +438,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
         panelEtape1.add(listeMatieres);
         panelEtape1.add(etapeSuiv1);
         panelEtape1.add(panelCouleur);
+        panelEtape1.add(panelTexture);
 
         // Panels etape 2
 
@@ -541,6 +596,9 @@ public class FenetreCoord extends JFrame implements ActionListener{
 
         if (listeVolume.getSelectedItem() == "--Choix volume--"){
             panelEtape2.setVisible(true);
+            panelEtape2Sphere.setVisible(false);
+            panelEtape2Cube.setVisible(false);
+            panelEtape2Plan.setVisible(false);
         }
         if (listeVolume.getSelectedItem() == "Sphère"){
             System.out.println("Sphère sélectionnée");
@@ -548,8 +606,6 @@ public class FenetreCoord extends JFrame implements ActionListener{
             panelEtape2Sphere.setVisible(true);
             panelEtape2Cube.setVisible(false);
             panelEtape2Plan.setVisible(false);
-            // on va dire qu'ici pour les tests quand on clique sur valider les coordonnées ça a le même effet
-            // que si on cliquait sur ajouter le volume à la scene et aussi afficher la scene
         }
         if (e.getSource()==etapeSuiv2) {
 /*
@@ -573,14 +629,25 @@ public class FenetreCoord extends JFrame implements ActionListener{
             panelEtape2Sphere.setVisible(false);
             panelEtape2Cube.setVisible(false);
             panelEtape2Plan.setVisible(true);
-
-
         }
-        //if (listeMatieres.getSelectedItem() == "Métal"){
-            //System.out.println("Métal sélectionné");
-        //}
+        if(listeMatieres.getSelectedItem() == "--Choix matière--"){
+            panelCouleur.setVisible(false);
+            panelTexture.setVisible(false);
+        }
+        if (listeMatieres.getSelectedItem() == "Métal"){
+            System.out.println("Métal sélectionné");
+            panelCouleur.setVisible(true);
+            panelTexture.setVisible(false);
+        }
         if (listeMatieres.getSelectedItem() == "Matériau diffusif"){
             System.out.println("Matériau diffusif sélectionné");
+            panelCouleur.setVisible(true);
+            panelTexture.setVisible(false);
+        }
+        if (listeMatieres.getSelectedItem() == "Texture - uniquement pour un plan"){
+            System.out.println("Texture sélectionnée");
+            panelCouleur.setVisible(false);
+            panelTexture.setVisible(true);
         }
 
         if(rBtnCoulBasique.isSelected()){
@@ -597,53 +664,96 @@ public class FenetreCoord extends JFrame implements ActionListener{
         if (e.getSource()==ajout){
             System.out.println("Avant la récupération des champs, la liste drawableUtil a une size de :"+drawableUtil.size());
             // recuperation des champs non vides
-            if (!(rayonSphere.getText()).isEmpty()&&!(xCentreSphere.getText()).isEmpty()&&
-                    !(yCentreSphere.getText()).isEmpty()&&!(zCentreSphere.getText()).isEmpty()){
+            // cas de la sphere
+            // recuperation param specifique volume
+            if (listeVolume.getSelectedItem()=="Sphère"&&!(rayonSphere.getText()).isEmpty()&&!(xCentreSphere.getText()).isEmpty()&&
+                    !(yCentreSphere.getText()).isEmpty()&&!(zCentreSphere.getText()).isEmpty()) {
                 System.out.println("Tous les champs de la sphère sont non-vides");
-                rUtil = Float.parseFloat(rayonSphere.getText());
-                xUtil = Float.parseFloat(xCentreSphere.getText());
-                yUtil = Float.parseFloat(yCentreSphere.getText());
-                zUtil = Float.parseFloat(zCentreSphere.getText());
-                if (listeMatieres.getSelectedItem() == "Métal") {
-                    //colorUtil = new Color();
-                   // materialUtil = new Metal(colorUtil);
-                } else if(listeMatieres.getSelectedItem() == "Matériau diffusif"){
-                    //colorUtil = new Color();
-                    //materialUtil = new Diffuse(colorUtil);
-                }
-            // else if (tous les param de cube sont non-vides) {
-                // recuperation des param de cube
-                // }
+                rSpUtil = Float.parseFloat(rayonSphere.getText());
+                xSpUtil = Float.parseFloat(xCentreSphere.getText());
+                ySpUtil = Float.parseFloat(yCentreSphere.getText());
+                zSpUtil = Float.parseFloat(zCentreSphere.getText());
+                System.out.println("champs spheres recuperes");
+            }
+            // cas du cube
+            if (listeVolume.getSelectedItem()=="Cube"&&!(areteCube.getText()).isEmpty()&&!(xCentreCube.getText()).isEmpty()&&
+                    !(yCentreCube.getText()).isEmpty()&&!(zCentreCube.getText()).isEmpty()){
+                longAreteUtil = Float.parseFloat(areteCube.getText());
+                xCubeUtil = Float.parseFloat(xCentreCube.getText());
+                yCubeUtil = Float.parseFloat(yCentreCube.getText());
+                zCubeUtil = Float.parseFloat(zCentreCube.getText());
+                System.out.println("champs cube recuperes");
+            }
+            // cas du plan
+            if (listeVolume.getSelectedItem() == "Plan"&&!(xVecteurNormalPlan.getText()).isEmpty()&&!(yVecteurNormalPlan.getText()).isEmpty()&&
+                    !(zVecteurNormalPlan.getText()).isEmpty()&&!(xCentrePlan.getText()).isEmpty()&&!(yCentrePlan.getText()).isEmpty()&&!(zCentrePlan.getText()).isEmpty()){
+                xNormPl = Float.parseFloat(xVecteurNormalPlan.getText());
+                yNormPl = Float.parseFloat(yVecteurNormalPlan.getText());
+                zNormPl = Float.parseFloat(zVecteurNormalPlan.getText());
+                xPtPl = Float.parseFloat(xCentrePlan.getText());
+                yPtPl = Float.parseFloat(yCentrePlan.getText());
+                zPtPl = Float.parseFloat(zCentrePlan.getText());
+
+                System.out.println("champs plan recuperes");
+            }
             // else if (tous les param de plan sont non-vides {
-                // recuperation des param de plan
-                // }
+            // recuperation des param de plan
+            //}
+            // recuperation couleur
+            if (listeMatieres.getSelectedItem() == "Métal"||listeMatieres.getSelectedItem()=="Matériau diffusif") {
+                if (rBtnNoir.isSelected()) {
+                    colorUtil = Color.black;
+                } else if (rBtnBleu.isSelected()){
+                    colorUtil = Color.blue;
+                } else if (rBtnVert.isSelected()){
+                    colorUtil = Color.green;
+                } else if (rBtnJaune.isSelected()){
+                    colorUtil = Color.yellow;
+                } else if (rBtnOrange.isSelected()){
+                    colorUtil = Color.orange;
+                } else if (rBtnRouge.isSelected()){
+                    colorUtil = Color.red;
+                } else if (!(fR.getText()).isEmpty()&&!(fG.getText()).isEmpty()&&
+                        !(fB.getText()).isEmpty()){
+                    rRGBUtil = Integer.parseInt(fR.getText());
+                    gRGBUtil = Integer.parseInt(fG.getText());
+                    bRGBUtil = Integer.parseInt(fB.getText());
+                    colorUtil = new Color(rRGBUtil,gRGBUtil,bRGBUtil);
+                }
+                if (listeMatieres.getSelectedItem() == "Métal"){
+                    materialUtil = new Metal(colorUtil);
+                }
+                if(listeMatieres.getSelectedItem()=="Matériau diffusif"){
+                    materialUtil = new Diffuse(colorUtil);
+                }
             } else {
                 javax.swing.JOptionPane.showMessageDialog(null,
                         "Veuillez compléter les champs manquants");
             }
-            centerUtil = new Vector3d(xUtil,yUtil,zUtil);
-            spUtil = new Sphere(centerUtil,rUtil,materialUtil);
+            centerUtil = new Vector3d(xSpUtil,ySpUtil,zSpUtil);
+            spUtil = new Sphere(centerUtil,rSpUtil,materialUtil);
+            cubeUtil = new Cube(longAreteUtil,longAreteUtil,longAreteUtil,new Vector3d(xCubeUtil,yCubeUtil,zCubeUtil),materialUtil);
+            plUtil = new Plane(new Vector3d(xNormPl,yNormPl,zNormPl), new Vector3d (xPtPl,yPtPl,zPtPl),materialUtil);
             // AJOUT
-            drawableUtil.add(spUtil);
-            System.out.println("Après la récupération des champs, la liste drawableUtil a une size de :"+drawableUtil.size());
-            // JUSTE POUR DES TESTS, MAIS UN FOR EACH C'EST MIEUX POUR UNE LINKEDLIST ///
-            for (int i = 0; i<drawableUtil.size(); i++){
-                System.out.println(drawableUtil.get(i).material);
+            if (listeVolume.getSelectedItem()=="Sphère"){
+                drawableUtil.add(spUtil);
             }
+            if (listeVolume.getSelectedItem()=="Cube"){
+                drawableUtil.add(cubeUtil);
+            }
+            if (listeVolume.getSelectedItem()=="Plan"){
+                drawableUtil.add(plUtil);
+            }
+            System.out.println("Après la récupération des champs, la liste drawableUtil a une size de :"+drawableUtil.size());
+
+            System.out.println("Couleur selectionnee" + colorUtil.toString());
         }
         if (e.getSource()==affUtil&&drawableUtil.size()!=0){
             // pour pouvoir afficher son rendu l'utilisateur doit cliquer sur le bouton "Afficher mon rendu" après avoir
             // ajouté au moins un volume à sa liste
             System.out.println("L'utilisateur souhaite afficher son rendu");
             System.out.println("La liste drawableUtil contient actuellement "+drawableUtil.size()+" élément(s)" );
-            /*
-            labelTestRenduUtil.setBounds(10,10,300,300);
-            labelTestRenduUtil.setForeground(Color.blue);
-            labelTestRenduUtil.setText("Coucou");
-            ImageIcon im_test = new ImageIcon("bois.png");
-            labelTestRenduUtil.setIcon(im_test);
-            labelTestRenduUtil.setVisible(true);
-             */
+
             lDefaut.setVisible(false);
             lUtil.setVisible(false);
             Scene sceneUtil = new Scene(drawableUtil,new Vector3d (1, 2*Math.cos(0), 2));
@@ -659,16 +769,17 @@ public class FenetreCoord extends JFrame implements ActionListener{
         /*
         // POUR l'instant à chaque clic sur n'importe quel bouton le system.out.println s'affiche dans terminal
         // A REMPLACER PAR UN FOR EACH (mais pas la syntaxe sous la main actuellement)
+         */
         System.out.println("La liste avec les infos entrees par l'utilisateur contient :");
         for (int i=0; i<drawableUtil.size();i++){
             System.out.println(drawableUtil.get(i));
-        }*/
+        }
 
 
     }// fin du actionPerformed
 
         public static void main (String[]args){
-            FenetreCoord f = new FenetreCoord(" IHM", 1700, 1000);
+            FenetreCoord f = new FenetreCoord("Ray Tracing", 1700, 1000);
         }
 }
 /*
