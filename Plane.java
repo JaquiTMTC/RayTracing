@@ -5,17 +5,18 @@ public class Plane extends Drawable{
     private Vector3d normal;
     private Vector3d center;
 
-    public Plane(Vector3d _normal, Vector3d _center, Material material){
-
-        normal = new Vector3d(_normal);
-        center = new Vector3d(_center);
+    /**
+     * Creates a plane given the following parameters
+     * @param normal the normal of the plane
+     * @param center a point of the plane
+     * @param material the material of the plane
+     */
+    public Plane(Vector3d normal, Vector3d center, Material material){
+        this.normal = new Vector3d(normal);
+        this.center = new Vector3d(center);
         this.material = material;
     }
 
-    /**
-     * Finds the parameter of the intersection between a ray and the plane
-     * @param ray the ray
-     */
     double closestIntersectionPoint(Ray ray) {
         if (ray.getDir().dot(normal) == 0) { // If ray is parallel to plane
             return -1; // We do not consider important the case where the camera is in the plane (where the ray should intersect the plane)

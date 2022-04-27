@@ -3,22 +3,10 @@ public class Ray {
     protected Vector3d pos;
     protected Vector3d dir;
 
-
-    public Ray(Vector3d _pos, Vector3d _dir){
-        pos = new Vector3d(_pos);
-        dir = new Vector3d(_dir).normalize();
+    public Ray(Vector3d pos, Vector3d dir){
+        this.pos = new Vector3d(pos);
+        this.dir = new Vector3d(dir).normalize();
     }
-
-    /*** Getters and Setters ***/
-
-    public Vector3d getPos() {
-        return new Vector3d(pos);
-    }
-
-    public Vector3d getDir() {
-        return new Vector3d(dir);
-    }
-
 
     /**
      * Returns the vector to the point of the ray a parameter t
@@ -29,20 +17,17 @@ public class Ray {
         return pos.add(dir.mult(t));
     }
 
+    /** Bounces the ray on a surface
+     * @param point the point where the ray bounces
+     * @param normal The normal to the surface
+     * @return the bounced ray
+     */
     public Ray bounce(Vector3d point, Vector3d normal){
-//        Vector3d diff = normal.add(dir);
-//        Vector3d newDir = dir.mult(-1).add(diff.mult(2));
-//        return new Ray(pos, newDir);
-
         Vector3d cross = dir.cross(normal); // The normal to the plane containing the vectors
         Vector3d parallel = normal.cross(cross).normalize();
         Vector3d tangentialDiff = parallel.mult(normal.add(dir).dot(parallel)*2);
         Vector3d newDir = dir.mult(-1).add(tangentialDiff);
-        return new  Ray(pos, newDir);
-
-//        Vector3d normalDiff = normal.mult(2*normal.dot(dir));
-//        Vector3d newDir = dir.add(normalDiff);
-//        return new Ray(pos, newDir);
+        return new Ray(point, newDir);
     }
 
     @Override
@@ -51,5 +36,15 @@ public class Ray {
                 "pos=" + pos +
                 ", dir=" + dir +
                 '}';
+    }
+
+    // Getters & setters
+
+    public Vector3d getPos() {
+        return new Vector3d(pos);
+    }
+
+    public Vector3d getDir() {
+        return new Vector3d(dir);
     }
 }

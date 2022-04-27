@@ -1,5 +1,4 @@
 import java.awt.*;
-import java.util.LinkedList;
 
 public class Metal extends Material{
 
@@ -7,7 +6,7 @@ public class Metal extends Material{
         this.color = color;
     }
 
-    public boolean bounces() {
+    public boolean bounces(HitInfo info) {
         return true;
     }
 

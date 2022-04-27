@@ -10,11 +10,11 @@ public class Diffuse extends Material{
         this.color = Color.BLACK;
     }
 
-    public Color getColor(HitInfo info, Scene scene, Camera cam){
+    public Color getColor(HitInfo info, Scene scene){
         Vector3d toLight = scene.light.sub(info.position);
         double lightDistance = toLight.norm();
         Ray toLightRay = new Ray(info.position, toLight);
-        HitInfo infoLight = cam.getIntersection(scene, toLightRay);
+        HitInfo infoLight = scene.getIntersection(toLightRay);
         double angle = info.normal.angle(toLight)*7/8;
         if(infoLight != null && infoLight.t <= lightDistance){  // If we are in the shadow of an object, we render black
             angle = (Math.PI/2)*7/8;
@@ -31,7 +31,7 @@ public class Diffuse extends Material{
         return color;
     }
 
-    boolean bounces() {
+    boolean bounces(HitInfo info) {
         return false;
     }
 

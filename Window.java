@@ -90,7 +90,7 @@ public class Window extends JPanel implements ActionListener {
         */
 
 
-        return camDefaut.renderImage(sceneDefaut, 50);
+        return camDefaut.renderImage(sceneDefaut, 10);
     }
 
     public void actionPerformed(ActionEvent e) {
