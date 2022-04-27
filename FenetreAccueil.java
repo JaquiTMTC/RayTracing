@@ -97,7 +97,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 
         JLabel cubeIcon = new JLabel();
         cubeIcon.setBounds(340, 90, 200, 250);
-        ImageIcon cb = new ImageIcon("square2.jpg");
+        ImageIcon cb = new ImageIcon("images/square2.jpg");
         cubeIcon.setIcon(cb);
 
         JLabel planarIcon = new JLabel();
