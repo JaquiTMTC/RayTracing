@@ -90,4 +90,11 @@ public class Cube extends Drawable{
     Drawable copy() {
         return null;
     }
+
+    public String toString (){
+        return "Cube{" +
+                "center=" + center +
+                ", cote=" + dimensions[1] +
+                '}';
+    }
 }

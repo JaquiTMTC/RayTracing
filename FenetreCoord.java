@@ -1,3 +1,4 @@
+import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import javax.swing.*;
 import java.awt.*;
@@ -150,7 +151,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
         listeMatieres.addItem("--Choix matière--");
         listeMatieres.addItem("Métal");
         listeMatieres.addItem("Matériau diffusif");
-        listeMatieres.addItem("Texture - uniquement pour un plan");
+        listeMatieres.addItem("Texture");
         listeMatieres.addActionListener(this);
 
         etapeSuiv1.setBounds(10, 100, 200, 30);
@@ -644,7 +645,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
             panelCouleur.setVisible(true);
             panelTexture.setVisible(false);
         }
-        if (listeMatieres.getSelectedItem() == "Texture - uniquement pour un plan"){
+        if (listeMatieres.getSelectedItem() == "Texture"){
             System.out.println("Texture sélectionnée");
             panelCouleur.setVisible(false);
             panelTexture.setVisible(true);
@@ -699,7 +700,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
             // else if (tous les param de plan sont non-vides {
             // recuperation des param de plan
             //}
-            // recuperation couleur
+            // recuperation couleur et matiere
             if (listeMatieres.getSelectedItem() == "Métal"||listeMatieres.getSelectedItem()=="Matériau diffusif") {
                 if (rBtnNoir.isSelected()) {
                     colorUtil = Color.black;
@@ -726,6 +727,15 @@ public class FenetreCoord extends JFrame implements ActionListener{
                 if(listeMatieres.getSelectedItem()=="Matériau diffusif"){
                     materialUtil = new Diffuse(colorUtil);
                 }
+            } if (listeMatieres.getSelectedItem()=="Texture"){
+                if(rBtnBrique.isSelected()){
+                    System.out.println("Texture selectionnee = brique");
+                   // ImageIcon im_brique = new ImageIcon("./textures/brick.jpg");
+                    //BufferedImage BuIm_brique = new BufferedImage(im_brique);
+                    //materialUtil = new Texture(BuIm_brique);
+                } if (rBtnBois.isSelected()){
+                    System.out.println("Texture selectionnee = bois");
+                }
             } else {
                 javax.swing.JOptionPane.showMessageDialog(null,
                         "Veuillez compléter les champs manquants");
@@ -746,7 +756,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
             }
             System.out.println("Après la récupération des champs, la liste drawableUtil a une size de :"+drawableUtil.size());
 
-            System.out.println("Couleur selectionnee" + colorUtil.toString());
+            //System.out.println("Couleur selectionnee" + colorUtil.toString()); commente pour pouvoir executer sans erreur dans le cas de la texture (car couleur null dans ce cas la)
         }
         if (e.getSource()==affUtil&&drawableUtil.size()!=0){
             // pour pouvoir afficher son rendu l'utilisateur doit cliquer sur le bouton "Afficher mon rendu" après avoir
