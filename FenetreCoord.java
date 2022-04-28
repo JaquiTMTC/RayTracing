@@ -1,5 +1,10 @@
+import sun.misc.JavaLangAccess;
+
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -16,11 +21,13 @@ public class FenetreCoord extends JFrame implements ActionListener{
     JButton accueil = new JButton("A propos");
     JButton AffDefaut = new JButton("Afficher le rendu par défaut");
     JButton effRendu = new JButton("Effacer le rendu");
-
-    JButton etapeSuiv1 = new JButton("Passer étape suivante 0 action");
-    JButton etapeSuiv2 = new JButton("Valider les coordonées 0 action");
     JButton ajout = new JButton("Ajouter le volume à la liste");
     JButton affUtil = new JButton("Afficher mon rendu");
+    JButton razChoixCoul = new JButton("RAZ");
+    JButton razCoordSphere = new JButton("Réinitialiser");
+    JButton razCoordCube = new JButton ("Réinitialiser");
+    JButton razCoordPlan = new JButton("Réinitialiser");
+    JButton razListe = new JButton("Vider la liste");
     // radioBoutons
     JRadioButton rBtnCoulBasique = new JRadioButton("Basiques");
     JRadioButton rBtnCoulRGB = new JRadioButton("RGB");
@@ -32,6 +39,9 @@ public class FenetreCoord extends JFrame implements ActionListener{
     JRadioButton rBtnRouge = new JRadioButton("Rouge");
     JRadioButton rBtnBrique = new JRadioButton();
     JRadioButton rBtnBois = new JRadioButton();
+    // groupes de radioBoutons
+    ButtonGroup bg;
+    ButtonGroup grpCoul;
 
     // labels
     JLabel lDefaut = new JLabel();
@@ -59,6 +69,9 @@ public class FenetreCoord extends JFrame implements ActionListener{
     JTextField yCentrePlan = new JTextField();
     JTextField zCentrePlan = new JTextField();
 
+    // JTextArea
+    JTextArea affichageListe = new JTextArea();
+
     // panels
     JPanel panelCouleur = new JPanel();
     JPanel panelCouleur1 = new JPanel();
@@ -73,6 +86,8 @@ public class FenetreCoord extends JFrame implements ActionListener{
     JPanel panelEtape2Plan = new JPanel();
     JPanel panelEtape2PlanParam = new JPanel();
     JPanel panelZoneAffichage = new JPanel();
+    JPanel panelContenuListe = new JPanel();
+
     // listes
     LinkedList<Drawable> listeDefaut;
     LinkedList<Drawable>drawableUtil;
@@ -154,22 +169,21 @@ public class FenetreCoord extends JFrame implements ActionListener{
         listeMatieres.addItem("Texture");
         listeMatieres.addActionListener(this);
 
-        etapeSuiv1.setBounds(10, 100, 200, 30);
-        etapeSuiv1.setBackground(Color.green);
-        etapeSuiv1.addActionListener(this);
-
         // composants panelCouleur
-            // panelCouleur1
-        JLabel lSeleCoul = new JLabel("--Choix couleur--");
+        JLabel lSeleCoul = new JLabel("Choix couleur");
         lSeleCoul.setBounds(5,5,175,20);
 
+        razChoixCoul.setBounds(100,3,60,20);
+        razChoixCoul.addActionListener(this);
+
+            // panelCouleur1
         rBtnCoulBasique.setBounds(5, 5,80,20);
         rBtnCoulRGB.setBounds(90,5,80,20);
 
         rBtnCoulBasique.addActionListener(this);
         rBtnCoulRGB.addActionListener(this);
 
-        ButtonGroup bg = new ButtonGroup();
+        bg = new ButtonGroup();
         bg.add(rBtnCoulBasique);
         bg.add(rBtnCoulRGB);
 
@@ -188,7 +202,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
         rBtnOrange.addActionListener(this);
         rBtnRouge.addActionListener(this);
 
-        ButtonGroup grpCoul = new ButtonGroup();
+        grpCoul = new ButtonGroup();
         grpCoul.add(rBtnNoir);
         grpCoul.add(rBtnBleu);
         grpCoul.add(rBtnVert);
@@ -249,9 +263,9 @@ public class FenetreCoord extends JFrame implements ActionListener{
                 zCentreSphere.setBounds(350,30,50,20 );
                 lCoord.setBounds(150,60,300,20);
 
-                etapeSuiv2.setBounds(20,70,200,20);
-                etapeSuiv2.setBackground(Color.green);
-                etapeSuiv2.addActionListener(this);
+                razCoordSphere.setBounds(20,70,150,20);
+                razCoordSphere.addActionListener(this);
+
 
                 // composants etape2CubeParam
 
@@ -270,6 +284,9 @@ public class FenetreCoord extends JFrame implements ActionListener{
                 lz1.setBounds(350,10,100,20);
                 zCentreCube.setBounds(350,30,50,20 );
                 lCentre.setBounds(150,60,300,20);
+
+                razCoordCube.setBounds(20,70,150,20);
+                razCoordCube.addActionListener(this);
 
                 // composants etape2PlanParam
 
@@ -291,38 +308,34 @@ public class FenetreCoord extends JFrame implements ActionListener{
                 zCentrePlan.setBounds(130,90,50,20 );
                 lPoint.setBounds(10,70,300,15);
 
+                razCoordPlan.setBounds(20,70,150,20);
+                razCoordPlan.addActionListener(this);
+
 
         // composants etape 3
         ajout.setBounds(10,10,200,30);
         ajout.setBackground(Color.magenta);
         ajout.addActionListener(this);
 
-        affUtil.setBounds(10,50,200,30);
+        affUtil.setBounds(10,90,200,30);
         affUtil.setBackground(Color.green);
         affUtil.addActionListener(this);
+
+        // composants affichage contenu liste
+        affichageListe.setBounds(5,5,400,100);
+        razListe.setBounds(5,105,200,30);
+        razListe.addActionListener(this);
+
+        JLabel lRepere = new JLabel();
+        ImageIcon imRepereSmall = new ImageIcon(new ImageIcon("./images/repere.png").getImage().getScaledInstance(300,200,Image.SCALE_SMOOTH));
+        lRepere.setIcon(imRepereSmall);
+        lRepere.setBounds(5,140,300,200);
 
         // composants zone affichage
         labelTestRenduUtil.setVisible(false);
         lUtil.setVisible(false);
 
         // VERSION BOUTON DEFAUT
-
-        /* on le garde pour l'exemple
-        //////////////////////////////////// A SUPPRIMER AVANT RENDU //////////////////////////////////////////////
-
-        Camera laCamera = new Camera(new Vector3d(0, 0, 0), new Vector3d(1, 0, 0), width, height, Math.PI/2);
-        LinkedList<Drawable> tab = new LinkedList<Drawable>();
-        Vector3d center = new Vector3d(1,0,0); // sans paramètres : au centre
-        double radius = 0.25;
-        Material material = new Diffuse(Color.gray);
-        tab.add(new Sphere(center, radius, material));
-        Vector3d light_pos = new Vector3d();
-        Scene laScene = new Scene(tab, light_pos);
-        ImageIcon renduIcon = new ImageIcon(laCamera.renderImage(laScene,10));
-        JLabel labelIm = new JLabel(renduIcon);
-        //labelIm.setLocation(0,0);
-        //labelIm.setSize(700,500);*/
-
         // Camera par defaut et geometrie par defaut
 
         camDefaut = new Camera(new Vector3d(-4, -2.5, 0), new Vector3d(1,0 ,0 ), width, height, Math.PI/2);
@@ -343,6 +356,13 @@ public class FenetreCoord extends JFrame implements ActionListener{
         Diffuse red = new Diffuse(Color.red);
         Diffuse blue = new Diffuse(Color.blue);
         Diffuse green = new Diffuse(Color.green);
+        BufferedImage BoisIm = null;
+        try {
+            BoisIm = ImageIO.read(new File("textures/wood.jpg"));
+        } catch (IOException ex) {
+            System.out.println("Error : couldn't import file");
+        }
+        Texture textBois = new Texture(BoisIm);
 
         listeDefaut.add(new Sphere(new Vector3d(4, 0, 0), 1.5, blue));
         listeDefaut.add(new Sphere(new Vector3d(-0.5, 0.2, 0.2), 0.1, silver));
@@ -350,7 +370,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
         listeDefaut.add(new Plane(new Vector3d(0, -1, 0), new Vector3d(0, 3, 0 ), green));
         listeDefaut.add(new Plane(new Vector3d(-1, 0, 0), new Vector3d(5, 0, 0), white));
         listeDefaut.add(new Plane(new Vector3d(0, 0, -1), new Vector3d(0, 0, 3), white));
-        listeDefaut.add(new Plane(new Vector3d(0, 0, 1), new Vector3d(0, 0, -3), white));
+        listeDefaut.add(new Plane(new Vector3d(0, 0, 1), new Vector3d(0, 0, -3), textBois));
         listeDefaut.add(new Plane(new Vector3d(1, 0, 0), new Vector3d(-5, 0, 0), white));
         listeDefaut.add(new Cube(new Vector3d(2, .7, .7), 1, 1, 1, 0, green));
         // theta=0 dans la version par defaut
@@ -415,6 +435,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
         panelCouleur.setBackground(Color.green);
 
         panelCouleur.add(lSeleCoul);
+        panelCouleur.add(razChoixCoul);
         panelCouleur.add(panelCouleur1);
         panelCouleur.add(panelCouleurBasique);
         panelCouleur.add(panelCouleurRGB);
@@ -437,7 +458,6 @@ public class FenetreCoord extends JFrame implements ActionListener{
 
         panelEtape1.add(listeVolume);
         panelEtape1.add(listeMatieres);
-        panelEtape1.add(etapeSuiv1);
         panelEtape1.add(panelCouleur);
         panelEtape1.add(panelTexture);
 
@@ -457,7 +477,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
         panelEtape2SphereParam.add(zCentreSphere);
         panelEtape2SphereParam.add(lz);
         panelEtape2SphereParam.add(lCoord);
-        panelEtape2SphereParam.add(etapeSuiv2);
+        panelEtape2SphereParam.add(razCoordSphere);
 
         panelEtape2Sphere.setVisible(false);
         panelEtape2Sphere.setLayout(null);
@@ -481,6 +501,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
         panelEtape2CubeParam.add(zCentreCube);
         panelEtape2CubeParam.add(lz1);
         panelEtape2CubeParam.add(lCentre);
+        panelEtape2CubeParam.add(razCoordCube);
 
         panelEtape2Cube.setVisible(false);
         panelEtape2Cube.setLayout(null);
@@ -506,6 +527,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
         panelEtape2PlanParam.add(zCentrePlan);
         panelEtape2PlanParam.add(lz2);
         panelEtape2PlanParam.add(lPoint);
+        panelEtape2Plan.add(razCoordPlan);
 
         panelEtape2Plan.setVisible(false);
         panelEtape2Plan.setLayout(null);
@@ -521,6 +543,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
         panelEtape2.setBounds(0, 150, 425, 150);
         panelEtape2.setBackground(new Color(209,242,235));
 
+
         // Panel etape 3
         JPanel panelEtape3 = new JPanel();
         panelEtape3.setVisible(true);
@@ -531,10 +554,19 @@ public class FenetreCoord extends JFrame implements ActionListener{
         panelEtape3.add(ajout);
         panelEtape3.add(affUtil);
 
+        // panel affichage contenu liste
+        panelContenuListe.setLayout(null);
+        panelContenuListe.setBounds(0,450,425,400);
+        panelContenuListe.setBackground(Color.lightGray);
+
+        panelContenuListe.add(affichageListe);
+        panelContenuListe.add(razListe);
+        panelContenuListe.add(lRepere);
+
         //Panel de toutes les etapes
         JPanel panelEtapes = new JPanel();
         panelEtapes.setLayout(null);
-        panelEtapes.setBounds(0, 50, 425, 450);
+        panelEtapes.setBounds(0, 50, 425, 850);
         panelEtapes.setBackground(Color.yellow);
         panelEtapes.setVisible(true);
 
@@ -544,6 +576,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
         panelEtapes.add(panelEtape2Cube);
         panelEtapes.add(panelEtape2Plan);
         panelEtapes.add(panelEtape3);
+        panelEtapes.add(panelContenuListe);
 
         // Panel zone affichage du rendu 3D
         panelZoneAffichage.setLayout(null);
@@ -551,7 +584,6 @@ public class FenetreCoord extends JFrame implements ActionListener{
         panelZoneAffichage.setBackground(new Color(232,248,245)); // même couleur que le pannel Global
         panelZoneAffichage.setVisible(true);
 
-        //panelZoneAffichage.add(labelIm); ///////// POUR L'EXEMPLE --> A SUPPRIMER APRES
         panelZoneAffichage.add(lDefaut);
         panelZoneAffichage.add(lUtil);
         panelZoneAffichage.add(labelTestRenduUtil);
@@ -591,10 +623,8 @@ public class FenetreCoord extends JFrame implements ActionListener{
             System.out.println("Effacer");
             panelZoneAffichage.setVisible(false);
             lDefaut.setVisible(false);
-            //labelTestRenduUtil.setVisible(false);
             lUtil.setVisible(false);
         }
-
         if (listeVolume.getSelectedItem() == "--Choix volume--"){
             panelEtape2.setVisible(true);
             panelEtape2Sphere.setVisible(false);
@@ -608,15 +638,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
             panelEtape2Cube.setVisible(false);
             panelEtape2Plan.setVisible(false);
         }
-        if (e.getSource()==etapeSuiv2) {
-/*
-                lUtil.setLocation(0,0); // label qui contient l'Icon
-                lUtil.setSize(1275,1000);
-                lUtil.setIcon(renduUtil);
-                lUtil.setVisible(true);
-
- */
-        }
+        // if (e.getSource()==etapeSuiv2) {}
         if (listeVolume.getSelectedItem() == "Cube"){
             System.out.println("Cube sélectionné");
             panelEtape2.setVisible(false);
@@ -667,39 +689,52 @@ public class FenetreCoord extends JFrame implements ActionListener{
             // recuperation des champs non vides
             // cas de la sphere
             // recuperation param specifique volume
-            if (listeVolume.getSelectedItem()=="Sphère"&&!(rayonSphere.getText()).isEmpty()&&!(xCentreSphere.getText()).isEmpty()&&
-                    !(yCentreSphere.getText()).isEmpty()&&!(zCentreSphere.getText()).isEmpty()) {
-                System.out.println("Tous les champs de la sphère sont non-vides");
-                rSpUtil = Float.parseFloat(rayonSphere.getText());
-                xSpUtil = Float.parseFloat(xCentreSphere.getText());
-                ySpUtil = Float.parseFloat(yCentreSphere.getText());
-                zSpUtil = Float.parseFloat(zCentreSphere.getText());
-                System.out.println("champs spheres recuperes");
+            if (listeVolume.getSelectedItem()=="Sphère"){
+                if(!(rayonSphere.getText()).isEmpty()&&!(xCentreSphere.getText()).isEmpty()&&
+                        !(yCentreSphere.getText()).isEmpty()&&!(zCentreSphere.getText()).isEmpty()){
+                    System.out.println("Tous les champs de la sphère sont non-vides");
+                    rSpUtil = Float.parseFloat(rayonSphere.getText());
+                    xSpUtil = Float.parseFloat(xCentreSphere.getText());
+                    ySpUtil = Float.parseFloat(yCentreSphere.getText());
+                    zSpUtil = Float.parseFloat(zCentreSphere.getText());
+                    System.out.println("champs spheres recuperes");
+                } else {
+                    javax.swing.JOptionPane.showMessageDialog(null,
+                            "Veuillez compléter les champs manquants");
+                }
             }
             // cas du cube
-            if (listeVolume.getSelectedItem()=="Cube"&&!(areteCube.getText()).isEmpty()&&!(xCentreCube.getText()).isEmpty()&&
-                    !(yCentreCube.getText()).isEmpty()&&!(zCentreCube.getText()).isEmpty()){
-                longAreteUtil = Float.parseFloat(areteCube.getText());
-                xCubeUtil = Float.parseFloat(xCentreCube.getText());
-                yCubeUtil = Float.parseFloat(yCentreCube.getText());
-                zCubeUtil = Float.parseFloat(zCentreCube.getText());
-                System.out.println("champs cube recuperes");
+            if (listeVolume.getSelectedItem()=="Cube"){
+                if(!(areteCube.getText()).isEmpty()&&!(xCentreCube.getText()).isEmpty()&&
+                        !(yCentreCube.getText()).isEmpty()&&!(zCentreCube.getText()).isEmpty()){
+                    longAreteUtil = Float.parseFloat(areteCube.getText());
+                    xCubeUtil = Float.parseFloat(xCentreCube.getText());
+                    yCubeUtil = Float.parseFloat(yCentreCube.getText());
+                    zCubeUtil = Float.parseFloat(zCentreCube.getText());
+                    System.out.println("champs cube recuperes");
+                } else {
+                    javax.swing.JOptionPane.showMessageDialog(null,
+                            "Veuillez compléter les champs manquants");
+                }
+
             }
             // cas du plan
-            if (listeVolume.getSelectedItem() == "Plan"&&!(xVecteurNormalPlan.getText()).isEmpty()&&!(yVecteurNormalPlan.getText()).isEmpty()&&
-                    !(zVecteurNormalPlan.getText()).isEmpty()&&!(xCentrePlan.getText()).isEmpty()&&!(yCentrePlan.getText()).isEmpty()&&!(zCentrePlan.getText()).isEmpty()){
-                xNormPl = Float.parseFloat(xVecteurNormalPlan.getText());
-                yNormPl = Float.parseFloat(yVecteurNormalPlan.getText());
-                zNormPl = Float.parseFloat(zVecteurNormalPlan.getText());
-                xPtPl = Float.parseFloat(xCentrePlan.getText());
-                yPtPl = Float.parseFloat(yCentrePlan.getText());
-                zPtPl = Float.parseFloat(zCentrePlan.getText());
+            if (listeVolume.getSelectedItem() == "Plan"){
+                if(!(xVecteurNormalPlan.getText()).isEmpty()&&!(yVecteurNormalPlan.getText()).isEmpty()&&
+                        !(zVecteurNormalPlan.getText()).isEmpty()&&!(xCentrePlan.getText()).isEmpty()&&!(yCentrePlan.getText()).isEmpty()&&!(zCentrePlan.getText()).isEmpty()) {
+                    xNormPl = Float.parseFloat(xVecteurNormalPlan.getText());
+                    yNormPl = Float.parseFloat(yVecteurNormalPlan.getText());
+                    zNormPl = Float.parseFloat(zVecteurNormalPlan.getText());
+                    xPtPl = Float.parseFloat(xCentrePlan.getText());
+                    yPtPl = Float.parseFloat(yCentrePlan.getText());
+                    zPtPl = Float.parseFloat(zCentrePlan.getText());
+                    System.out.println("champs plan recuperes");
+                } else {
+                    javax.swing.JOptionPane.showMessageDialog(null,
+                            "Veuillez compléter les champs manquants");
+                }
 
-                System.out.println("champs plan recuperes");
             }
-            // else if (tous les param de plan sont non-vides {
-            // recuperation des param de plan
-            //}
             // recuperation couleur et matiere
             if (listeMatieres.getSelectedItem() == "Métal"||listeMatieres.getSelectedItem()=="Matériau diffusif") {
                 if (rBtnNoir.isSelected()) {
@@ -727,18 +762,27 @@ public class FenetreCoord extends JFrame implements ActionListener{
                 if(listeMatieres.getSelectedItem()=="Matériau diffusif"){
                     materialUtil = new Diffuse(colorUtil);
                 }
-            } if (listeMatieres.getSelectedItem()=="Texture"){
+            }
+            if (listeMatieres.getSelectedItem()=="Texture"){
                 if(rBtnBrique.isSelected()){
                     System.out.println("Texture selectionnee = brique");
-                   // ImageIcon im_brique = new ImageIcon("./textures/brick.jpg");
-                    //BufferedImage BuIm_brique = new BufferedImage(im_brique);
-                    //materialUtil = new Texture(BuIm_brique);
+                    BufferedImage briqueImg = null;
+                    try {
+                        briqueImg = ImageIO.read(new File("textures/brick.jpg"));
+                    } catch (IOException ex) {
+                        System.out.println("Error : couldn't import file");
+                    }
+                    materialUtil = new Texture(briqueImg);
                 } if (rBtnBois.isSelected()){
                     System.out.println("Texture selectionnee = bois");
+                    BufferedImage BoisImg = null;
+                    try {
+                        BoisImg = ImageIO.read(new File("textures/wood.jpg"));
+                    } catch (IOException ex) {
+                        System.out.println("Error : couldn't import file");
+                    }
+                    materialUtil = new Texture(BoisImg);
                 }
-            } else {
-                javax.swing.JOptionPane.showMessageDialog(null,
-                        "Veuillez compléter les champs manquants");
             }
             centerUtil = new Vector3d(xSpUtil,ySpUtil,zSpUtil);
             spUtil = new Sphere(centerUtil,rSpUtil,materialUtil);
@@ -757,6 +801,9 @@ public class FenetreCoord extends JFrame implements ActionListener{
             System.out.println("Après la récupération des champs, la liste drawableUtil a une size de :"+drawableUtil.size());
 
             //System.out.println("Couleur selectionnee" + colorUtil.toString()); commente pour pouvoir executer sans erreur dans le cas de la texture (car couleur null dans ce cas la)
+
+            //System.out.println("La liste avec les infos entrees par l'utilisateur contient :");
+            affichageListe.append(drawableUtil.get(drawableUtil.size()-1).toString()+"\n");
         }
         if (e.getSource()==affUtil&&drawableUtil.size()!=0){
             // pour pouvoir afficher son rendu l'utilisateur doit cliquer sur le bouton "Afficher mon rendu" après avoir
@@ -774,17 +821,42 @@ public class FenetreCoord extends JFrame implements ActionListener{
             //panelZoneAffichage.setVisible(true);
             lUtil.repaint();
         }
+        if(e.getSource() == razChoixCoul){
+            bg.clearSelection();
+            grpCoul.clearSelection();
+            panelCouleurBasique.setVisible(false);
+            panelCouleurRGB.setVisible(false);
+        }
+        if(e.getSource() == razCoordSphere){
+            rayonSphere.setText("");
+            xCentreSphere.setText("");
+            yCentreSphere.setText("");
+            zCentreSphere.setText("");
+        }
+        if(e.getSource() == razCoordCube){
+            areteCube.setText("");
+            xCentreCube.setText("");
+            yCentreCube.setText("");
+            zCentreCube.setText("");
+        }
+        if(e.getSource() == razCoordPlan){
+            xVecteurNormalPlan.setText("");
+            yVecteurNormalPlan.setText("");
+            zVecteurNormalPlan.setText("");
+            xCentrePlan.setText("");
+            yCentrePlan.setText("");
+            zCentrePlan.setText("");
+        }
+        if (e.getSource() == razListe){
+            drawableUtil.clear();
+            affichageListe.setText("");
+        }
 
         // TESTS SUR LA LISTE
         /*
         // POUR l'instant à chaque clic sur n'importe quel bouton le system.out.println s'affiche dans terminal
         // A REMPLACER PAR UN FOR EACH (mais pas la syntaxe sous la main actuellement)
          */
-        System.out.println("La liste avec les infos entrees par l'utilisateur contient :");
-        for (int i=0; i<drawableUtil.size();i++){
-            System.out.println(drawableUtil.get(i));
-        }
-
 
     }// fin du actionPerformed
 
@@ -817,32 +889,5 @@ public class FenetreCoord extends JFrame implements ActionListener{
 // placement, mise en forme du texte Fenetre Accuei/ Adieu
 // couleurs
 
-
 /*
-    // parametres sphere par defaut
-    Vector3d center_default = new Vector3d(1,0,0); // sans paramètres : au centre
-    double radius_default = 0.25;
-    Material material_default = new Diffuse(Color.gray);
-    Sphere sphere = new Sphere(center_default,radius_default,material_default);
-    drawableUtil.add(sphere);
-
-    // parametres cube par defaut
-    double largeur_default=0.25;
-    double hauteur_default=0.25;
-    double profondeur_default=0.25;
-    Vector3d center_default=new Vector3d(1,0,0);
-    Material material_default=new Diffuse(Color.gray);
-    Cube cube = new Cube(largeur_default, hauteur_default, profondeur_default, center_default, material_default);
-    drawableUtil.add(cube);
-
-    //parametres plan par defaut
-    Vector3d normal_default = new Vector3d(0, 1, 0); // choix de la normale par defaut en selectionnant un des plans rendu
-    Vector3d center_default = new Vector3d(0, -3, 0);
-    Material material_default = new Diffuse(Color.red);
-    Plane plan = new Plane(normal_default, center_default, material_default);
-    drawableUtil.add(plan);
-
-    if (e.getSource() == etapeSuiv1 && (listeVolume.getSelectedItem()=="--Choix volume--"||listeMatieres.getSelectedItem()=="--Choix matière--")) {
-        System.out.println("Il faut sélectionner un volume et une matière pour pouvoir passer à l'étape suivante");
-    }
  */
