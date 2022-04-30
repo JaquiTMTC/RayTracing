@@ -1,4 +1,4 @@
-import sun.misc.JavaLangAccess;
+//mport sun.misc.JavaLangAccess;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -261,7 +261,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
                 yCentreSphere.setBounds(250, 30,50,20);
                 lz.setBounds(350,10,100,20);
                 zCentreSphere.setBounds(350,30,50,20 );
-                lCoord.setBounds(150,60,300,20);
+                lCoord.setBounds(180,60,300,20);
 
                 razCoordSphere.setBounds(20,70,150,20);
                 razCoordSphere.addActionListener(this);
@@ -283,7 +283,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
                 yCentreCube.setBounds(250, 30,50,20);
                 lz1.setBounds(350,10,100,20);
                 zCentreCube.setBounds(350,30,50,20 );
-                lCentre.setBounds(150,60,300,20);
+                lCentre.setBounds(180,60,300,20);
 
                 razCoordCube.setBounds(20,70,150,20);
                 razCoordCube.addActionListener(this);
@@ -308,7 +308,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
                 zCentrePlan.setBounds(130,90,50,20 );
                 lPoint.setBounds(10,70,300,15);
 
-                razCoordPlan.setBounds(20,70,150,20);
+                razCoordPlan.setBounds(200,90,150,20);
                 razCoordPlan.addActionListener(this);
 
 
@@ -754,8 +754,14 @@ public class FenetreCoord extends JFrame implements ActionListener{
                     rRGBUtil = Integer.parseInt(fR.getText());
                     gRGBUtil = Integer.parseInt(fG.getText());
                     bRGBUtil = Integer.parseInt(fB.getText());
-                    colorUtil = new Color(rRGBUtil,gRGBUtil,bRGBUtil);
+                    if( rRGBUtil + gRGBUtil +bRGBUtil == 255) {
+                        colorUtil = new Color(rRGBUtil, gRGBUtil, bRGBUtil);
+                    } else{
+                        javax.swing.JOptionPane.showMessageDialog(null,
+                                " Attention! La somme des trois composantes du code RGB doit donner 255");
+                    }
                 }
+
                 if (listeMatieres.getSelectedItem() == "Métal"){
                     materialUtil = new Metal(colorUtil);
                 }
