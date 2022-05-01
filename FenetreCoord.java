@@ -863,7 +863,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
         // POUR l'instant à chaque clic sur n'importe quel bouton le system.out.println s'affiche dans terminal
         // A REMPLACER PAR UN FOR EACH (mais pas la syntaxe sous la main actuellement)
          */
-
+//
     }// fin du actionPerformed
 
         public static void main (String[]args){
