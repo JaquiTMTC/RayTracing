@@ -1,10 +1,10 @@
 public class Cube extends Drawable{
 
-    Vector3d center;
-    Vector3d[] basis;  // 0 = x, 1 = y, 2 = z
-    double[] dimensions;
+    protected Vector3d center;
+    protected Vector3d[] basis;  // 0 = x, 1 = y, 2 = z
+    protected double[] dimensions;
 
-    Plane[] planes;
+    protected Plane[] planes;
 
 
     public Cube(Vector3d center, double width, double height, double depth, double zAngle, Material material){

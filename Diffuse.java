@@ -43,4 +43,10 @@ public class Diffuse extends Material{
         return new double[0];
     }
 
+    @Override
+    public String toString() {
+        return "Diffusif{" +
+                "color=" + color +
+                '}';
+    }
 }

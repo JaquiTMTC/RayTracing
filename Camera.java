@@ -3,10 +3,11 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 
 public class Camera {
+    public Vector3d pos;
+
     protected Vector3d normal;
     protected Vector3d xDir;
     protected Vector3d yDir;
-    protected Vector3d pos;
     protected int width;
     protected int height;
     protected double verticalFOV;
@@ -128,5 +129,29 @@ public class Camera {
 
     public Vector3d getNormal() {
         return new Vector3d(normal);
+    }
+
+    public Vector3d getxDir() {
+        return xDir;
+    }
+
+    public Vector3d getyDir() {
+        return yDir;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public double getVerticalFOV() {
+        return verticalFOV;
+    }
+
+    public double getHorizontalFOV() {
+        return horizontalFOV;
     }
 }

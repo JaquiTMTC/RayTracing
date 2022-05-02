@@ -58,6 +58,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
     JTextField zCentreSphere = new JTextField();
 
     JTextField areteCube = new JTextField();
+    JTextField angleCube = new JTextField();
     JTextField xCentreCube = new JTextField();
     JTextField yCentreCube = new JTextField();
     JTextField zCentreCube = new JTextField();
@@ -113,6 +114,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
     double zSpUtil;
     // pour le cas du cube
     double longAreteUtil;
+    double angleCubeUtil;
     double xCubeUtil;
     double yCubeUtil;
     double zCubeUtil;
@@ -272,6 +274,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
 
                 JLabel lArete = new JLabel("Longueur Arete");
                 JLabel lCentre = new JLabel("Coordonnées du centre du cube");
+                JLabel lAngle = new JLabel("Angle autour de z (deg)");
                 JLabel lx1 = new JLabel("x");
                 JLabel ly1 = new JLabel("y");
                 JLabel lz1 = new JLabel("z");
@@ -285,8 +288,10 @@ public class FenetreCoord extends JFrame implements ActionListener{
                 lz1.setBounds(350,10,100,20);
                 zCentreCube.setBounds(350,30,50,20 );
                 lCentre.setBounds(180,60,300,20);
+                angleCube.setBounds(20, 90, 50, 20);
+                lAngle.setBounds(20, 70, 150, 20);
 
-                razCoordCube.setBounds(20,70,150,20);
+                razCoordCube.setBounds(20,120,150,20);
                 razCoordCube.addActionListener(this);
 
                 // composants etape2PlanParam
@@ -490,7 +495,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
         // PANEL CUBE
 
         panelEtape2CubeParam. setLayout(null);
-        panelEtape2CubeParam.setBounds(0, 0, 425, 100);
+        panelEtape2CubeParam.setBounds(0, 0, 425, 150);
         panelEtape2CubeParam.setBackground(Color.red);
 
         panelEtape2CubeParam.add(lArete);
@@ -503,6 +508,8 @@ public class FenetreCoord extends JFrame implements ActionListener{
         panelEtape2CubeParam.add(lz1);
         panelEtape2CubeParam.add(lCentre);
         panelEtape2CubeParam.add(razCoordCube);
+        panelEtape2CubeParam.add(lAngle);
+        panelEtape2CubeParam.add(angleCube);
 
         panelEtape2Cube.setVisible(false);
         panelEtape2Cube.setLayout(null);
@@ -707,20 +714,23 @@ public class FenetreCoord extends JFrame implements ActionListener{
                 } else {
                     javax.swing.JOptionPane.showMessageDialog(null,
                             "Veuillez compléter les champs manquants");
+                    return;
                 }
             }
             // cas du cube
             if (listeVolume.getSelectedItem()=="Cube"){
                 if(!(areteCube.getText()).isEmpty()&&!(xCentreCube.getText()).isEmpty()&&
-                        !(yCentreCube.getText()).isEmpty()&&!(zCentreCube.getText()).isEmpty()){
+                        !(yCentreCube.getText()).isEmpty()&&!(zCentreCube.getText()).isEmpty()&&!(angleCube.getText()).isEmpty()){
                     longAreteUtil = Float.parseFloat(areteCube.getText());
                     xCubeUtil = Float.parseFloat(xCentreCube.getText());
                     yCubeUtil = Float.parseFloat(yCentreCube.getText());
                     zCubeUtil = Float.parseFloat(zCentreCube.getText());
+                    angleCubeUtil = Math.toRadians(Float.parseFloat(angleCube.getText()));
                     System.out.println("champs cube recuperes");
                 } else {
                     javax.swing.JOptionPane.showMessageDialog(null,
                             "Veuillez compléter les champs manquants");
+                    return;
                 }
 
             }
@@ -738,8 +748,12 @@ public class FenetreCoord extends JFrame implements ActionListener{
                 } else {
                     javax.swing.JOptionPane.showMessageDialog(null,
                             "Veuillez compléter les champs manquants");
+                    return;
                 }
-
+            }
+            if(listeVolume.getSelectedItem() == "--Choix volume--"){
+                JOptionPane.showMessageDialog(null, "Veuillez choisir un volume");
+                return;
             }
             // recuperation couleur et matiere
             if (listeMatieres.getSelectedItem()=="Matériau diffusif") {
@@ -760,16 +774,18 @@ public class FenetreCoord extends JFrame implements ActionListener{
                     rRGBUtil = Integer.parseInt(fR.getText());
                     gRGBUtil = Integer.parseInt(fG.getText());
                     bRGBUtil = Integer.parseInt(fB.getText());
-                    if( rRGBUtil + gRGBUtil +bRGBUtil == 255) {
-                        colorUtil = new Color(rRGBUtil, gRGBUtil, bRGBUtil);
-                    } else{
+                    if( rRGBUtil>255 || gRGBUtil>255 || bRGBUtil>255 || rRGBUtil<0 || gRGBUtil<0 || bRGBUtil<0) {
                         javax.swing.JOptionPane.showMessageDialog(null,
-                                " Attention! La somme des trois composantes du code RGB doit donner 255");
+                                " Attention! Chaque composante doit être comprise entre 0 et 255 (compris)");
+                        return;
+                    } else{
+                        colorUtil = new Color(rRGBUtil, gRGBUtil, bRGBUtil);
                     }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Veuillez choisir une couleur");
+                    return;
                 }
-                if(listeMatieres.getSelectedItem()=="Matériau diffusif"){
-                    materialUtil = new Diffuse(colorUtil);
-                }
+                materialUtil = new Diffuse(colorUtil);
             }
             if (listeMatieres.getSelectedItem()=="Texture"){
                 if(rBtnBrique.isSelected()){
@@ -781,7 +797,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
                         System.out.println("Error : couldn't import file");
                     }
                     materialUtil = new Texture(briqueImg);
-                } if (rBtnBois.isSelected()){
+                } else if (rBtnBois.isSelected()){
                     System.out.println("Texture selectionnee = bois");
                     BufferedImage BoisImg = null;
                     try {
@@ -790,6 +806,9 @@ public class FenetreCoord extends JFrame implements ActionListener{
                         System.out.println("Error : couldn't import file");
                     }
                     materialUtil = new Texture(BoisImg);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Veuillez sélectionner une texture");
+                    return;
                 }
             }
             if (listeMatieres.getSelectedItem()=="Verre"){
@@ -798,9 +817,13 @@ public class FenetreCoord extends JFrame implements ActionListener{
             if(listeMatieres.getSelectedItem()=="Métal"){
                 materialUtil = new Metal();
             }
+            if(listeMatieres.getSelectedItem()=="--Choix matière--"){
+                JOptionPane.showMessageDialog(null, "Veuillez choisir une matière");
+                return;
+            }
             centerUtil = new Vector3d(xSpUtil,ySpUtil,zSpUtil);
             spUtil = new Sphere(centerUtil,rSpUtil,materialUtil);
-            cubeUtil = new Cube(new Vector3d(xCubeUtil,yCubeUtil,zCubeUtil),longAreteUtil,longAreteUtil,longAreteUtil,0,materialUtil);
+            cubeUtil = new Cube(new Vector3d(xCubeUtil,yCubeUtil,zCubeUtil),longAreteUtil,longAreteUtil,longAreteUtil,angleCubeUtil,materialUtil);
             plUtil = new Plane(new Vector3d(xNormPl,yNormPl,zNormPl), new Vector3d (xPtPl,yPtPl,zPtPl),materialUtil);
             // AJOUT
             if (listeVolume.getSelectedItem()=="Sphère"){
@@ -825,10 +848,11 @@ public class FenetreCoord extends JFrame implements ActionListener{
             System.out.println("L'utilisateur souhaite afficher son rendu");
             System.out.println("La liste drawableUtil contient actuellement "+drawableUtil.size()+" élément(s)" );
 
+            Camera camUtil = new Camera(new Vector3d(), Vector3d.XDIR, 1275, 1000, Math.PI/2);
             lDefaut.setVisible(false);
             lUtil.setVisible(false);
             Scene sceneUtil = new Scene(drawableUtil,new Vector3d (1, 2*Math.cos(0), 2));
-            lUtil = genereLabel(camDefaut,drawableUtil,sceneUtil);
+            lUtil = genereLabel(camUtil,drawableUtil,sceneUtil);
             lUtil.setBounds(0,0,1275,1000);
             panelZoneAffichage.add(lUtil);
             lUtil.setVisible(true);
@@ -852,6 +876,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
             xCentreCube.setText("");
             yCentreCube.setText("");
             zCentreCube.setText("");
+            angleCube.setText("");
         }
         if(e.getSource() == razCoordPlan){
             xVecteurNormalPlan.setText("");

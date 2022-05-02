@@ -10,11 +10,15 @@ public class Metal extends Material{
         return true;
     }
 
-    double[] getCoeffs(HitInfo info) {
+    public double[] getCoeffs(HitInfo info) {
         return new double[]{1};
     }
 
     public Ray[] bouncedRays(HitInfo info) {
         return new Ray[]{info.rayIn.bounce(info.position, info.normal)};
+    }
+
+    public String toString() {
+        return "Metal";
     }
 }
