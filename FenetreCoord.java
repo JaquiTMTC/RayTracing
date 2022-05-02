@@ -352,7 +352,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
         listeDefaut= new LinkedList<>();
 
         // remplissage de la listeDefaut
-        Metal silver = new Metal(Color.black);
+        Metal silver = new Metal();
         Diffuse white = new Diffuse(Color.white);
         Diffuse red = new Diffuse(Color.red);
         Diffuse blue = new Diffuse(Color.blue);
@@ -660,7 +660,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
         }
         if (listeMatieres.getSelectedItem() == "Métal"){
             System.out.println("Métal sélectionné");
-            panelCouleur.setVisible(true);
+            panelCouleur.setVisible(false);
             panelTexture.setVisible(false);
         }
         if (listeMatieres.getSelectedItem() == "Matériau diffusif"){
@@ -742,7 +742,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
 
             }
             // recuperation couleur et matiere
-            if (listeMatieres.getSelectedItem() == "Métal"||listeMatieres.getSelectedItem()=="Matériau diffusif") {
+            if (listeMatieres.getSelectedItem()=="Matériau diffusif") {
                 if (rBtnNoir.isSelected()) {
                     colorUtil = Color.black;
                 } else if (rBtnBleu.isSelected()){
@@ -766,10 +766,6 @@ public class FenetreCoord extends JFrame implements ActionListener{
                         javax.swing.JOptionPane.showMessageDialog(null,
                                 " Attention! La somme des trois composantes du code RGB doit donner 255");
                     }
-                }
-
-                if (listeMatieres.getSelectedItem() == "Métal"){
-                    materialUtil = new Metal(colorUtil);
                 }
                 if(listeMatieres.getSelectedItem()=="Matériau diffusif"){
                     materialUtil = new Diffuse(colorUtil);
@@ -798,6 +794,9 @@ public class FenetreCoord extends JFrame implements ActionListener{
             }
             if (listeMatieres.getSelectedItem()=="Verre"){
                 materialUtil = new Glass(1.5);
+            }
+            if(listeMatieres.getSelectedItem()=="Métal"){
+                materialUtil = new Metal();
             }
             centerUtil = new Vector3d(xSpUtil,ySpUtil,zSpUtil);
             spUtil = new Sphere(centerUtil,rSpUtil,materialUtil);

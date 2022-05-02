@@ -2,8 +2,8 @@ import java.awt.*;
 
 public class Metal extends Material{
 
-    public Metal(Color color){
-        this.color = color;
+    public Metal(){
+        this.color = Color.BLACK;
     }
 
     public boolean bounces(HitInfo info) {

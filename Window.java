@@ -37,7 +37,7 @@ public class Window extends JPanel implements ActionListener {
         //BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
 
-        Metal silver = new Metal(Color.black);
+        Metal silver = new Metal();
         Diffuse white = new Diffuse(Color.white);
         Diffuse red = new Diffuse(Color.red);
         Diffuse blue = new Diffuse(Color.blue);
