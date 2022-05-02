@@ -167,6 +167,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
         listeMatieres.addItem("Métal");
         listeMatieres.addItem("Matériau diffusif");
         listeMatieres.addItem("Texture");
+        listeMatieres.addItem("Verre");
         listeMatieres.addActionListener(this);
 
         // composants panelCouleur
@@ -672,6 +673,11 @@ public class FenetreCoord extends JFrame implements ActionListener{
             panelCouleur.setVisible(false);
             panelTexture.setVisible(true);
         }
+        if (listeMatieres.getSelectedItem() == "Verre"){
+            System.out.println("Verre sélectionné");
+            panelCouleur.setVisible(false);
+            panelTexture.setVisible(false);
+        }
 
         if(rBtnCoulBasique.isSelected()){
             System.out.println("Bouton basique coché détécté");
@@ -789,6 +795,9 @@ public class FenetreCoord extends JFrame implements ActionListener{
                     }
                     materialUtil = new Texture(BoisImg);
                 }
+            }
+            if (listeMatieres.getSelectedItem()=="Verre"){
+                materialUtil = new Glass(1.5);
             }
             centerUtil = new Vector3d(xSpUtil,ySpUtil,zSpUtil);
             spUtil = new Sphere(centerUtil,rSpUtil,materialUtil);

@@ -35,14 +35,6 @@ public class Scene {
         return new HitInfo(tMin, ray, closestObject);
     }
 
-    // version ancienne avec tableau
-    //public Drawable[] getGeometry() {
-    // Drawable[]returnArray = new Drawable[geometry.length];
-    // for(int i=0; i<returnArray.length; i++){
-    //returnArray[i]=geometry[i].copy();
-    //}
-    //return returnArray; }
-
     public Vector3d getLight() {
         return new Vector3d(light);
     }
