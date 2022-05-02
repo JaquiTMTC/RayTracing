@@ -134,7 +134,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         panelMat.add(woodIcon);
         panelMat.setVisible(true);
 
-        // PANEL PRES COULEURS
+        // PANEL PRESENTATION COULEURS
         JPanel panelCol = new JPanel();
         panelCol.setLayout(null);
         panelCol.setBounds(10,280, 950, 80);
@@ -145,7 +145,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         panelCol.add(degrade);
 
 
-        // PANEL PRES OBJETS
+        // PANEL PRESENTATION OBJETS
         JPanel panelGeo = new JPanel();
         panelGeo.setLayout(null);
         panelGeo.setBounds(10,375, 950, 330);
@@ -180,10 +180,6 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 
 
     public void actionPerformed(ActionEvent e) {
-
-    }
-    public static void main(String[]args){
-        FenetreAccueil bienvenue = new FenetreAccueil("Accueil", 1000, 770);
 
     }
 
