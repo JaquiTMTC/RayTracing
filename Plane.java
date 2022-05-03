@@ -1,8 +1,8 @@
 import java.util.Objects;
 
 public class Plane extends Drawable{
-    private Vector3d normal;
-    private Vector3d center;
+    protected Vector3d normal;
+    protected Vector3d center;
 
     /**
      * Creates a plane given the following parameters
@@ -16,7 +16,7 @@ public class Plane extends Drawable{
         this.material = material;
     }
 
-    double closestIntersectionPoint(Ray ray, double min, double max) {
+    public double closestIntersectionPoint(Ray ray, double min, double max) {
         if(ray.getDir().dot(normal)==0){ // If ray is parallel to plane
             return -1; // We do not consider important the case where the camera is in the plane (where the ray should intersect the plane)
         }
@@ -27,15 +27,15 @@ public class Plane extends Drawable{
         return t;
     }
 
-    Vector3d normal(Vector3d point) {
+    public Vector3d normal(Vector3d point) {
         return new Vector3d(normal);
     }
 
-    Drawable copy() {
+    public Drawable copy() {
         return new Plane(normal, center, material);
     }
 
-    Vector3d getUVCoordinates(Vector3d point) {
+    public Vector3d getUVCoordinates(Vector3d point) {
         Vector3d xDir;
         Vector3d yDir;
         if(normal.isColinear(Vector3d.ZDIR)){

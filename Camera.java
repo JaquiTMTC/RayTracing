@@ -3,10 +3,11 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 
 public class Camera {
+    public Vector3d pos;
+
     protected Vector3d normal;
     protected Vector3d xDir;
     protected Vector3d yDir;
-    protected Vector3d pos;
     protected int width;
     protected int height;
     protected double verticalFOV;
@@ -59,19 +60,23 @@ public class Camera {
      * @return the color of the given pixel
      */
     private Color renderPixel(int x, int y, Scene scene, int maxBounces){
-
         Ray ray = createRay(x, y);
-        Color returnColor = renderRay(ray, scene, maxBounces);
-        returnColor = ((returnColor==null) ? sky(ray) : returnColor);
-        return (returnColor);
+        return renderRay(ray, scene, maxBounces);
     }
 
+    /**
+     * For a ray, gives the color of this ray in a scene.
+     * @param ray the ray to render
+     * @param scene the scene in which to cast the ray
+     * @param maxBounces the maxium bounc depth
+     * @return the Color of the ray
+     */
     private Color renderRay(Ray ray, Scene scene, int maxBounces){
 
         HitInfo info = scene.getIntersection(ray);
 
         if (info==null){
-            return null;
+            return sky(ray);
         }
 
         if(info.closestObject.material.bounces(info) && maxBounces != 0){
@@ -79,10 +84,8 @@ public class Camera {
             double[] coeffs = info.closestObject.material.getCoeffs(info);
             double coeffTotal = coeffs[0];
             Color avgColor = renderRay(bouncedRays[0], scene, maxBounces-1);
-            avgColor = avgColor==null ? sky(ray) : avgColor;
             for(int i=1; i<bouncedRays.length; i++){
                 Color newColor = renderRay(bouncedRays[i], scene, maxBounces-1);
-                newColor = newColor==null ? sky(ray) : newColor;
                 int red = (int)((coeffTotal*avgColor.getRed()+coeffs[i]*newColor.getRed())/(coeffTotal+coeffs[i]));
                 int green = (int)((coeffTotal*avgColor.getGreen()+coeffs[i]*newColor.getGreen())/(coeffTotal+coeffs[i]));
                 int blue = (int)((coeffTotal*avgColor.getBlue()+coeffs[i]*newColor.getBlue())/(coeffTotal+coeffs[i]));
@@ -95,6 +98,12 @@ public class Camera {
         }
     }
 
+    /**
+     * Creates the renderet image of the scene
+     * @param scene the scene to render
+     * @param maxBounces the maximum bounce depth
+     * @return the rendered image
+     */
     public Image renderImage (Scene scene, int maxBounces) {
         BufferedImage imageRendu = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         for(int y=0; y<height; y++){
@@ -106,6 +115,11 @@ public class Camera {
         return imageRendu ;
     }
 
+    /**
+     * Color of the ray if it doesn't hit any geometry
+     * @param ray the ray that doesn't hit geometry
+     * @return the color of that ray
+     */
     private static Color sky(Ray ray) {
         double blueProportion = 1-(Math.abs(ray.dir.z*0.75));
         return new Color((int)(blueProportion*255), (int)(blueProportion*255), 255);
@@ -115,5 +129,29 @@ public class Camera {
 
     public Vector3d getNormal() {
         return new Vector3d(normal);
+    }
+
+    public Vector3d getxDir() {
+        return xDir;
+    }
+
+    public Vector3d getyDir() {
+        return yDir;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public double getVerticalFOV() {
+        return verticalFOV;
+    }
+
+    public double getHorizontalFOV() {
+        return horizontalFOV;
     }
 }

@@ -37,7 +37,7 @@ public class Window extends JPanel implements ActionListener {
         //BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
 
-        Metal silver = new Metal(Color.black);
+        Metal silver = new Metal();
         Diffuse white = new Diffuse(Color.white);
         Diffuse red = new Diffuse(Color.red);
         Diffuse blue = new Diffuse(Color.blue);
@@ -62,15 +62,15 @@ public class Window extends JPanel implements ActionListener {
 
         Camera camDefaut = new Camera(new Vector3d(0, 0, 0), new Vector3d(1, 0, 0), width, height, Math.PI/2);
         LinkedList<Drawable> listeDefaut= new LinkedList<Drawable>();
-        //listeDefaut.add(new Sphere(new Vector3d(theta+1.5, 0, 0), 1, glass));
-        listeDefaut.add(new Sphere(new Vector3d(-0.5, 0.2, 0.2), 0.1, silver));
+        listeDefaut.add(new Sphere(new Vector3d(theta+2, 0, 0), 1, glass));
+        //listeDefaut.add(new Sphere(new Vector3d(-0.5, 0.2, 0.2), 0.1, silver));
         listeDefaut.add(new Plane(new Vector3d(0, 1, 0), new Vector3d(0, -3, 0 ), bricks));
         listeDefaut.add(new Plane(new Vector3d(0, -1, 0), new Vector3d(0, 3, 0 ), green));
         listeDefaut.add(new Plane(new Vector3d(-1, 0, 0), new Vector3d(5, 0, 0), bricks));
         listeDefaut.add(new Plane(new Vector3d(0, 0, -1), new Vector3d(0, 0, 3), white));
         listeDefaut.add(new Plane(new Vector3d(0, 0, 1), new Vector3d(0, 0, -3), wood));
         listeDefaut.add(new Plane(new Vector3d(1, 0, 0), new Vector3d(-5, 0, 0), white));
-        listeDefaut.add(new Cube(new Vector3d(2, .7, .7),1, 1, 1, Math.PI/4, bricks));
+        //listeDefaut.add(new Cube(new Vector3d(2, .7, .7),1, 1, 1, Math.PI/4, bricks));
         // theta=0 dans la version par defaut
         Scene sceneDefaut = new Scene(listeDefaut, new Vector3d(1, 2, 2));
 

@@ -1,7 +1,7 @@
 import java.awt.*;
 
 public abstract class Material {
-    protected Color color;
+    Color color;
 
     /**
      * Gives the color of the object at position contained in info
