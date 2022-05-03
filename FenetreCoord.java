@@ -1,4 +1,3 @@
-//mport sun.misc.JavaLangAccess;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -858,42 +857,10 @@ public class FenetreCoord extends JFrame implements ActionListener{
             affichageListe.setText("");
         }
 
-        // TESTS SUR LA LISTE
-        /*
-        // POUR l'instant à chaque clic sur n'importe quel bouton le system.out.println s'affiche dans terminal
-        // A REMPLACER PAR UN FOR EACH (mais pas la syntaxe sous la main actuellement)
-         */
-//
+
     }// fin du actionPerformed
 
         public static void main (String[]args){
             FenetreCoord f = new FenetreCoord("Ray Tracing", 1700, 1000);
         }
 }
-/*
-// TO DO :
-
-//  version par défaut --> voir position optimale camera : A, fait
-// créer les listes qui se remplissent avec les demandes de l'utilisateur: A,fait
-// Lors de la selection des param de la sphere : ajouter des boutons "réinitialiser les coordonnées", "réinitialiser le rayon" : A
-// separer les contenus multimedia du code --> et donc mdifier les chemins d'acces aux images : A
-// textures dans les plans (nos images)
-// volume à rajouter: plan placé par un point et les coordonnées de sa normale : C (item ComboBox: choix plan ) fait
-// commentaires : au fur et à mesure
-//detail qui fait quoi, CR en expliquant contenu des dossiers en annexe
-
-// nettoyage du code  : pdt vacances
-// gestion erreurs utilisateur (si ecrit caractere bizarre) : C
-// bouton validation des choix de sphère pour retour en arrière: A
-
-
-// pour plus de facilité dans le placement des volumes par l'utilisateur : un schema du systeme de coord avec la camera qu'on a choisie
-// zone où on peut voir le contenu de la liste "en temps réel"
-
-
-// esthétique : rendre l'interface sympa: pdt vacances
-// placement, mise en forme du texte Fenetre Accuei/ Adieu
-// couleurs
-
-/*
- */

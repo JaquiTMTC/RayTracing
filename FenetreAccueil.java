@@ -6,7 +6,7 @@ import java.awt.event.*;
 import java.awt.Font;
 
 
-public class FenetreAccueil extends JFrame implements ActionListener {
+public class FenetreAccueil extends JFrame {
     // Attributs
     int width;
     int height;
@@ -57,7 +57,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         diffuseMat.setIcon(imageDiffuse);
         diffuseMat.setVisible(true);
 
-        JLabel textures = new JLabel( "                     Choix des textures :     MUR DE BRIQUE  ou BOIS ");
+        JLabel textures = new JLabel( "           Choix des textures :   BRIQUE,   PLANCHER   OU   VERRE  ");
         textures.setBounds(20, 135, 500, 20);
         textures.setForeground(Color.white);
         Font police2 = new Font(" Arial ",Font.BOLD,14);
@@ -110,14 +110,19 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         plans.setForeground(Color.black);
 
         JLabel brickIcon = new JLabel();
-        brickIcon.setBounds(100, 165, 350, 50);
+        brickIcon.setBounds(30, 165, 180, 50);
         ImageIcon brick = new ImageIcon("images/brickwall.jpg");
         brickIcon.setIcon(brick);
 
         JLabel woodIcon = new JLabel();
-        woodIcon.setBounds(350, 165, 350, 50);
+        woodIcon.setBounds(220, 165, 180, 50);
         ImageIcon wood = new ImageIcon("images/wood.jpg");
         woodIcon.setIcon(wood);
+
+        JLabel glassIcon = new JLabel();
+        glassIcon.setBounds(410, 165, 180, 50);
+        ImageIcon glass = new ImageIcon("images/Verres.png");
+        glassIcon.setIcon(glass);
 
         // panels
 
@@ -132,6 +137,7 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         panelMat.add(textures);
         panelMat.add(brickIcon);
         panelMat.add(woodIcon);
+        panelMat.add(glassIcon);
         panelMat.setVisible(true);
 
         // PANEL PRESENTATION COULEURS
@@ -175,11 +181,6 @@ public class FenetreAccueil extends JFrame implements ActionListener {
         this.add(panelGlobal);
 
         this.setVisible(true);
-
-    }
-
-
-    public void actionPerformed(ActionEvent e) {
 
     }
 
