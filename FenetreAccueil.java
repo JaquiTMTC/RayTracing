@@ -111,12 +111,16 @@ public class FenetreAccueil extends JFrame {
 
         JLabel brickIcon = new JLabel();
         brickIcon.setBounds(30, 165, 180, 50);
-        ImageIcon brick = new ImageIcon("images/brickwall.jpg");
+        //ImageIcon brick = new ImageIcon("images/brickwall.jpg");
+        ImageIcon brick = new ImageIcon(new ImageIcon("./textures/brick.jpg").getImage().getScaledInstance(80,80,Image.SCALE_SMOOTH));
+
         brickIcon.setIcon(brick);
 
         JLabel woodIcon = new JLabel();
         woodIcon.setBounds(220, 165, 180, 50);
-        ImageIcon wood = new ImageIcon("images/wood.jpg");
+        //ImageIcon wood = new ImageIcon("images/wood.jpg");
+        ImageIcon wood = new ImageIcon(new ImageIcon("./textures/wood.jpg").getImage().getScaledInstance(80,80,Image.SCALE_SMOOTH));
+
         woodIcon.setIcon(wood);
 
         JLabel glassIcon = new JLabel();

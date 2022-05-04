@@ -45,7 +45,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
     // labels
     JLabel lDefaut = new JLabel();
     JLabel lUtil = new JLabel();
-    JLabel labelTestRenduUtil = new JLabel();
+    JLabel labelTestRenduUtil = new JLabel(); // ne sert plus
     // textFields
     JTextField fR = new JTextField();
     JTextField fG = new JTextField();
@@ -318,23 +318,23 @@ public class FenetreCoord extends JFrame implements ActionListener{
 
 
         // composants etape 3
-        ajout.setBounds(10,10,200,30);
+        ajout.setBounds(112,40,200,30);
         ajout.setBackground(Color.magenta);
         ajout.addActionListener(this);
 
-        affUtil.setBounds(10,90,200,30);
+        affUtil.setBounds( 112,80,200,30);
         affUtil.setBackground(Color.green);
         affUtil.addActionListener(this);
 
         // composants affichage contenu liste
-        affichageListe.setBounds(5,5,400,100);
-        razListe.setBounds(5,105,200,30);
+        affichageListe.setBounds(12,5,400,100);
+        razListe.setBounds(112,106,200,30);
         razListe.addActionListener(this);
 
         JLabel lRepere = new JLabel();
-        ImageIcon imRepereSmall = new ImageIcon(new ImageIcon("./images/repere.png").getImage().getScaledInstance(300,200,Image.SCALE_SMOOTH));
+        ImageIcon imRepereSmall = new ImageIcon(new ImageIcon("./images/repere.png").getImage().getScaledInstance(350,200,Image.SCALE_SMOOTH));
         lRepere.setIcon(imRepereSmall);
-        lRepere.setBounds(5,140,300,200);
+        lRepere.setBounds(35,140,350,200);
 
         // composants zone affichage
         labelTestRenduUtil.setVisible(false);
@@ -405,7 +405,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
         panelCouleur1.setVisible(true);
         panelCouleur1.setLayout(null);
         panelCouleur1.setBounds(0,25,175,30);
-        panelCouleur1.setBackground(Color.cyan);
+        panelCouleur1.setBackground(new Color ( 183, 245, 252));
 
         panelCouleur1.add(rBtnCoulBasique);
         panelCouleur1.add(rBtnCoulRGB);
@@ -413,7 +413,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
         panelCouleurBasique.setVisible(false); // deviendra visible si le rBtnCoulBasique est selectionne
         panelCouleurBasique.setLayout(null);
         panelCouleurBasique.setBounds(0,60,175,80);
-        panelCouleurBasique.setBackground(Color.pink);
+        panelCouleurBasique.setBackground(new Color(252, 197, 229));
 
         panelCouleurBasique.add(rBtnNoir);
         panelCouleurBasique.add(rBtnBleu);
@@ -425,7 +425,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
         panelCouleurRGB.setVisible(false); // deviendra visible si le rBtnCoulRGB est selectionne
         panelCouleurRGB.setLayout(null);
         panelCouleurRGB.setBounds(0,60,175,80);
-        panelCouleurRGB.setBackground(Color.magenta);
+        panelCouleurRGB.setBackground(new Color(252, 197, 229));
 
         panelCouleurRGB.add(lR);
         panelCouleurRGB.add(lG);
@@ -437,7 +437,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
         panelCouleur.setVisible(false); // deviendra visible quand l'utilisateur aura clique sur un materiau qui accepte une couleur (cad Metal ou Diffusif)
         panelCouleur.setLayout(null);
         panelCouleur.setBounds(230,10,175,375);
-        panelCouleur.setBackground(Color.green);
+        panelCouleur.setBackground(new Color(232,248,245));
 
         panelCouleur.add(lSeleCoul);
         panelCouleur.add(razChoixCoul);
@@ -470,8 +470,8 @@ public class FenetreCoord extends JFrame implements ActionListener{
 
         panelEtape2SphereParam.setVisible(true);
         panelEtape2SphereParam.setLayout(null);
-        panelEtape2SphereParam.setBounds(0, 0, 425, 100);
-        panelEtape2SphereParam.setBackground(Color.cyan);
+        panelEtape2SphereParam.setBounds(0, 0, 425, 150);
+        panelEtape2SphereParam.setBackground(new Color(92,246,215));
 
         panelEtape2SphereParam.add(lRayon);
         panelEtape2SphereParam.add(rayonSphere);
@@ -495,7 +495,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
 
         panelEtape2CubeParam. setLayout(null);
         panelEtape2CubeParam.setBounds(0, 0, 425, 150);
-        panelEtape2CubeParam.setBackground(Color.red);
+        panelEtape2CubeParam.setBackground(new Color (92,246,215));
 
         panelEtape2CubeParam.add(lArete);
         panelEtape2CubeParam.add(areteCube);
@@ -520,8 +520,8 @@ public class FenetreCoord extends JFrame implements ActionListener{
         // PANEL PLAN
 
         panelEtape2PlanParam. setLayout(null);
-        panelEtape2PlanParam.setBounds(0, 0, 425, 140);
-        panelEtape2PlanParam.setBackground(Color.red);
+        panelEtape2PlanParam.setBounds(0, 0, 425, 150);
+        panelEtape2PlanParam.setBackground(new Color(92,246,215));
 
         panelEtape2PlanParam.add(lVecteurNormal);
         panelEtape2PlanParam.add(xVecteurNormalPlan);
@@ -556,15 +556,15 @@ public class FenetreCoord extends JFrame implements ActionListener{
         panelEtape3.setVisible(true);
         panelEtape3.setLayout(null);
         panelEtape3.setBounds(0, 300, 425, 150);
-        panelEtape3.setBackground(new Color(163,228,215));
+        panelEtape3.setBackground(new Color(92,246,215));
 
         panelEtape3.add(ajout);
         panelEtape3.add(affUtil);
 
         // panel affichage contenu liste
         panelContenuListe.setLayout(null);
-        panelContenuListe.setBounds(0,450,425,400);
-        panelContenuListe.setBackground(Color.lightGray);
+        panelContenuListe.setBounds(0,450,425,500);
+        panelContenuListe.setBackground(new Color(14,226,184));
 
         panelContenuListe.add(affichageListe);
         panelContenuListe.add(razListe);
@@ -573,7 +573,7 @@ public class FenetreCoord extends JFrame implements ActionListener{
         //Panel de toutes les etapes
         JPanel panelEtapes = new JPanel();
         panelEtapes.setLayout(null);
-        panelEtapes.setBounds(0, 50, 425, 850);
+        panelEtapes.setBounds(0, 50, 425, 900);
         panelEtapes.setBackground(Color.yellow);
         panelEtapes.setVisible(true);
 
