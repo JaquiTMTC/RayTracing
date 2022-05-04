@@ -88,7 +88,7 @@ public class Cube extends Drawable{
     }
 
     Drawable copy() {
-        return null;
+        return new Cube(center, dimensions[2], dimensions[0], dimensions[1], basis[0].angle(Vector3d.XDIR), material);
     }
 
     public String toString (){
