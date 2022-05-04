@@ -55,6 +55,7 @@ public class Sphere extends Drawable {
         return "Sphere{" +
                 "center=" + center +
                 ", radius=" + radius +
+                ", material=" + material +
                 '}';
     }
 }

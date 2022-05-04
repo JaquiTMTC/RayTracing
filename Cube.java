@@ -95,6 +95,7 @@ public class Cube extends Drawable{
         return "Cube{" +
                 "center=" + center +
                 ", cote=" + dimensions[1] +
+                ", material=" + material +
                 '}';
     }
 }
