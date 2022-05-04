@@ -1,4 +1,6 @@
 
+import com.sun.jdi.IntegerType;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -385,7 +387,6 @@ public class FenetreCoord extends JFrame implements ActionListener{
         lDefaut.setBounds(0,0,1275,1000);
         lDefaut.setVisible(false); // deviendra visible quand l'utilisateur cliquera sur le bouton "afficher la version par defaut"
 
-
         drawableUtil = new LinkedList<>(); // instanciation
 
         // PANNEAUX
@@ -696,20 +697,31 @@ public class FenetreCoord extends JFrame implements ActionListener{
             panelCouleurRGB.setVisible(true);
         }
 
-        if (e.getSource()==ajout){
-            System.out.println("Avant la récupération des champs, la liste drawableUtil a une size de :"+drawableUtil.size());
+        if (e.getSource()==ajout) {
+            System.out.println("Avant la récupération des champs, la liste drawableUtil a une size de :" + drawableUtil.size());
             // recuperation des champs non vides
             // cas de la sphere
             // recuperation param specifique volume
-            if (listeVolume.getSelectedItem()=="Sphère"){
-                if(!(rayonSphere.getText()).isEmpty()&&!(xCentreSphere.getText()).isEmpty()&&
-                        !(yCentreSphere.getText()).isEmpty()&&!(zCentreSphere.getText()).isEmpty()){
+            if (listeVolume.getSelectedItem() == "Sphère") {
+                if (!(rayonSphere.getText()).isEmpty() && !(xCentreSphere.getText()).isEmpty() &&
+                        !(yCentreSphere.getText()).isEmpty() && !(zCentreSphere.getText()).isEmpty()) {
+
                     System.out.println("Tous les champs de la sphère sont non-vides");
-                    rSpUtil = Float.parseFloat(rayonSphere.getText());
-                    xSpUtil = Float.parseFloat(xCentreSphere.getText());
-                    ySpUtil = Float.parseFloat(yCentreSphere.getText());
-                    zSpUtil = Float.parseFloat(zCentreSphere.getText());
-                    System.out.println("champs spheres recuperes");
+                    try { // on teste si les coordonnees rentrées sont bien des nombres
+
+                        System.out.println("c'est bien un nombre");
+
+                        rSpUtil = Float.parseFloat(rayonSphere.getText());
+                        xSpUtil = Float.parseFloat(xCentreSphere.getText());
+                        ySpUtil = Float.parseFloat(yCentreSphere.getText());
+                        zSpUtil = Float.parseFloat(zCentreSphere.getText());
+                        System.out.println("champs spheres recuperes");
+                        System.out.println("c'est bien un nombre");
+                    } catch (NumberFormatException nfe) {
+                        javax.swing.JOptionPane.showMessageDialog(null,
+                                "Veuillez rentrer un nombre");
+                        return;
+                    }
                 } else {
                     javax.swing.JOptionPane.showMessageDialog(null,
                             "Veuillez compléter les champs manquants");
@@ -717,15 +729,22 @@ public class FenetreCoord extends JFrame implements ActionListener{
                 }
             }
             // cas du cube
-            if (listeVolume.getSelectedItem()=="Cube"){
-                if(!(areteCube.getText()).isEmpty()&&!(xCentreCube.getText()).isEmpty()&&
-                        !(yCentreCube.getText()).isEmpty()&&!(zCentreCube.getText()).isEmpty()&&!(angleCube.getText()).isEmpty()){
-                    longAreteUtil = Float.parseFloat(areteCube.getText());
-                    xCubeUtil = Float.parseFloat(xCentreCube.getText());
-                    yCubeUtil = Float.parseFloat(yCentreCube.getText());
-                    zCubeUtil = Float.parseFloat(zCentreCube.getText());
-                    angleCubeUtil = Math.toRadians(Float.parseFloat(angleCube.getText()));
-                    System.out.println("champs cube recuperes");
+            if (listeVolume.getSelectedItem() == "Cube") {
+                if (!(areteCube.getText()).isEmpty() && !(xCentreCube.getText()).isEmpty() &&
+                        !(yCentreCube.getText()).isEmpty() && !(zCentreCube.getText()).isEmpty() && !(angleCube.getText()).isEmpty()) {
+                    try { // on teste si les coordonnees rentrées sont bien des nombres
+
+                        System.out.println("c'est bien un nombre");
+                        longAreteUtil = Float.parseFloat(areteCube.getText());
+                        xCubeUtil = Float.parseFloat(xCentreCube.getText());
+                        yCubeUtil = Float.parseFloat(yCentreCube.getText());
+                        zCubeUtil = Float.parseFloat(zCentreCube.getText());
+                        angleCubeUtil = Math.toRadians(Float.parseFloat(angleCube.getText()));
+                        System.out.println("champs cube recuperes");
+                    } catch (NumberFormatException nfe) {
+                        javax.swing.JOptionPane.showMessageDialog(null,
+                                "Veuillez rentrer un nombre");
+                    }
                 } else {
                     javax.swing.JOptionPane.showMessageDialog(null,
                             "Veuillez compléter les champs manquants");
@@ -734,16 +753,24 @@ public class FenetreCoord extends JFrame implements ActionListener{
 
             }
             // cas du plan
-            if (listeVolume.getSelectedItem() == "Plan"){
-                if(!(xVecteurNormalPlan.getText()).isEmpty()&&!(yVecteurNormalPlan.getText()).isEmpty()&&
-                        !(zVecteurNormalPlan.getText()).isEmpty()&&!(xCentrePlan.getText()).isEmpty()&&!(yCentrePlan.getText()).isEmpty()&&!(zCentrePlan.getText()).isEmpty()) {
-                    xNormPl = Float.parseFloat(xVecteurNormalPlan.getText());
-                    yNormPl = Float.parseFloat(yVecteurNormalPlan.getText());
-                    zNormPl = Float.parseFloat(zVecteurNormalPlan.getText());
-                    xPtPl = Float.parseFloat(xCentrePlan.getText());
-                    yPtPl = Float.parseFloat(yCentrePlan.getText());
-                    zPtPl = Float.parseFloat(zCentrePlan.getText());
-                    System.out.println("champs plan recuperes");
+            if (listeVolume.getSelectedItem() == "Plan") {
+                if (!(xVecteurNormalPlan.getText()).isEmpty() && !(yVecteurNormalPlan.getText()).isEmpty() &&
+                        !(zVecteurNormalPlan.getText()).isEmpty() && !(xCentrePlan.getText()).isEmpty() && !(yCentrePlan.getText()).isEmpty() && !(zCentrePlan.getText()).isEmpty()) {
+                    try { // on teste si les coordonnees rentrées sont bien des nombres
+
+                        System.out.println("c'est bien un nombre");
+                        xNormPl = Float.parseFloat(xVecteurNormalPlan.getText());
+                        yNormPl = Float.parseFloat(yVecteurNormalPlan.getText());
+                        zNormPl = Float.parseFloat(zVecteurNormalPlan.getText());
+                        xPtPl = Float.parseFloat(xCentrePlan.getText());
+                        yPtPl = Float.parseFloat(yCentrePlan.getText());
+                        zPtPl = Float.parseFloat(zCentrePlan.getText());
+                        System.out.println("champs plan recuperes");
+                    } catch (NumberFormatException nfe) {
+                        javax.swing.JOptionPane.showMessageDialog(null,
+                                "Veuillez rentrer un nombre");
+                        return;
+                    }
                 } else {
                     javax.swing.JOptionPane.showMessageDialog(null,
                             "Veuillez compléter les champs manquants");
@@ -770,15 +797,24 @@ public class FenetreCoord extends JFrame implements ActionListener{
                     colorUtil = Color.red;
                 } else if (!(fR.getText()).isEmpty()&&!(fG.getText()).isEmpty()&&
                         !(fB.getText()).isEmpty()){
-                    rRGBUtil = Integer.parseInt(fR.getText());
+
+                rRGBUtil = Integer.parseInt(fR.getText());
                     gRGBUtil = Integer.parseInt(fG.getText());
                     bRGBUtil = Integer.parseInt(fB.getText());
-                    if( rRGBUtil>255 || gRGBUtil>255 || bRGBUtil>255 || rRGBUtil<0 || gRGBUtil<0 || bRGBUtil<0) {
+                    if( rRGBUtil>255 || gRGBUtil>255 || bRGBUtil>255 || rRGBUtil<0 || gRGBUtil<0 || bRGBUtil<0 ){
                         javax.swing.JOptionPane.showMessageDialog(null,
-                                " Attention! Chaque composante doit être comprise entre 0 et 255 (compris)");
+                                " Attention! Chaque composante doit être comprise entre 0 et 255 (inclus)");
                         return;
-                    } else{
-                        colorUtil = new Color(rRGBUtil, gRGBUtil, bRGBUtil);
+                    } else {
+                        try{
+                            colorUtil = new Color(rRGBUtil, gRGBUtil, bRGBUtil);
+                            System.out.println(" C'est bien un nombre");
+
+                        } catch (NumberFormatException n){
+                            javax.swing.JOptionPane.showMessageDialog(null,
+                                    " Veuillez entrer un nombre!");
+
+                        }
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Veuillez choisir une couleur");
